@@ -159,6 +159,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        crocodicstudio\dokularavel\DokuLaravelServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        Lavary\Menu\ServiceProvider::class,
 
     ],
 
@@ -208,6 +213,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Helper' => App\Helpers\Helper::class,
+        'Menu'      => Lavary\Menu\Facade::class,
+
 
     ],
 

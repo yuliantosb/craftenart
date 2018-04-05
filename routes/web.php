@@ -12,5 +12,33 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.home');
+});
+
+Route::get('/shop', function () {
+    return view('frontend.shop');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('/admin')->as('admin.')/*->middleware(['auth', 'role:admin'])*/->group(function(){
+	// dashboard
+	Route::resource('/dashboard', 'DashboardController');
+	// product
+	Route::resource('product', 'ProductController');
+	// media
+	Route::prefix('media')->group(function(){
+		Route::post('uploads', 'MediaController@uploads')->name('media.uploads');
+		Route::get('get-data', 'MediaController@getData')->name('media.get-data');
+		Route::get('select-data/{id}', 'MediaController@selectData')->name('media.get-data');
+	});
+	Route::resource('/media', 'MediaController');
+	// category
+	Route::resource('/category', 'CategoryController');
+	// tag
+	Route::resource('/tag', 'TagController');
+
+
 });
