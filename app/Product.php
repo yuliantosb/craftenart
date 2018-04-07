@@ -7,6 +7,8 @@ use Helper;
 
 class Product extends Model
 {
+    protected $appends = ['price_amount'];
+
     public function stock()
     {
     	return $this->hasOne('App\Stock');
@@ -55,11 +57,10 @@ class Product extends Model
     public function getPriceAmountAttribute()
     {
         if (!empty($this->sale)) {
-            return '<sup class="text-muted"><s>'.Helper::currency($this->price).'</s></sup> '.Helper::currency($this->sale);
+            return '<sup style="color: #e1e1e1"><s>'.Helper::currency($this->price).'</s></sup> '.Helper::currency($this->sale);
         } else {
             return Helper::currency($this->price);
         }
-
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
 
 class HomeController extends Controller
 {
@@ -11,10 +12,6 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the application dashboard.
@@ -23,6 +20,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.home');
+        $products = Product::orderBy('id', 'desc')
+                    ->get();
+                    
+        return view('frontend.home', compact(['products']));
     }
 }

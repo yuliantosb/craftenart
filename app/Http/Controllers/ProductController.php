@@ -105,8 +105,7 @@ class ProductController extends Controller
                 foreach ($request->tags as $tag) {
 
                     $tag = Tag::firstOrCreate([
-                                    'name' => $tag,
-                                    'slug' => str_slug($tag)]);
+                                    'name' => $tag]);
                     if ($tag) {
                         $tagIds[] = $tag->id;
                     }
@@ -120,8 +119,7 @@ class ProductController extends Controller
                 foreach ($request->categories as $category) {
 
                     $category = Category::firstOrCreate([
-                                'name' => $category,
-                                'slug' => str_slug($category)]);
+                                'name' => $category]);
 
                     if ($category) {
                         $categoryIds[] = $category->id;

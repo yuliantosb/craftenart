@@ -32,7 +32,7 @@ class CategoryController extends Controller
     			';
     		})
     		->addColumn('description', function($data){
-    			return strip_tags($data->description);
+    			return substr(strip_tags($data->description), 0, 150).'...';
     		})
     		->toJson();
 

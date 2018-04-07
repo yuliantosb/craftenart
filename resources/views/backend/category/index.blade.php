@@ -22,7 +22,7 @@
                         <table class="table table-striped" id="table-category">
                             <thead>
                                 <tr>
-                                	<th>Name</th>
+                                	<th style="width: 150px">Name</th>
     	                        	<th>Description</th>
                             	</tr>
                         	</thead>

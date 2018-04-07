@@ -13,61 +13,47 @@
 				<div class="col-xs-12">
 					<!-- banner frame start here -->
 					<div class="banner-frame">
-						<!-- banner-1 start here -->
-						<div class="banner-1 wow fadeInLeft" data-wow-delay="0.4s">
-							<img alt="image description" src="http://placehold.it/385x480">
-							<div class="holder">
-								<h2>MY SMALL WRITING <br>DESK</h2>
-								<div class="txts">
-									<a class="btn-shop" href="product-detail.html">
-										<span>shop now</span>
-										<i class="fa fa-angle-right"></i>
-									</a>
-									<div class="discount">
-										<span>-20%</span>
+
+						@foreach ($products as $product)
+							@if ($loop->first || $loop->last)
+							<!-- banner-1 start here -->
+							<div class="banner-1 wow fadeInLeft" data-wow-delay="0.4s">
+								<img alt="{{ $product->name }}" src="{{ url('uploads/'.$product->picture) }}" style="width: 385px; height: 480px; object-fit: cover;">
+								<div class="holder">
+									<h2>{{ $product->name }}</h2>
+									<span class="price">{!! $product->price_amount !!}</span>
+									<div class="txts">
+										<a class="btn-shop" href="product-detail.html">
+											<span>shop now</span>
+											<i class="fa fa-angle-right"></i>
+										</a>
+										@if (!empty($product->sale))
+										<div class="discount">
+											<span>-{{ round(( ($product->price - $product->sale) / $product->price) * 100) }}%</span>
+										</div>
+										@endif
 									</div>
 								</div>
 							</div>
-						</div>
-						<!-- banner-1 end here -->
+							@else
 
-						<!-- banner-box first start here -->
-						<div class="banner-box first">
-							<!-- banner-2 start here -->
-							<div class="banner-2 wow fadeInUp" data-wow-delay="0.4s">
-								<img alt="image description" src="http://placehold.it/385x225">
-								<div class="holder">
-									<h2>MODULAR LOUNGE <br>TEAK</h2>
-									<span class="price">$ 129.00</span>
+								<div class="banner-box first">
+									@foreach ($products->splice(2, 0) as $product)
+									<!-- banner-2 start here -->
+									<div class="banner-2 wow fadeInUp" data-wow-delay="0.4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+										<img alt="image description" src="{{ url('uploads/thumbs/'.$product->picture) }}" style="width: 385px; height: 255px; object-fit: cover;">
+										<div class="holder">
+											<h2>{{ $product->name }}</h2>
+											<span class="price">{!! $product->price_amount !!}</span>
+											<a href="product-detail.html" class="shop">SHOP NOW</a>
+										</div>
+									</div>
+									@endforeach
+									<!-- banner-2 end here -->
 								</div>
-							</div>
-							<!-- banner-2 end here -->
 
-							<!-- banner-3 start here -->
-							<div class="banner-3 right wow fadeInDown" data-wow-delay="0.4s">
-								<img alt="image description" src="http://placehold.it/385x225">
-								<div class="holder">
-									<h2>Modular technical <br>fabric sofa</h2>
-									<a href="product-detail.html" class="shop">SHOP NOW</a>
-								</div>
-							</div>
-							<!-- banner-3 end here -->
-						</div>
-						<!-- banner-box first end here -->
-
-						<!-- banner-4 start here -->
-						<div class="banner-4 hidden-sm wow fadeInRight" data-wow-delay="0.4s">
-							<img alt="image description" src="http://placehold.it/385x480">
-							<div class="holder">
-								<h2>Direct light <br>pendant lamp</h2>
-								<span class="price">$ 129.00</span>
-								<a class="btn-shop add" href="product-detail.html">
-									<span>shop now</span>
-									<i class="fa fa-angle-right"></i>
-								</a>
-							</div>
-						</div>
-						<!-- banner-4 end here -->
+							@endif
+						@endforeach
 					</div>
 					<!-- banner frame end here -->
 					<!-- mt producttabs start here -->

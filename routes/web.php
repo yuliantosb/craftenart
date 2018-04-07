@@ -11,17 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.home');
-});
+Route::get('/', 'HomeController@index');
 
 Route::get('/shop', function () {
     return view('frontend.shop');
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('/admin')->as('admin.')/*->middleware(['auth', 'role:admin'])*/->group(function(){
 	// dashboard

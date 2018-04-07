@@ -74,7 +74,6 @@ class Helper
     public static function currency($amount)
     {
         if (session()->has('currency')) {
-
             $curr = session()->get('currency');
         } else {
             $curr = 'usd';
@@ -83,7 +82,11 @@ class Helper
         $convert = Currency::where('alias', $curr)
                             ->first();
 
-        return $convert->symbol.''.number_format(($amount * $convert->convertion), 2, $convert->decimal_separator, $convert->thousand_separator);
+        return $convert->symbol.''.number_format(
+                                    ($amount * $convert->convertion),
+                                     2,
+                                      $convert->decimal_separator,
+                                      $convert->thousand_separator);
 
     }
 
