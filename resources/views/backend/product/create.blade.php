@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <form action="{{ route('admin.product.store') }}" method="post">
+                    <form action="{{ route('admin.product.store') }}" method="post" id="form-add-edit">
                     {{ csrf_field() }}
 
                         <hr>
@@ -26,8 +26,9 @@
                                 <div class="col-md-12">
 
                                     <div class="form-group">
-                                        <label class="control-label">Name</label>
-                                        <input type="text" name="name" class="form-control" placeholder="Product Name">
+                                        <label class="control-label">Name <span class="text-danger">*</span></label>
+                                        <input type="text" name="name" class="form-control" placeholder="Product Name" required="required">
+                                        <span class="help-block"></span>
                                     </div>
 
                                     <div class="form-group">
@@ -103,13 +104,14 @@
                             <div class="col-md-4">
 
                                 <div class="form-group">
-                                    <label class="control-label">Feature Image</label>
+                                    <label class="control-label">Feature Image <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Feature Image" readonly="readonly" name="feature_image" id="input-feature-image">
+                                        <input type="text" class="form-control" placeholder="Feature Image" readonly="readonly" name="feature_image" id="input-feature-image" required="required">
                                         <span class="input-group-btn">
                                             <button class="btn btn-default btn-open-media" type="button" data-type="feature-image">Browse</button>
                                         </span>
                                     </div>
+                                    <span class="help-block"></span>
                                 </div>
 
                                 <div class="form-group">
@@ -118,20 +120,23 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label">Stock</label>
-                                    <input type="text" name="stock" class="form-control autonumeric" placeholder="0">
+                                    <label class="control-label">Stock <span class="text-danger">*</span></label>
+                                    <input type="text" name="stock" class="form-control number" placeholder="0" required="required">
+                                    <span class="help-block"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label">Weight (gr)</label>
-                                    <input type="text" name="weight" placeholder="0.0" class="form-control autonumeric">
+                                    <label class="control-label">Weight (gr) <span class="text-danger">*</span></label>
+                                    <input type="text" name="weight" placeholder="0.0" class="form-control autonumeric" required="required">
+                                    <span class="help-block"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label">Price</label>
+                                    <label class="control-label">Price <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-addon">$</span>
-                                        <input type="text" name="price" class="form-control autonumeric text-right" placeholder="0.0">
+                                        <input type="text" name="price" class="form-control autonumeric text-right" placeholder="0.0" required="required">
+                                        <span class="help-block"></span>
                                     </div>
                                 </div>
 
@@ -144,21 +149,23 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label">Categories</label>
-                                    <select name="categories[]" class="form-control select2" data-tags="true" multiple="multiple" data-placeholder="Select or type categories">
+                                    <label class="control-label">Categories <span class="text-danger">*</span></label>
+                                    <select name="categories[]" class="form-control select2" data-tags="true" multiple="multiple" data-placeholder="Select or type categories" required="required">
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->name }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
+                                    <span class="help-block"></span>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="control-label">Tags</label>
-                                    <select name="tags[]" class="form-control select2" data-tags="true" multiple="multiple" data-placeholder="Select or type tags">
+                                    <label class="control-label">Tags <span class="text-danger">*</span></label>
+                                    <select name="tags[]" class="form-control select2" data-tags="true" multiple="multiple" data-placeholder="Select or type tags" required="required">
                                         @foreach ($tags as $tag)
                                             <option value="{{ $tag->name }}">{{ $tag->name }}</option>
                                         @endforeach
                                     </select>
+                                    <span class="help-block"></span>
                                 </div>
 
                             </div>

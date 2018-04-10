@@ -13,9 +13,11 @@ class CreateReviewsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('reviews');
         Schema::create('reviews', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
+            $table->integer('product_id');
             $table->integer('rate');
             $table->text('content')->nullable();
             $table->integer('status')->default(0);

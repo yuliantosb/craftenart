@@ -29,7 +29,7 @@
 			        			<div class="template no-gutter" style="width: 100%">
 				        			<div class="col-md-2">
 					        			<div class="progress-wrapper">
-				        					<div id="progress-format1" class="progress">
+				        					<div id="progress-format1" class="progress progress-custom">
 												<div class="progress-bar progress-bar-success"  data-dz-uploadprogress style="width: 0%;">0%</div>
 											</div>
 				        				</div>

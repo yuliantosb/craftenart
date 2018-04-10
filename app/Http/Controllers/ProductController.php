@@ -98,14 +98,15 @@ class ProductController extends Controller
 			$stock_details = new StockDetails;
 			$stock_details->amount = $request->stock;
 			$stock_details->description = 'Init new product';
-			$stock->details()->save($stock_details);
+			$product->stock->details()->save($stock_details);
 
 			if (count($request->tags) > 0){
 
                 foreach ($request->tags as $tag) {
 
                     $tag = Tag::firstOrCreate([
-                                    'name' => $tag]);
+                                    'name' => $tag,
+                                    'slug' => str_slug($tag)]);
                     if ($tag) {
                         $tagIds[] = $tag->id;
                     }
@@ -119,7 +120,8 @@ class ProductController extends Controller
                 foreach ($request->categories as $category) {
 
                     $category = Category::firstOrCreate([
-                                'name' => $category]);
+                                'name' => $category,
+                                'slug' => str_slug($category)]);
 
                     if ($category) {
                         $categoryIds[] = $category->id;
@@ -193,7 +195,7 @@ class ProductController extends Controller
 			$stock_details = new StockDetails;
 			$stock_details->amount = $request->stock;
 			$stock_details->description = 'Init new product';
-			$stock->details()->save($stock_details);
+			$product->stock->details()->save($stock_details);
 
 			if (count($request->tags) > 0){
 
@@ -270,8 +272,8 @@ class ProductController extends Controller
    			$product->stock->details()->delete();
    			$product->galleries()->delete();
    			$product->attributes()->delete();
-   			$product->categories()->delete();
-   			$product->tags()->delete();
+   			$product->categories()->detach();
+   			$product->tags()->detach();
    			$product->delete();
 
    		});

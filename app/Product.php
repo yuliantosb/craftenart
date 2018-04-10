@@ -31,7 +31,7 @@ class Product extends Model
 
     public function reviews()
     {
-    	return $this->hasMany('App\Review', 'product_id');
+    	return $this->hasMany('App\Review', 'product_id')->where('status', 1);
     }
 
     public function attributes()
@@ -57,10 +57,15 @@ class Product extends Model
     public function getPriceAmountAttribute()
     {
         if (!empty($this->sale)) {
-            return '<sup style="color: #e1e1e1"><s>'.Helper::currency($this->price).'</s></sup> '.Helper::currency($this->sale);
+            return '<sup style="color: #aaa"><s>'.Helper::currency($this->price).'</s></sup> '.Helper::currency($this->sale);
         } else {
             return Helper::currency($this->price);
         }
+    }
+
+    public function orders()
+    {
+       return $this->hasMany('App\OrderDetails', 'product_id');
     }
 
 }

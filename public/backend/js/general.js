@@ -129,4 +129,13 @@ $('.autonumeric').autoNumeric('init', {
     vMin: 0
 });
 
-tinymce.init({ selector: '.tinymce' });
+tinymce.init({
+    selector: '.tinymce',
+    menubar: false,
+        plugins: [
+        'advlist autolink lists link image charmap print preview anchor textcolor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table contextmenu paste code help'
+        ],
+        toolbar: ' formatselect | undo redo  | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat ',
+});

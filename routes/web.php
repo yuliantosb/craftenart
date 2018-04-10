@@ -17,6 +17,9 @@ Route::get('/shop', function () {
     return view('frontend.shop');
 });
 
+// currency
+Route::get('currency/{type}', 'CurrencyController@set')->name('currency.set');
+
 Auth::routes();
 
 Route::prefix('/admin')->as('admin.')/*->middleware(['auth', 'role:admin'])*/->group(function(){
@@ -35,6 +38,4 @@ Route::prefix('/admin')->as('admin.')/*->middleware(['auth', 'role:admin'])*/->g
 	Route::resource('/category', 'CategoryController');
 	// tag
 	Route::resource('/tag', 'TagController');
-
-
 });

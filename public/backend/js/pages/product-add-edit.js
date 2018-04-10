@@ -1,6 +1,8 @@
 var thumb;
 $(document).ready(function(){
 
+	$('#form-add-edit').validate();
+
 	$('.btn-open-media').click(function(){
 		$('#modal-media').modal('show');
 		thumb = $(this).data('type');

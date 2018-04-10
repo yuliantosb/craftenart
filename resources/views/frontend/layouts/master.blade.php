@@ -123,11 +123,13 @@
 	
 								<ul class="nav mt-top-list2">
 								    <li>
-								        <a href="#">USD</a>
+								        <a href="#">
+								        	{{ session()->has('currency') ? strtoupper(session()->get('currency')) : 'USD' }}
+							        	</a>
 								        <ul class="dropdown">
-								            <li><a href="#">$ USD</a></li>
-								            <li><a href="#">Rp IDR</a></li>
-								            <li><a href="#">&euro; EUR</a></li>
+								        	@foreach (App\Currency::get() as $currency)
+								            <li><a href="{{ route('currency.set', $currency->alias) }}">{{ $currency->name }}</a></li>
+								            @endforeach
 								        </ul>
 								    </li>
 								    <li>

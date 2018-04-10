@@ -26,7 +26,7 @@ class MediaController extends Controller
 	            $file->move($dir, $filename);
 
 	            $thumb1 = Image::make($dir.'/'.$filename);
-	            $thumb1->fit(620, 424);
+	            $thumb1->fit(215, 215);
 	            $thumb1->save($dir.'thumbs/'.$filename);
 
 		        $media = new Media;

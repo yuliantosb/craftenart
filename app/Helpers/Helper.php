@@ -52,21 +52,21 @@ class Helper
     public static function getRate($rate)
     {
 
-        $result = '<span class="rate">';
+        $result = '<ul class="mt-stars">';
 
-        for($i = 1; $i <= $rate; $i++){
-            $result .= '<i class="fa fa-star"></i>';
+        for($i = 1; $i <= round($rate); $i++){
+            $result .= '<li style="margin-right: 2px"><i class="fa fa-star"></i></li>';
         }
 
-        if (5 - $rate > 0) {
+        if (5 - round($rate) > 0) {
 
-            for ($i = 1; $i <= 5 - $rate; $i++) {
-                $result .= '<i class="fa fa-star unrated"></i>';
+            for ($i = 1; $i <= 5 - round($rate); $i++) {
+                $result .= '<li style="margin-right: 2px"><i class="fa fa-star-o"></i></li>';
             }
 
         }
         
-        $result .= '</span>';
+        $result .= '</ul>';
 
         return $result;
     }
