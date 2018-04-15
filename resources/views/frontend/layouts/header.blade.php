@@ -15,57 +15,11 @@
 						</a>
 					</li>
 					<li><a href="#" class="icon-magnifier"></a></li>
-					<li class="drop">
-						<a href="#" class="icon-heart cart-opener"><span style="margin-bottom: -3px;" class="num">3</span></a>
-						<!-- mt drop start here -->
-						<div class="mt-drop">
-							<!-- mt drop sub start here -->
-							<div class="mt-drop-sub">
-								<!-- mt side widget start here -->
-								<div class="mt-side-widget">
-									<!-- cart row start here -->
-									<div class="cart-row">
-										<a href="#" class="img"><img src="http://placehold.it/75x75" alt="image" class="img-responsive"></a>
-										<div class="mt-h">
-											<span class="mt-h-title"><a href="#">Marvelous Modern 3 Seater</a></span>
-											<span class="price"><i class="fa fa-eur" aria-hidden="true"></i> 599,00</span>
-										</div>
-										<a href="#" class="close fa fa-times"></a>
-									</div><!-- cart row end here -->
-									<!-- cart row start here -->
-									<div class="cart-row">
-										<a href="#" class="img"><img src="http://placehold.it/75x75" alt="image" class="img-responsive"></a>
-										<div class="mt-h">
-											<span class="mt-h-title"><a href="#">Marvelous Modern 3 Seater</a></span>
-											<span class="price"><i class="fa fa-eur" aria-hidden="true"></i> 599,00</span>
-										</div>
-										<a href="#" class="close fa fa-times"></a>
-									</div><!-- cart row end here -->
-									<!-- cart row start here -->
-									<div class="cart-row">
-										<a href="#" class="img"><img src="http://placehold.it/75x75" alt="image" class="img-responsive"></a>
-										<div class="mt-h">
-											<span class="mt-h-title"><a href="#">Marvelous Modern 3 Seater</a></span>
-											<span class="price"><i class="fa fa-eur" aria-hidden="true"></i> 599,00</span>
-										</div>
-										<a href="#" class="close fa fa-times"></a>
-									</div><!-- cart row end here -->
-									<!-- cart row total start here -->
-									<div class="cart-row-total">
-										<span class="mt-total">Add them all</span>
-										<span class="mt-total-txt"><a href="#" class="btn-type2">add to CART</a></span>
-									</div>
-									<!-- cart row total end here -->
-								</div><!-- mt side widget end here -->
-							</div>
-							<!-- mt drop sub end here -->
-						</div><!-- mt drop end here -->
-						<span class="mt-mdropover"></span>
-					</li>
+
 					<li class="drop">
 						<a href="#" class="cart-opener">
 							<span class="icon-handbag"></span>
-							<span class="num">3</span>
+							<span class="num">{{ count(LaraCart::getItems()) }}</span>
 						</a>
 						<!-- mt drop start here -->
 						<div class="mt-drop">
@@ -73,46 +27,60 @@
 							<div class="mt-drop-sub">
 								<!-- mt side widget start here -->
 								<div class="mt-side-widget">
+									@if (count(LaraCart::getItems()) > 0)
+
+									@foreach (LaraCart::getItems() as $item)
 									<!-- cart row start here -->
 									<div class="cart-row">
-										<a href="#" class="img"><img src="http://placehold.it/75x75" alt="image" class="img-responsive"></a>
+										<a href="#" class="img"><img src="{{ url('uploads/thumbs/'.$item->thumbnail) }}" alt="image" class="img-responsive"></a>
 										<div class="mt-h">
-											<span class="mt-h-title"><a href="#">Marvelous Modern 3 Seater</a></span>
-											<span class="price"><i class="fa fa-eur" aria-hidden="true"></i> 599,00</span>
-											<span class="mt-h-title">Qty: 1</span>
+											<span class="mt-h-title"><a href="#">{{ $item->name }}</a></span>
+											<span class="price">{{ Helper::currency($item->price) }}</span>
+											<span class="mt-h-title">Qty: {{ $item->qty }}</span>
 										</div>
-										<a href="#" class="close fa fa-times"></a>
+
+										<form action="{{ route('cart.destroy', $item->getHash()) }}" method="post" style="display: none;" id="destroy-{{ $item->getHash() }}">
+											{{ csrf_field() }}
+											{{ method_field('DELETE') }}
+										</form>
+
+										<a href="javascript:void(0)" onclick="document.getElementById('destroy-{{ $item->getHash() }}').submit()" class="close fa fa-times"></a>
 									</div><!-- cart row end here -->
-									<!-- cart row start here -->
-									<div class="cart-row">
-										<a href="#" class="img"><img src="http://placehold.it/75x75" alt="image" class="img-responsive"></a>
-										<div class="mt-h">
-											<span class="mt-h-title"><a href="#">Marvelous Modern 3 Seater</a></span>
-											<span class="price"><i class="fa fa-eur" aria-hidden="true"></i> 599,00</span>
-											<span class="mt-h-title">Qty: 1</span>
-										</div>
-										<a href="#" class="close fa fa-times"></a>
-									</div><!-- cart row end here -->
-									<!-- cart row start here -->
-									<div class="cart-row">
-										<a href="#" class="img"><img src="http://placehold.it/75x75" alt="image" class="img-responsive"></a>
-										<div class="mt-h">
-											<span class="mt-h-title"><a href="#">Marvelous Modern 3 Seater</a></span>
-											<span class="price"><i class="fa fa-eur" aria-hidden="true"></i> 599,00</span>
-											<span class="mt-h-title">Qty: 1</span>
-										</div>
-										<a href="#" class="close fa fa-times"></a>
-									</div><!-- cart row end here -->
+									@endforeach
+									
 									<!-- cart row total start here -->
 									<div class="cart-row-total">
 										<span class="mt-total">Sub Total</span>
-										<span class="mt-total-txt"><i class="fa fa-eur" aria-hidden="true"></i> 799,00</span>
+										<span class="mt-total-txt">{{ Helper::currency(LaraCart::subTotal($format = false, $withDiscount = true)) }}</span>
+									</div>
+
+									<!-- cart row total start here -->
+									<div class="cart-row-total">
+										<span class="mt-total">Discount</span>
+										<span class="mt-total-txt">{{ Helper::currency(LaraCart::totalDiscount($formatted = false)) }}</span>
+									</div>
+
+									<!-- cart row total start here -->
+									<div class="cart-row-total">
+										<span class="mt-total">Tax</span>
+										<span class="mt-total-txt">{{ Helper::currency(LaraCart::taxTotal($formatted = false)) }}</span>
+									</div>
+
+									<!-- cart row total start here -->
+									<div class="cart-row-total">
+										<span class="mt-total">Total</span>
+										<span class="mt-total-txt">{{ Helper::currency(LaraCart::total($formatted = false, $withDiscount = true)) }}</span>
 									</div>
 									<!-- cart row total end here -->
 									<div class="cart-btn-row">
 										<a href="#" class="btn-type2">VIEW CART</a>
 										<a href="#" class="btn-type3">CHECKOUT</a>
 									</div>
+									@else
+									<div class="cart-row text-center">
+										<strong>Your cart is currently empty</strong>
+									</div>
+									@endif
 								</div><!-- mt side widget end here -->
 							</div>
 							<!-- mt drop sub end here -->

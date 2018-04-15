@@ -11,8 +11,10 @@
 |
 */
 
+// home
 Route::get('/', 'HomeController@index');
 
+// shop
 Route::get('/shop', function () {
     return view('frontend.shop');
 });
@@ -20,7 +22,12 @@ Route::get('/shop', function () {
 // currency
 Route::get('currency/{type}', 'CurrencyController@set')->name('currency.set');
 
+// auth
 Auth::routes();
+
+// cart
+Route::post('cart', 'CartController@store')->name('cart.store');
+Route::delete('cart/{id}', 'CartController@destroy')->name('cart.destroy');
 
 Route::prefix('/admin')->as('admin.')/*->middleware(['auth', 'role:admin'])*/->group(function(){
 	// dashboard
@@ -39,3 +46,6 @@ Route::prefix('/admin')->as('admin.')/*->middleware(['auth', 'role:admin'])*/->g
 	// tag
 	Route::resource('/tag', 'TagController');
 });
+
+// shop
+Route::get('/{slug}', 'ShopController@show')->name('shop.show');

@@ -164,6 +164,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Lavary\Menu\ServiceProvider::class,
+        LukePOLO\LaraCart\LaraCartServiceProvider::class,
 
     ],
 
@@ -218,8 +219,8 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Helper' => App\Helpers\Helper::class,
         'Menu'      => Lavary\Menu\Facade::class,
-
-
+        'LaraCart' => LukePOLO\LaraCart\Facades\LaraCart::class,
+        
     ],
 
 ];

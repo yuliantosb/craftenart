@@ -24,7 +24,7 @@
 										<h2>{{ $product->name }}</h2>
 										<span class="price">{!! $product->price_amount !!}</span>
 										<div class="txts">
-											<a class="btn-shop" href="product-detail.html">
+											<a class="btn-shop" href="{{ route('shop.show', $product->slug) }}">
 												<span>shop now</span>
 												<i class="fa fa-angle-right"></i>
 											</a>
@@ -50,7 +50,7 @@
 										<h2>{{ $product->name }}</h2>
 										<span class="price">{!! $product->price_amount !!}</span>
 										<div class="txts">
-											<a class="btn-shop" href="product-detail.html">
+											<a class="btn-shop" href="{{ route('shop.show', $product->slug) }}">
 												<span>shop now</span>
 												<i class="fa fa-angle-right"></i>
 											</a>
@@ -71,7 +71,7 @@
 									<div class="holder">
 										<h2>{{ $product->name }}</h2>
 										<span class="price">{!! $product->price_amount !!}</span>
-										<a href="product-detail.html" class="shop">SHOP NOW</a>
+										<a href="{{ route('shop.show', $product->slug) }}" class="shop">SHOP NOW</a>
 									</div>
 								</div>
 									
@@ -107,21 +107,33 @@
 												<div class="box">
 													<div class="b1">
 														<div class="b2">
-															<a href="product-detail.html"><img src="{{ url('uploads/thumbs/'.$product->picture) }}" alt="image description" style="width: 215px; height: 215px; object-fit: cover"></a>
+															<a href="{{ route('shop.show', $product->slug) }}"><img src="{{ url('uploads/thumbs/'.$product->picture) }}" alt="image description" style="width: 215px; height: 215px; object-fit: cover"></a>
+
 															<span class="caption">
-																<span class="new">NEW</span>
+																@if (!empty($product->sale))
+																<span class="off">{{ round(( ($product->price - $product->sale) / $product->price) * 100) }}% Off</span>
+																@endif
 															</span>
+
 															{!! Helper::getRate($product->reviews->avg('rate')) !!} 
 															<ul class="links">
-																<li><a href="#"><i class="icon-handbag"></i><span>Add to Cart</span></a></li>
+																<li>
+																	<form style="display: none" action="{{ route('cart.store') }}" method="post" id="cart-{{ $product->id }}">
+																		{{ csrf_field() }}
+																		<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
+																	</form>
+																	<a href="javascript:void(0)" onclick="document.getElementById('cart-{{ $product->id }}').submit()">
+																		<i class="icon-handbag"></i>
+																		<span>Add to Cart</span>
+																	</a>
+																</li>
 																<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
-																<li><a href="#"><i class="icomoon icon-exchange"></i></a></li>
 															</ul>
 														</div>
 													</div>
 												</div>
 												<div class="txt">
-													<strong class="title"><a href="product-detail.html">{{ $product->name }}</a></strong>
+													<strong class="title"><a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a></strong>
 													<span class="price">{!! $product->price_amount !!}</span>
 												</div>
 											</div><!-- mt product1 center end here -->
@@ -158,17 +170,21 @@
 									<div class="box">
 										<div class="b1">
 											<div class="b2">
-												<a href="product-detail.html"><img src="{{ url('uploads/thumbs/'.$product->picture) }}" style="width: 275px; height: 285px; object-fit: scale-down;"></a>
+												<a href="{{ route('shop.show', $product->slug) }}"><img src="{{ url('uploads/thumbs/'.$product->picture) }}" style="width: 275px; height: 285px; object-fit: scale-down;"></a>
 												<ul class="links add">
-													<li><a href="#"><i class="icon-handbag"></i></a></li>
+													<form style="display: none" action="{{ route('cart.store') }}" method="post" id="best-{{ $product->id }}">
+														{{ csrf_field() }}
+														<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
+													</form>
+													
+													<li><a href="javascript:void(0)" onclick="document.getElementById('best-{{ $product->id }}').submit()"><i class="icon-handbag"></i></a></li>
 													<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
-													<li><a href="#"><i class="icomoon icon-exchange"></i></a></li>
 												</ul>
 											</div>
 										</div>
 									</div>
 									<div class="txt">
-										<strong class="title"><a href="product-detail.html">{{ $product->name }}</a></strong>
+										<strong class="title"><a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a></strong>
 										<span class="price">{{ $product->price_amount }}</span>
 									</div>
 								</div><!-- mt product1 center end here -->

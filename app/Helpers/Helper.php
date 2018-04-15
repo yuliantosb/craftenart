@@ -49,10 +49,13 @@ class Helper
 
     }
 
-    public static function getRate($rate)
+    public static function getRate($rate, $option = [])
     {
-
-        $result = '<ul class="mt-stars">';
+        if (!empty($option)) {
+            $result = '<ul class="'.$option['class'].'">';
+        } else {
+            $result = '<ul class="mt-stars">';
+        }
 
         for($i = 1; $i <= round($rate); $i++){
             $result .= '<li style="margin-right: 2px"><i class="fa fa-star"></i></li>';
