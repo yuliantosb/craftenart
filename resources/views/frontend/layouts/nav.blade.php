@@ -105,7 +105,7 @@
 					<!-- mt col3 start here -->
 					<div class="mt-col-3 promo">
 						<div class="mt-promobox">
-							<a href="#"><img src="http://placehold.it/295x320" alt="promo banner" class="img-responsive"></a>
+							<a href="#"><img src="{{ url('uploads/thumbs/1523091442_1132988588.jpg') }}" alt="promo banner" class="img-responsive"></a>
 						</div>
 					</div>
 					<!-- mt col3 end here -->
@@ -218,7 +218,7 @@
 					<!-- mt col3 start here -->
 					<div class="mt-col-3 promo">
 						<div class="mt-promobox">
-							<a href="#"><img src="http://placehold.it/295x320" alt="promo banner" class="img-responsive"></a>
+							<a href="#"><img src="{{ url('uploads/thumbs/1523091442_1132988588.jpg') }}" alt="promo banner" class="img-responsive"></a>
 						</div>
 					</div>
 					<!-- mt col3 end here -->
