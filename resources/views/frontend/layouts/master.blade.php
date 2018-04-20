@@ -3,6 +3,7 @@
 <head>
 	<!-- set the encoding of your site -->
 	<meta charset="utf-8">
+	<link rel="icon" href="{{ url('frontend/images/favicon.ico') }}">
 	<!-- set the viewport width and initial-scale on mobile devices -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- CSRF Token -->
@@ -172,5 +173,7 @@
 	<script src="{{ url('frontend/js/plugins.js') }}"></script>
 	<!-- include jQuery -->
 	<script src="{{ url('frontend/js/jquery.main.js') }}"></script>
+	<!-- custom -->
+	<script src="{{ url('frontend/js/custom.js') }}"></script>
 </body>
 </html>

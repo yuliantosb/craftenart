@@ -249,250 +249,49 @@
 					</header><!-- mt shoplist header end here -->
 					<!-- mt productlisthold start here -->
 					<ul class="mt-productlisthold list-inline">
+						@foreach ($products as $product)
 						<li>
 							<!-- mt product1 large start here -->
-							<div class="mt-product1 large">
+							<div class="mt-product1 mt-paddingbottom20">
 								<div class="box">
 									<div class="b1">
 										<div class="b2">
-											<a href="product-detail.html"><img src="http://placehold.it/275x290" alt="image description"></a>
-											<ul class="mt-stars">
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star-o"></i></li>
-											</ul>
-											<ul class="links">
-												<li><a href="#"><i class="icon-handbag"></i><span>Add to Cart</span></a></li>
-												<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
-												<li><a href="#"><i class="icomoon icon-exchange"></i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="txt">
-									<strong class="title"><a href="product-detail.html">Bombi Chair</a></strong>
-									<span class="price"><i class="fa fa-eur"></i> <span>399,00</span></span>
-								</div>
-							</div><!-- mt product1 center end here -->
-						</li>
-						<li>
-							<!-- mt product1 large start here -->
-							<div class="mt-product1 large">
-								<div class="box">
-									<div class="b1">
-										<div class="b2">
-											<a href="product-detail.html"><img src="http://placehold.it/275x290" alt="image description"></a>
-											<ul class="links">
-												<li><a href="#"><i class="icon-handbag"></i><span>Add to Cart</span></a></li>
-												<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
-												<li><a href="#"><i class="icomoon icon-exchange"></i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="txt">
-									<strong class="title"><a href="product-detail.html">Marvelous Modern 3 Seater</a></strong>
-									<span class="price"><i class="fa fa-eur"></i> <span>599,00</span></span>
-								</div>
-							</div><!-- mt product1 center end here -->
-						</li>
-						<li>
-							<!-- mt product1 large start here -->
-							<div class="mt-product1 large">
-								<div class="box">
-									<div class="b1">
-										<div class="b2">
-											<a href="product-detail.html"><img src="http://placehold.it/275x290" alt="image description"></a>
+											<a href="{{ route('shop.show', $product->slug) }}"><img src="{{ url('uploads/thumbs/'.$product->picture) }}" alt="image description" style="width: 215px; height: 215px; object-fit: cover"></a>
+
 											<span class="caption">
-												<span class="off">15% Off</span>
+												@if (!empty($product->sale))
+												<span class="off">{{ round(( ($product->price - $product->sale) / $product->price) * 100) }}% Off</span>
+												@endif
 											</span>
+
+											{!! Helper::getRate($product->reviews->avg('rate')) !!} 
 											<ul class="links">
-												<li><a href="#"><i class="icon-handbag"></i><span>Add to Cart</span></a></li>
+												<li>
+													<form style="display: none" action="{{ route('cart.store') }}" method="post" id="cart-{{ $product->id }}">
+														{{ csrf_field() }}
+														<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
+													</form>
+													<a href="javascript:void(0)" onclick="document.getElementById('cart-{{ $product->id }}').submit()">
+														<i class="icon-handbag"></i>
+														<span>Add to Cart</span>
+													</a>
+												</li>
 												<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
-												<li><a href="#"><i class="icomoon icon-exchange"></i></a></li>
 											</ul>
 										</div>
 									</div>
 								</div>
 								<div class="txt">
-									<strong class="title"><a href="product-detail.html">Chair with armrests</a></strong>
-									<span class="price"><i class="fa fa-eur"></i> <span>200,00</span></span>
+									<strong class="title"><a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a></strong>
+									<span class="price">{!! $product->price_amount !!}</span>
 								</div>
 							</div><!-- mt product1 center end here -->
 						</li>
-						<li>
-							<!-- mt product1 large start here -->
-							<div class="mt-product1 large">
-								<div class="box">
-									<div class="b1">
-										<div class="b2">
-											<a href="product-detail.html"><img src="http://placehold.it/275x290" alt="image description"></a>
-											<ul class="mt-stars">
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star-o"></i></li>
-											</ul>
-											<ul class="links">
-												<li><a href="#"><i class="icon-handbag"></i><span>Add to Cart</span></a></li>
-												<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
-												<li><a href="#"><i class="icomoon icon-exchange"></i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="txt">
-									<strong class="title"><a href="product-detail.html">Pouf Chair</a></strong>
-									<span class="price"><i class="fa fa-eur"></i> <span>399,00</span></span>
-								</div>
-							</div><!-- mt product1 center end here -->
-						</li>
-						<li>
-							<!-- mt product1 large start here -->
-							<div class="mt-product1 large">
-								<div class="box">
-									<div class="b1">
-										<div class="b2">
-											<a href="product-detail.html"><img src="http://placehold.it/275x290" alt="image description"></a>
-											<ul class="mt-stars">
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star-o"></i></li>
-											</ul>
-											<ul class="links">
-												<li><a href="#"><i class="icon-handbag"></i><span>Add to Cart</span></a></li>
-												<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
-												<li><a href="#"><i class="icomoon icon-exchange"></i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="txt">
-									<strong class="title"><a href="product-detail.html">Jalis Counter stool</a></strong>
-									<span class="price"><i class="fa fa-eur"></i> <span>269,00</span></span>
-								</div>
-							</div><!-- mt product1 center end here -->
-						</li>
-						<li>
-							<!-- mt product1 large start here -->
-							<div class="mt-product1 large">
-								<div class="box">
-									<div class="b1">
-										<div class="b2">
-											<a href="product-detail.html"><img src="http://placehold.it/275x290" alt="image description"></a>
-											<ul class="mt-stars">
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star-o"></i></li>
-											</ul>
-											<ul class="links">
-												<li><a href="#"><i class="icon-handbag"></i><span>Add to Cart</span></a></li>
-												<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
-												<li><a href="#"><i class="icomoon icon-exchange"></i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="txt">
-									<strong class="title"><a href="product-detail.html">Bombi Chair</a></strong>
-									<span class="price"><i class="fa fa-eur"></i> <span>399,00</span></span>
-								</div>
-							</div><!-- mt product1 center end here -->
-						</li>
-						<li>
-							<!-- mt product1 large start here -->
-							<div class="mt-product1 large">
-								<div class="box">
-									<div class="b1">
-										<div class="b2">
-											<a href="product-detail.html"><img src="http://placehold.it/275x290" alt="image description"></a>
-											<ul class="mt-stars">
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star-o"></i></li>
-											</ul>
-											<ul class="links">
-												<li><a href="#"><i class="icon-handbag"></i><span>Add to Cart</span></a></li>
-												<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
-												<li><a href="#"><i class="icomoon icon-exchange"></i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="txt">
-									<strong class="title"><a href="product-detail.html">Lucky Chair</a></strong>
-									<span class="price"><i class="fa fa-eur"></i> <span>399,00</span></span>
-								</div>
-							</div><!-- mt product1 center end here -->
-						</li>
-						<li>
-							<!-- mt product1 large start here -->
-							<div class="mt-product1 large">
-								<div class="box">
-									<div class="b1">
-										<div class="b2">
-											<a href="product-detail.html"><img src="http://placehold.it/275x290" alt="image description"></a>
-											<ul class="mt-stars">
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star-o"></i></li>
-											</ul>
-											<ul class="links">
-												<li><a href="#"><i class="icon-handbag"></i><span>Add to Cart</span></a></li>
-												<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
-												<li><a href="#"><i class="icomoon icon-exchange"></i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="txt">
-									<strong class="title"><a href="product-detail.html">Cut Chair with 4  Spoke Base</a></strong>
-									<span class="price"><i class="fa fa-eur"></i> <span>269,00</span></span>
-								</div>
-							</div><!-- mt product1 center end here -->
-						</li>
-						<li>
-							<!-- mt product1 large start here -->
-							<div class="mt-product1 large">
-								<div class="box">
-									<div class="b1">
-										<div class="b2">
-											<a href="product-detail.html"><img src="http://placehold.it/275x290" alt="image description"></a>
-											<ul class="mt-stars">
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star-o"></i></li>
-											</ul>
-											<ul class="links">
-												<li><a href="#"><i class="icon-handbag"></i><span>Add to Cart</span></a></li>
-												<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
-												<li><a href="#"><i class="icomoon icon-exchange"></i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="txt">
-									<strong class="title"><a href="product-detail.html">Yard SeChair</a></strong>
-									<span class="price"><i class="fa fa-eur"></i> <span>139,00</span></span>
-								</div>
-							</div><!-- mt product1 center end here -->
-						</li>
+						@endforeach
 					</ul><!-- mt productlisthold end here -->
 					<!-- mt pagination start here -->
-					<nav class="mt-pagination">
-						<ul class="list-inline">
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-						</ul>
-					</nav><!-- mt pagination end here -->
+					{{ $products->links('vendor.pagination.custom') }}
+					<!-- mt pagination end here -->
 				</div>
 			</div>
 		</div>

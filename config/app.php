@@ -220,6 +220,7 @@ return [
         'Helper' => App\Helpers\Helper::class,
         'Menu'      => Lavary\Menu\Facade::class,
         'LaraCart' => LukePOLO\LaraCart\Facades\LaraCart::class,
+        'Coupons' => LukePOLO\LaraCart\Coupons::class,
         
     ],
 

@@ -7,6 +7,14 @@ use App\Product;
 
 class ShopController extends Controller
 {
+
+    public function index()
+    {
+        $products = Product::paginate(12);
+
+        return view('frontend.shop', compact(['products']));
+    }
+
     public function show($slug)
     {
     	$product = Product::where('slug', $slug)->first();

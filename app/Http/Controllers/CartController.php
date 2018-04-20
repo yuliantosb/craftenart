@@ -17,7 +17,7 @@ class CartController extends Controller
 		    $name = $product->name,
 		    $qty = $request->has('qty') ? $request->qty : 1,
 		    $price = $price,
-		    $options = ['thumbnail' => $product->picture, 'tax' => .10],
+		    $options = ['thumbnail' => $product->picture, 'tax' => .10, 'discount' => .5],
 		    $taxable = true,
 		    $lineItem = false
 		);

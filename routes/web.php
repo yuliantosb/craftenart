@@ -14,10 +14,6 @@
 // home
 Route::get('/', 'HomeController@index');
 
-// shop
-Route::get('/shop', function () {
-    return view('frontend.shop');
-});
 
 // currency
 Route::get('currency/{type}', 'CurrencyController@set')->name('currency.set');
@@ -28,6 +24,11 @@ Auth::routes();
 // cart
 Route::post('cart', 'CartController@store')->name('cart.store');
 Route::delete('cart/{id}', 'CartController@destroy')->name('cart.destroy');
+
+// coupon
+Route::post('coupon', 'CouponController@apply')->name('coupon.apply');
+Route::get('coupon', 'CouponController@index')->name('coupon.index');
+Route::delete('coupon/{code}', 'CouponController@destroy')->name('coupon.destroy');
 
 Route::prefix('/admin')->as('admin.')/*->middleware(['auth', 'role:admin'])*/->group(function(){
 	// dashboard
@@ -48,4 +49,5 @@ Route::prefix('/admin')->as('admin.')/*->middleware(['auth', 'role:admin'])*/->g
 });
 
 // shop
+Route::get('/shop', 'ShopController@index')->name('shop.index');
 Route::get('/{slug}', 'ShopController@show')->name('shop.show');

@@ -12757,3 +12757,55 @@ a:hover, a:active, a:focus {
 .changer-active #style-changer {
   margin: 0;
 }
+
+.page-item.active  .page-link {
+  color: #fff;
+  background: #ff6060 !important;
+  display: block;
+  padding: 5px 10px;
+  background: #f6f6f6;
+  -moz-transition: all ease 0.5s;
+  -webkit-transition: all ease 0.5s;
+  -o-transition: all ease 0.5s;
+  transition: all ease 0.5s;
+}
+
+.page-item.disabled  .page-link {
+  color: #ccc;
+  display: block;
+  padding: 5px 10px;
+  background: #f6f6f6;
+  -moz-transition: all ease 0.5s;
+  -webkit-transition: all ease 0.5s;
+  -o-transition: all ease 0.5s;
+  transition: all ease 0.5s;
+  cursor: not-allowed;
+}
+
+.input-custom {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.input-custom:focus {
+  outline: none;
+}
+
+.alert {
+  padding: 10px;
+}
+
+.alert.alert-success {
+  background: #1abc9c;
+  color: #fff;
+}
+
+.alert.alert-success button {
+  color: #fff;
+  float: right;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}

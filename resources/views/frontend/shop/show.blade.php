@@ -66,6 +66,7 @@
 							@endif
 						</div>
 						<!-- Product Form of the Page -->
+
 						<form action="{{ route('cart.store') }}" class="product-form" method="post">
 							{{ csrf_field() }}
 							<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
@@ -80,6 +81,38 @@
 							</fieldset>
 						</form>
 						<!-- Product Form of the Page end -->
+
+						<hr>
+
+						@if (!empty(LaraCart::getCoupons()))
+
+							@foreach (LaraCart::getCoupons() as $coupon)
+
+								<form style="display: none" action="{{ route('coupon.destroy', $coupon->code) }}" method="post" id="coupon-{{ $coupon->code }}">
+
+									{{ csrf_field() }}
+									{{ method_field('DELETE') }}
+
+								</form>
+
+								<div class="alert alert-success">
+								  <button class="close" data-toggle="tooltip" title="Remove Coupon" onclick="document.getElementById('coupon-{{ $coupon->code }}').submit()">&times;</button>
+								  <strong>Coupon Applied</strong>
+								</div>
+
+							@endforeach
+
+						@else
+
+							<form action="{{ route('coupon.apply') }}" method="post">
+								{{ csrf_field() }}
+								<div class="form-group form-inline" style="margin-top: 20px">
+									<input type="text" name="coupon" class="input-custom" placeholder="Add Coupon">
+									<button class="btn btn-type4" type="submit">Apply Coupon</button>
+								</div>
+							</form>
+
+						@endif
 
 						<div id="mt-footer" style="margin-top: 20px">
 							<div class="f-widget-tabs">

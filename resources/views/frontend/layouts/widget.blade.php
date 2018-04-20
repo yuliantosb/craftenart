@@ -9,11 +9,11 @@
 			<!-- mt product4 start here -->
 			<div class="mt-product4 mt-paddingbottom20">
 				<div class="img">
-					<a href="product-detail.html"><img alt="{{ $product->name }}" src="{{ url('uploads/thumbs/'.$product->picture) }}" style="width: 80px; height: 80px; object-fit: cover;"></a>
+					<a href="{{ route('shop.show', $product->slug) }}"><img alt="{{ $product->name }}" src="{{ url('uploads/thumbs/'.$product->picture) }}" style="width: 80px; height: 80px; object-fit: cover;"></a>
 				</div>
 				<div class="text">
 					<div class="frame">
-						<strong><a href="product-detail.html">{{ $product->name }}</a></strong>
+						<strong><a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a></strong>
 						{!! Helper::getRate($product->reviews->avg('rate')) !!}
 					</div>
 					<del class="off">{{ Helper::currency($product->price) }}</del>
@@ -31,11 +31,11 @@
 			<!-- mt product4 start here -->
 			<div class="mt-product4 mt-paddingbottom20">
 				<div class="img">
-					<a href="product-detail.html"><img alt="{{ $product->name }}" src="{{ url('uploads/thumbs/'.$product->picture) }}" style="width: 80px; height: 80px; object-fit: cover;"></a>
+					<a href="{{ route('shop.show', $product->slug) }}"><img alt="{{ $product->name }}" src="{{ url('uploads/thumbs/'.$product->picture) }}" style="width: 80px; height: 80px; object-fit: cover;"></a>
 				</div>
 				<div class="text">
 					<div class="frame">
-						<strong><a href="product-detail.html">{{ $product->name }}</a></strong>
+						<strong><a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a></strong>
 						{!! Helper::getRate($product->reviews->avg('rate')) !!}
 					</div>
 					@if (!empty($product->sale))
@@ -55,11 +55,11 @@
 			<!-- mt product4 start here -->
 			<div class="mt-product4 mt-paddingbottom20">
 				<div class="img">
-					<a href="product-detail.html"><img alt="{{ $product->name }}" src="{{ url('uploads/thumbs/'.$product->picture) }}" style="width: 80px; height: 80px; object-fit: cover;"></a>
+					<a href="{{ route('shop.show', $product->slug) }}"><img alt="{{ $product->name }}" src="{{ url('uploads/thumbs/'.$product->picture) }}" style="width: 80px; height: 80px; object-fit: cover;"></a>
 				</div>
 				<div class="text">
 					<div class="frame">
-						<strong><a href="product-detail.html">{{ $product->name }}</a></strong>
+						<strong><a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a></strong>
 						{!! Helper::getRate($product->reviews->avg('rate')) !!}
 					</div>
 					@if (!empty($product->sale))
@@ -78,11 +78,11 @@
 			<!-- mt product4 start here -->
 			<div class="mt-product4 mt-paddingbottom20">
 				<div class="img">
-					<a href="product-detail.html"><img alt="{{ $product->name }}" src="{{ url('uploads/thumbs/'.$product->picture) }}" style="width: 80px; height: 80px; object-fit: cover;"></a>
+					<a href="{{ route('shop.show', $product->slug) }}"><img alt="{{ $product->name }}" src="{{ url('uploads/thumbs/'.$product->picture) }}" style="width: 80px; height: 80px; object-fit: cover;"></a>
 				</div>
 				<div class="text">
 					<div class="frame">
-						<strong><a href="product-detail.html">{{ $product->name }}</a></strong>
+						<strong><a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a></strong>
 						{!! Helper::getRate($product->reviews->avg('rate')) !!}
 					</div>
 					@if (!empty($product->sale))

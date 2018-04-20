@@ -83,7 +83,8 @@
 					</div>
 					<!-- banner frame end here -->
 					<!-- mt producttabs start here -->
-					<div class="mt-producttabs wow fadeInUp" data-wow-delay="0.4s">
+
+					<div class="mt-producttabs style2 wow fadeInUp" data-wow-delay="0.4s">
 						<!-- producttabs start here -->
 						<ul class="producttabs">
 							@foreach ($categories as $category)
@@ -93,60 +94,58 @@
 							@endforeach
 						</ul>
 						<!-- producttabs end here -->
-						<div class="tab-content text-center">
+						<div class="tab-content">
 							@foreach ($categories as $category)
-								<div id="tab{{ $category->id }}" class="tab-pane">
-									<!-- tabs slider start here -->
-									<div class="tabs-slider">
-										<!-- slide start here -->
-										@foreach ($category->products->chunk(2) as $chunk)
-										<div class="slide">
-											@foreach ($chunk as $product)
-											<!-- mt product1 center start here -->
-											<div class="mt-product1 mt-paddingbottom20">
-												<div class="box">
-													<div class="b1">
-														<div class="b2">
-															<a href="{{ route('shop.show', $product->slug) }}"><img src="{{ url('uploads/thumbs/'.$product->picture) }}" alt="image description" style="width: 215px; height: 215px; object-fit: cover"></a>
+							<div id="tab{{ $category->id }}">
+								<!-- tabs slider start here -->
+								<div class="tabs-sliderlg">
+									@foreach ($category->products as $product)
+									<!-- slide start here -->
+									<div class="slide">
+										<!-- mt product1 large start here -->
+										<div class="mt-product1 large">
+											<div class="box">
+												<div class="b1">
+													<div class="b2">
+														<a href="{{ route('shop.show', $product->slug) }}"><img src="{{ url('uploads/thumbs/'.$product->picture) }}" alt="image description" style="width: 215px; height: 215px; object-fit: cover"></a>
 
-															<span class="caption">
-																@if (!empty($product->sale))
-																<span class="off">{{ round(( ($product->price - $product->sale) / $product->price) * 100) }}% Off</span>
-																@endif
-															</span>
+														<span class="caption">
+															@if (!empty($product->sale))
+															<span class="off">{{ round(( ($product->price - $product->sale) / $product->price) * 100) }}% Off</span>
+															@endif
+														</span>
 
-															{!! Helper::getRate($product->reviews->avg('rate')) !!} 
-															<ul class="links">
-																<li>
-																	<form style="display: none" action="{{ route('cart.store') }}" method="post" id="cart-{{ $product->id }}">
-																		{{ csrf_field() }}
-																		<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
-																	</form>
-																	<a href="javascript:void(0)" onclick="document.getElementById('cart-{{ $product->id }}').submit()">
-																		<i class="icon-handbag"></i>
-																		<span>Add to Cart</span>
-																	</a>
-																</li>
-																<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
-															</ul>
-														</div>
+														{!! Helper::getRate($product->reviews->avg('rate')) !!} 
+														<ul class="links">
+															<li>
+																<form style="display: none" action="{{ route('cart.store') }}" method="post" id="cart-{{ $product->id }}">
+																	{{ csrf_field() }}
+																	<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
+																</form>
+																<a href="javascript:void(0)" onclick="document.getElementById('cart-{{ $product->id }}').submit()">
+																	<i class="icon-handbag"></i>
+																	<span>Add to Cart</span>
+																</a>
+															</li>
+															<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
+														</ul>
 													</div>
 												</div>
-												<div class="txt">
-													<strong class="title"><a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a></strong>
-													<span class="price">{!! $product->price_amount !!}</span>
-												</div>
-											</div><!-- mt product1 center end here -->
-											@endforeach
-										</div>
-										@endforeach
-										<!-- slide end here -->
+											</div>
+											<div class="txt">
+												<strong class="title"><a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a></strong>
+												<span class="price">{!! $product->price_amount !!}</span>
+											</div>
+										</div><!-- mt product1 center end here -->
 									</div>
-									<!-- tabs slider end here -->
+									@endforeach
 								</div>
+								<!-- tabs slider end here -->
+							</div>
 							@endforeach
 						</div>
-					</div>
+					</div><!-- mt producttabs end here -->
+
 					<!-- mt producttabs end here -->
 				</div>
 			</div>
