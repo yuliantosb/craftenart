@@ -118,11 +118,12 @@
 														{!! Helper::getRate($product->reviews->avg('rate')) !!} 
 														<ul class="links">
 															<li>
-																<form style="display: none" action="{{ route('cart.store') }}" method="post" id="cart-{{ $product->id }}">
+																<form style="display: none" action="{{ route('cart.store') }}" method="post">
 																	{{ csrf_field() }}
 																	<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
 																</form>
-																<a href="javascript:void(0)" onclick="document.getElementById('cart-{{ $product->id }}').submit()">
+																
+																<a href="javascript:void(0)" onclick="document.getElementById('item-{{ $product->id }}').submit()">
 																	<i class="icon-handbag"></i>
 																	<span>Add to Cart</span>
 																</a>
@@ -162,29 +163,30 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="bestseller-slider">
-							@foreach ($products->whereHas('orders')->withCount('orders')->orderBy('orders_count', 'desc')->take(10)->get() as $product)
+							@foreach ($products->whereHas('orders')->withCount('orders')->orderBy('orders_count', 'desc')->take(10)->get() as $best)
 							<div class="slide">
 								<!-- mt product1 center start here -->
 								<div class="mt-product1 large">
 									<div class="box">
 										<div class="b1">
 											<div class="b2">
-												<a href="{{ route('shop.show', $product->slug) }}"><img src="{{ url('uploads/thumbs/'.$product->picture) }}" style="width: 275px; height: 285px; object-fit: scale-down;"></a>
+												<a href="{{ route('shop.show', $best->slug) }}"><img src="{{ url('uploads/thumbs/'.$best->picture) }}" style="width: 275px; height: 285px; object-fit: scale-down;"></a>
 												<ul class="links add">
-													<form style="display: none" action="{{ route('cart.store') }}" method="post" id="best-{{ $product->id }}">
+													<form style="display: none" action="{{ route('cart.store') }}" method="post" id="best-{{ $best->id }}">
 														{{ csrf_field() }}
-														<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
+														<input type="text" name="id" value="{{ $best->id }}" hidden="hidden">
 													</form>
 													
-													<li><a href="javascript:void(0)" onclick="document.getElementById('best-{{ $product->id }}').submit()"><i class="icon-handbag"></i></a></li>
+													
+													<li><a href="javascript:void(0)" onclick="document.getElementById('best-{{ $best->id }}').submit()"><i class="icon-handbag"></i></a></li>
 													<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
 												</ul>
 											</div>
 										</div>
 									</div>
 									<div class="txt">
-										<strong class="title"><a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a></strong>
-										<span class="price">{{ $product->price_amount }}</span>
+										<strong class="title"><a href="{{ route('shop.show', $best->slug) }}">{{ $best->name }}</a></strong>
+										<span class="price">{{ $best->price_amount }}</span>
 									</div>
 								</div><!-- mt product1 center end here -->
 							</div>
