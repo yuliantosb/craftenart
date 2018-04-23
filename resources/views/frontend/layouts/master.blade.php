@@ -34,7 +34,7 @@
 	<!-- include the site stylesheet -->
 	<link rel="stylesheet" href="{{ url('frontend/css/icon-fonts.css') }}">
 	<!-- include the site stylesheet -->
-	<link rel="stylesheet" href="{{ url('frontend/css/main.css') }}">
+	<link rel="stylesheet" href="{{ url('frontend/css/main-custom.css') }}">
 	<!-- include the site stylesheet -->
 	<link rel="stylesheet" href="{{ url('frontend/css/responsive.css') }}">
 
@@ -108,7 +108,7 @@
 		<!-- Page Loader -->
     <div id="pre-loader" class="loader-container">
       <div class="loader">
-        <img src="{{ url('frontend/images/svg/rings.svg') }}" alt="loader">
+        <img src="{{ url('frontend/images/svg/loading.gif') }}" alt="loader">
       </div>
     </div>
 		<!-- W1 start here -->

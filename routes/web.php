@@ -30,6 +30,7 @@ Route::post('coupon', 'CouponController@apply')->name('coupon.apply');
 Route::get('coupon', 'CouponController@index')->name('coupon.index');
 Route::delete('coupon/{code}', 'CouponController@destroy')->name('coupon.destroy');
 
+// admin
 Route::prefix('/admin')->as('admin.')/*->middleware(['auth', 'role:admin'])*/->group(function(){
 	// dashboard
 	Route::resource('/dashboard', 'DashboardController');
@@ -46,6 +47,8 @@ Route::prefix('/admin')->as('admin.')/*->middleware(['auth', 'role:admin'])*/->g
 	Route::resource('/category', 'CategoryController');
 	// tag
 	Route::resource('/tag', 'TagController');
+	// user
+	Route::resource('/user', 'UserController');
 });
 
 // shop

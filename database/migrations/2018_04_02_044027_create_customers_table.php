@@ -13,10 +13,9 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('customers');
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
             $table->string('identity_number')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('country_id')->nullable();

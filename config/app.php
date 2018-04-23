@@ -165,6 +165,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Lavary\Menu\ServiceProvider::class,
         LukePOLO\LaraCart\LaraCartServiceProvider::class,
+        Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class
 
     ],
 
@@ -221,6 +222,7 @@ return [
         'Menu'      => Lavary\Menu\Facade::class,
         'LaraCart' => LukePOLO\LaraCart\Facades\LaraCart::class,
         'Coupons' => LukePOLO\LaraCart\Coupons::class,
+        'Gravatar' => Thomaswelton\LaravelGravatar\Facades\Gravatar::class
         
     ],
 
