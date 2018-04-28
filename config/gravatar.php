@@ -2,7 +2,7 @@
 
 return array(
 	// --- The default avatar size
-	'size' => 80,
+	'size' => 120,
 
 	// --- The default avatar to display if we have no results
 	// (bool)   false

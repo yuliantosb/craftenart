@@ -31,6 +31,6 @@ class User extends Authenticatable
 
     public function cust()
     {
-        return $this->belongsTo('App\Customer', 'user_id');
+        return $this->hasOne('App\Customer', 'user_id');
     }
 }

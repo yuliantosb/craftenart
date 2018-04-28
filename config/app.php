@@ -222,7 +222,9 @@ return [
         'Menu'      => Lavary\Menu\Facade::class,
         'LaraCart' => LukePOLO\LaraCart\Facades\LaraCart::class,
         'Coupons' => LukePOLO\LaraCart\Coupons::class,
-        'Gravatar' => Thomaswelton\LaravelGravatar\Facades\Gravatar::class
+        'Gravatar' => Thomaswelton\LaravelGravatar\Facades\Gravatar::class,
+        'RajaOngkir' => App\RajaOngkir\RajaOngkir::class,
+
         
     ],
 

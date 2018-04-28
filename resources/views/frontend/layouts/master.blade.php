@@ -26,9 +26,7 @@
 	<!-- include the site stylesheet -->
 	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,200italic,300,300italic,400italic,600,600italic,700,700italic,900,900italic%7cMontserrat:400,700%7cOxygen:400,300,700' rel='stylesheet' type='text/css'>
 	<!-- include the site stylesheet -->
-	<!-- <link rel="stylesheet" href="{{ url('frontend/css/bootstrap.css') }}"> -->
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="{{ url('frontend/css/bootstrap.min.css') }}">
   	<!-- include the site stylesheet -->
  	<link rel="stylesheet" href="{{ url('frontend/css/animate.css') }}">
 	<!-- include the site stylesheet -->
@@ -92,13 +90,22 @@
 			border-bottom: 1px solid #e1e1e1;
 			text-align: right !important;
 			padding: 0px 10px !important;
+			width: 100%;
 		}
 
 		.dropdown li:last {
 			border: none;
 		}
 
+		.dropdown li > a {
+			text-align: left !important;
+		}
+
 	</style>
+
+	<script type="text/javascript">
+	    var SITE_URL = "{{ url('') }}";
+	</script>
 
 </head>
 
@@ -139,7 +146,7 @@
 								        <a href="#">English</a>
 								        <ul class="dropdown">
 								            <li><a href="#">English</a></li>
-								            <li><a href="#">Bahasa</a></li>
+								            <li><a href="#">Bahasa Indonesia</a></li>
 								        </ul>
 								    </li>
 								</ul>
@@ -175,7 +182,11 @@
 	<script src="{{ url('frontend/js/plugins.js') }}"></script>
 	<!-- include jQuery -->
 	<script src="{{ url('frontend/js/jquery.main.js') }}"></script>
+	<!-- jquery validate -->
+	<script src="{{ url('backend/plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>
 	<!-- custom -->
 	<script src="{{ url('frontend/js/custom.js') }}"></script>
+	<script src="{{ url('frontend/js/form.js') }}"></script>
+	@stack('js')
 </body>
 </html>

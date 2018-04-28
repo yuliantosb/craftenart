@@ -16,7 +16,7 @@
             </div>
 
 	        <div class="col-md-12">
-				<form method="post" action="{{ route('admin.user.index') }}" id="form-add-edit">
+				<form method="post" action="{{ route('admin.user.store') }}" id="form-add-edit">
 				{{ csrf_field() }}
 							
 					<div class="row">
@@ -26,7 +26,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label class="control-label">ID Number <span class="text-danger">*</span></label>
-										<input type="text" name="name" class="form-control" placeholder="eg: Identity Card Number" required="required">
+										<input type="text" name="identity_number" class="form-control" placeholder="eg: Identity Card Number" required="required">
 										<span class="help-block"></span>
 									</div>
 								</div>
@@ -46,7 +46,7 @@
 							<div class="form-group">
 								<label>Photo</label>
 								<div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Feature Image" readonly="readonly" name="feature_image" id="input-feature-image" required="required">
+                                    <input type="text" class="form-control" placeholder="Feature Image" readonly="readonly" name="feature_image" id="input-feature-image">
                                     <span class="input-group-btn">
                                         <button class="btn btn-default btn-open-media" type="button" data-type="feature-image">Browse</button>
                                     </span>
@@ -94,12 +94,13 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Role <span class="text-danger">*</span></label>
-	              				<select name="role_id" class="form-control select2" data-placeholder="Select Role" required="required" multiple="multiple">
+	              				<select name="role_id[]" class="form-control select2" data-placeholder="Select Role" required="required" multiple="multiple">
 	              					<option></option>
 	              					@foreach ($roles as $role)
 	              					<option value="{{ $role->id }}">{{ $role->display_name }}</option>
 	              					@endforeach
 	              				</select>
+	              				<span class="help-block"></span>
 							</div>
 						</div>
 
@@ -126,15 +127,18 @@
 
 									<div class="form-group">
 										<label>State / Province</label>
-										<select name="province" class="select2 form-control" data-placeholder="Select Province">
-											<option value="id">Jawa Barat</option>
+										<select name="province_id" class="select2 form-control" data-placeholder="Select Province">
+											<option></option>
+											@foreach ($provinces as $province)
+											<option value="{{ $province->province_id }}">{{ $province->province }}</option>
+											@endforeach
 										</select>
 									</div>
 
 									<div class="form-group">
 										<label>City</label>
-										<select name="province" class="select2 form-control" data-placeholder="Select Province">
-											<option value="id">Bandung</option>
+										<select name="city_id" class="select2 form-control" data-placeholder="Select Province">
+											
 										</select>
 									</div>
 
@@ -217,6 +221,10 @@
 
 @endsection
 
-@push('js')
+@include('backend.media.list')
 
+@push('js')
+	
+<script src="{{ url('backend/js/pages/media.js') }}"></script>
+<script src="{{ url('backend/js/pages/user-add-edit.js') }}"></script>
 @endpush
