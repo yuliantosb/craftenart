@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Socialite;
 use App\User;
+use App\Customer;
 
 class LoginController extends Controller
 {
@@ -78,12 +79,10 @@ class LoginController extends Controller
                 $user->password = bcrypt(str_random(16));
                 $user->save();
 
-                $userdata = [
+                $customer = new Customer;
+                $customer->picture = $avatar;
+                $user->cust()->save($customer);
 
-                    'picture' => $avatar,
-                ];
-
-                $user->cust()->create($userdata);
                 $user->attachRole(2);
 
                 return $user;
