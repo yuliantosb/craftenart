@@ -113,9 +113,9 @@
                       <div class="text-center">
                         <p style="margin-bottom: 20px">Or <br> Login using social account</p>
                         <fieldset class="text-center m-t-10">
-                          <button type="submit" class="btn-type1" style="background-color: #d34836"><i class="fa fa-google-plus" style="margin-right: 5px"></i> Google</button>
-                          <button type="submit" class="btn-type1" style="background-color: #3B5998"><i class="fa fa-facebook" style="margin-right: 5px"></i> Facebook</button>
-                        </fieldset>
+                            <a class="btn-type1" style="background-color: #d34836" href="{{ route('login.provider', 'google') }}"><i class="fa fa-google-plus" style="margin-right: 5px"></i> Google</a>
+                            <a class="btn-type1" style="background-color: #3B5998" href="{{ route('login.provider', 'facebook') }}"><i class="fa fa-facebook" style="margin-right: 5px"></i> Facebook</a>
+                          </fieldset>
 
                       </div>
 
