@@ -12,13 +12,17 @@
 */
 
 // home
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
 
 
 // currency
 Route::get('currency/{type}', 'CurrencyController@set')->name('currency.set');
 
 // auth
+
+Route::get('login/{driver}', 'Auth\LoginController@redirectToProvider')->name('login.provider');
+Route::get('login/{driver}/callback', 'Auth\LoginController@handleProviderCallback')->name('login.provider_callback');
+Route::post('/login/check', 'Auth\LoginController@check')->name('login.check');
 Auth::routes();
 
 // cart
@@ -31,7 +35,7 @@ Route::get('coupon', 'CouponController@index')->name('coupon.index');
 Route::delete('coupon/{code}', 'CouponController@destroy')->name('coupon.destroy');
 
 // admin
-Route::prefix('/admin')->as('admin.')/*->middleware(['auth', 'role:admin'])*/->group(function(){
+Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group(function(){
 	// dashboard
 	Route::resource('/dashboard', 'DashboardController');
 	// product
@@ -49,8 +53,11 @@ Route::prefix('/admin')->as('admin.')/*->middleware(['auth', 'role:admin'])*/->g
 	Route::resource('/tag', 'TagController');
 	// user
 	Route::resource('/user', 'UserController');
+	// region
+	Route::get('/region/city', 'RegionController@city');
 });
 
 // shop
 Route::get('/shop', 'ShopController@index')->name('shop.index');
 Route::get('/{slug}', 'ShopController@show')->name('shop.show');
+Auth::routes();

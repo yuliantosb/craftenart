@@ -12829,3 +12829,33 @@ a:hover, a:active, a:focus {
       width: 1230px !important
   }
 }
+
+.mt-side-nav {
+  text-transform: none !important;
+}
+
+.mt-side-nav li {
+  padding: 10px 0px;
+}
+
+.mt-side-nav li:not(:last-child) {
+  border-bottom: 1px solid #e1e1e1
+}
+
+.profile-picture {
+  text-align: center;
+  padding: 10px;
+}
+
+.profile-picture img {
+  width: 100px;
+  display: inline-block;
+}
+
+.mt-side-nav li > a > i {
+  margin-right: 10px;
+}
+
+.form-group.has-error input {
+  border: 1px solid #ba4c53;
+}

@@ -21,11 +21,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $products = new Product;
-
         $categories = Category::take(3)->get();
-                    
         return view('frontend.home', compact(['products', 'categories']));
-
     }
 }

@@ -1,6 +1,6 @@
 @extends('backend.layouts.master')
 @section('title')
-	Add User
+	Edit User
 @endsection
 @section('content')
 <div class="container-fluid">
@@ -8,7 +8,7 @@
         <div class="card card-plain">
             <div class="header">
                 <div class="pull-left">
-                    <h4 class="title">Add User</h4>
+                    <h4 class="title">Edit User</h4>
                 </div>
                 <div class="pull-right">
                     <a href="{{ route('admin.user.index') }}" class="btn btn-primary">Back</a>
@@ -16,7 +16,7 @@
             </div>
 
 	        <div class="col-md-12">
-				<form method="post" action="{{ route('admin.user.store') }}" id="form-add-edit">
+				<form method="post" action="{{ route('admin.user.update', {{ $user->id }}) }}" id="form-add-edit">
 				{{ csrf_field() }}
 							
 					<div class="row">

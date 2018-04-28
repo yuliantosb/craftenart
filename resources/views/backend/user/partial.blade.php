@@ -29,7 +29,7 @@
             <div class="clearfix"></div>
             <div class="member-card">
                 <div class="thumb-xl member-thumb m-b-10 center-block">
-                    <img src="{{ !empty($user->cust->picture) && file_exists('uploads/avatars/'.$user->cust->picture)  ? url('uploads/avatars/'.$user->cust->picture) : Gravatar::get($user->email) }}" class="img-circle img-thumbnail" alt="profile-image">
+                    <img src="{{ $user->cust->picture }}" class="img-circle img-thumbnail" alt="profile-image">
                 </div>
                 <div class="">
                     <h4 class="m-b-5">{{ $user->name }}</h4>
