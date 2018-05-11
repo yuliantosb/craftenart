@@ -13,8 +13,17 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
-    	$vt = new Veritrans;
-        return response()->json($request->all());
+    	
+        $vt = new Veritrans;
+        echo 'test notification handler';
+        $json_result = $request;
+        $result = json_decode($json_result);
+
+        if($result){
+        	$notif = $vt->status($result->order_id);
+        }
+
+        error_log(print_r($result,TRUE));
 
         // $result = json_decode($json_result);
 
