@@ -16,11 +16,11 @@ class PaymentController extends Controller
     	
         $vt = new Veritrans;
         echo 'test notification handler';
-        $json_result = $request;
+        $json_result = file_get_contents('php://input');
         $result = json_decode($json_result);
 
         if($result){
-        	$notif = $vt->status($result->order_id);
+        $notif = $vt->status($result->order_id);
         }
 
         error_log(print_r($result,TRUE));
