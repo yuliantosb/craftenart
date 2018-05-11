@@ -48,7 +48,7 @@ Route::post('review', 'ReviewController@store')->name('review.store');
 
 // payment
 Route::get('payment', 'PaymentController@index')->name('payment.index');
-Route::post('payment', 'PaymentController@store')->name('payment.store');
+Route::post('payment/store', 'PaymentController@store')->name('payment.store');
 Route::get('payment/finish', 'PaymentController@finish')->name('payment.finish');
 Route::get('payment/unfinish', 'PaymentController@unfinish')->name('payment.unfinish');
 Route::get('payment/error', 'PaymentController@error')->name('payment.error');
