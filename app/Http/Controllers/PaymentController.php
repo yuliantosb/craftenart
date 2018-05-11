@@ -10,4 +10,19 @@ class PaymentController extends Controller
     {
     	return view('frontend.payment');
     }
+
+    public function finish(Request $request)
+    {
+
+    }
+
+    public function unfinish(Request $request)
+    {
+
+    }
+
+    public function error(Request $request)
+    {
+
+    }
 }

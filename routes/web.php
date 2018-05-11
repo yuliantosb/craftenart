@@ -48,6 +48,12 @@ Route::post('review', 'ReviewController@store')->name('review.store');
 
 // payment
 Route::get('payment', 'PaymentController@index');
+Route::get('payment/finish', 'PaymentController@finish');
+Route::get('payment/unfinish', 'PaymentController@unfinish');
+Route::get('payment/error', 'PaymentController@error');
+
+// notification
+Route::get('notification/handling', 'NotificationController@handling');
 
 // admin
 Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group(function(){
