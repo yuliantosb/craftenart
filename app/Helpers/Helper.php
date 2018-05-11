@@ -93,20 +93,15 @@ class Helper
 
     }
 
-    public static function setCurrency($amount, $static = null)
+    public static function setCurrency($amount, $curr = null)
     {
-
-        if (!is_null($static)) {
-            $curr = $static;
-        } else {
+        if (empty($curr)){
             if (session()->has('currency')) {
-
                 $curr = session()->get('currency');
             } else {
                 $curr = 'usd';
             }
         }
-        
 
         $convert = Currency::where('alias', $curr)
                             ->first();
@@ -114,7 +109,26 @@ class Helper
         return ($amount / $convert->convertion);
     }
 
-    public static function getCurrency($amount)
+    public static function getCurrency($amount, $curr = null)
+    {
+       if(empty($curr)){
+
+            if (session()->has('currency')) {
+
+                $curr = session()->get('currency');
+            } else {
+                $curr = 'usd';
+            }
+        }
+
+        $convert = Currency::where('alias', $curr)
+                            ->first();
+
+        return $amount * $convert->convertion;
+
+    }
+
+    public static function takeCurrency()
     {
         if (session()->has('currency')) {
 
@@ -124,10 +138,9 @@ class Helper
         }
 
         $convert = Currency::where('alias', $curr)
-                            ->first();
+                    ->first();
 
-        return $amount * $convert->convertion;
-
+        return $convert;
     }
 
     public static function getProvince($province_id)

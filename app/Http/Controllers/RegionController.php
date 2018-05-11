@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use RajaOngkir;
+use LaraCart;
 
 class RegionController extends Controller
 {
@@ -18,5 +19,19 @@ class RegionController extends Controller
     	}
     	
     	return $result;
+    }
+
+    public function cost(Request $request)
+    {
+        $carts = LaraCart::getItems();
+        $weight = collect($carts)->pluck('weight')->sum();
+        $costs = [];
+        $couriers = ['jne', 'pos', 'tiki'];
+
+        foreach ($couriers as $courier) {
+            $costs[] = RajaOngkir::getCost($request->destination, $weight, $courier);
+        }
+
+        return view('frontend.cart.partial', ['costs' => collect($costs), 'total_weight' => $weight])->render();
     }
 }

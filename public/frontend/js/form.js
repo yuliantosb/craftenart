@@ -62,4 +62,35 @@ $(document).ready(function(){
 		},
     	onkeyup: function(element){$(element).valid()},
 	});
+
+	$('#form-register-sidemenu').validate({
+		rules: {
+	    	email: {
+	        	remote: {
+	                url: SITE_URL + '/login/check',
+	                type: 'post',
+	                data: {
+	                        email: function() { return $('#form-register-sidemenu input[name="email"]').val()},
+	                        _token : function() { return $('meta[name="csrf-token"]').attr('content')},
+	                  	}
+	              	},
+	          	},
+	          	password_confirmation: {
+			      equalTo: '#form-register-sidemenu [name="password"]'
+			    },
+			},
+
+	    messages: {
+	        email: {
+	            remote: '{0} has been used'
+	        },
+	        password_confirmation: {
+	        	equalTo: 'Password not match'
+	        }
+		},
+    	onkeyup: function(element){$(element).valid()},
+	});
+	
+
+	$('form').validate();
 });

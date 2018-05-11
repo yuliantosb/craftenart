@@ -73,7 +73,7 @@
 							<fieldset>
 								<div class="row-val">
 									<label for="qty">qty</label>
-									<input type="number" id="qty" placeholder="1" name="qty" value="1">
+									<input type="number" id="qty" placeholder="1" name="qty" value="1" min="1">
 								</div>
 								<div class="row-val">
 									<button type="submit">ADD TO CART</button>
@@ -149,41 +149,57 @@
 								@foreach ($product->reviews as $review)
 								<div class="mt-box">
 									<div class="mt-hold">
-										{!! Helper::getRate($review->rate, ['class' => 'mt-star']) !!}
-										<span class="name">{{ $review->user->name }}</span>
-										<time>{{ Carbon\Carbon::parse($review->created_at)->format('F jS, Y') }}</time>
+
+										<div class="col-md-2 text-center">
+											<img src="{{ $review->user->cust->picture }}" alt="{{ $review->user->name }}" class="img img-circle img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;">
+										</div>
+
+										<div class="col-md-10">
+											{!! Helper::getRate($review->rate, ['class' => 'mt-star']) !!}
+											<span class="name">{{ $review->user->name }}</span>
+											<time>{{ Carbon\Carbon::parse($review->created_at)->format('F jS, Y') }}</time>
+											<p>{{ $review->content }}</p>
+										</div>
 									</div>
-									<p>{{ $review->content }}</p>
 								</div>
 								@endforeach
 								
-								<form action="#" class="p-commentform">
+								@if (auth()->check())
+
+								@if(session()->has('message'))
+
+								<div class="alert alert-success alert-dismissible" role="alert">
+								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								  <strong>Success!</strong> {{ session()->get('message') }}
+								</div>
+
+								@endif
+
+								<form action="{{ route('review.store') }}" class="p-commentform" method="post">
+									@csrf
 									<fieldset>
-										<h2>Add  Comment</h2>
+										<h2>Add  Review</h2>
+										<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
 										<div class="mt-row">
-											<label>Rating</label>
-											<ul class="mt-star">
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star-o"></i></li>
-												<li><i class="fa fa-star-o"></i></li>
-											</ul>
-										</div>
-										<div class="mt-row">
-											<label>Name</label>
-											<input type="text" class="form-control">
-										</div>
-										<div class="mt-row">
-											<label>E-Mail</label>
-											<input type="text" class="form-control">
+											<label>Rate</label>
+											<fieldset class="rating text-left">
+											    <input type="radio" id="star5" name="rate" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+											    <input type="radio" id="star4" name="rate" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+											    <input type="radio" id="star3" name="rate" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+											    <input type="radio" id="star2" name="rate" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+											    <input type="radio" id="star1" name="rate" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+											</fieldset>
 										</div>
 										<div class="mt-row">
 											<label>Review</label>
-											<textarea class="form-control"></textarea>
+											<textarea class="form-control" name="content"></textarea>
 										</div>
 										<button type="submit" class="btn-type4">ADD REVIEW</button>
 									</fieldset>
 								</form>
+								@else
+								<h3>You must sign in to give a review</h3>
+								@endif
 							</div>
 						</div>
 					</div>

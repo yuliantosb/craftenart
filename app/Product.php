@@ -41,12 +41,16 @@ class Product extends Model
 
     public function setPriceAttribute($value)
     {
-        $this->attributes['price'] = str_replace(',', '', $value);
+        $this->attributes['price'] = Helper::setCurrency(str_replace(',', '', $value), session()->get('currency'));
     }
 
-    public function setDiscountAttribute($value)
+    public function setSaleAttribute($value)
     {
-        $this->attributes['discount'] = str_replace(',', '', $value);
+        if ($value == 0) {
+            $this->attributes['sale'] = NULL;
+        } else {
+            $this->attributes['sale'] = Helper::setCurrency(str_replace(',', '', $value), session()->get('currency'));
+        }
     }
 
     public function setWeightAttribute($value)

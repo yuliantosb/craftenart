@@ -100,6 +100,12 @@
 								<!-- tabs slider start here -->
 								<div class="tabs-sliderlg">
 									@foreach ($category->products as $product)
+
+									<form style="display: none" action="{{ route('cart.store') }}" method="post" id="tab-{{ $product->id }}">
+										{{ csrf_field() }}
+										<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
+									</form>
+
 									<!-- slide start here -->
 									<div class="slide">
 										<!-- mt product1 large start here -->
@@ -117,13 +123,8 @@
 
 														{!! Helper::getRate($product->reviews->avg('rate')) !!} 
 														<ul class="links">
-															<li>
-																<form style="display: none" action="{{ route('cart.store') }}" method="post">
-																	{{ csrf_field() }}
-																	<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
-																</form>
-																
-																<a href="javascript:void(0)" onclick="document.getElementById('item-{{ $product->id }}').submit()">
+															<li>																
+																<a href="javascript:void(0)" onclick="document.getElementById('tab-{{ $product->id }}').submit()">
 																	<i class="icon-handbag"></i>
 																	<span>Add to Cart</span>
 																</a>

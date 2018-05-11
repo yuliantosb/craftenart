@@ -33,8 +33,13 @@
 	<link rel="stylesheet" href="{{ url('frontend/css/icon-fonts.css') }}">
 	<!-- include the site stylesheet -->
 	<link rel="stylesheet" href="{{ url('frontend/css/main-custom.css') }}">
+	<link rel="stylesheet" href="{{ url('frontend/css/rating.css') }}">
 	<!-- include the site stylesheet -->
 	<link rel="stylesheet" href="{{ url('frontend/css/responsive.css') }}">
+	<!-- Select2 -->
+    <link href="{{ url('backend/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+
+    @stack('css')
 
 	<style type="text/css">
 		.nav {
@@ -183,7 +188,9 @@
 	<!-- include jQuery -->
 	<script src="{{ url('frontend/js/jquery.main.js') }}"></script>
 	<!-- jquery validate -->
-	<script src="{{ url('backend/plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>
+	<script src="{{ url('backend/plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>	
+ 	<!-- Select2 -->
+    <script src="{{ url('backend/plugins/select2/js/select2.min.js') }}"></script>
 	<!-- custom -->
 	<script src="{{ url('frontend/js/custom.js') }}"></script>
 	<script src="{{ url('frontend/js/form.js') }}"></script>

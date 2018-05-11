@@ -73,7 +73,7 @@ class ProductController extends Controller
     {
     	$categories = Category::get();
     	$tags = Tag::get();
-    	return view('backend.product.create', compact(['categories', 'tags']));
+    	//return view('backend.product.create', compact(['categories', 'tags']));
     }
 
     public function store(Request $request)
@@ -85,7 +85,7 @@ class ProductController extends Controller
 			$product->picture = $request->feature_image;
 			$product->slug = Helper::createSlug($request->name, 'product');
 			$product->price = $request->price;
-			$product->sale = $request->discount;
+			$product->sale = $request->sale;
 			$product->sku = $request->sku;
 			$product->weight = $request->weight;
 			$product->description = $request->description;
@@ -176,9 +176,9 @@ class ProductController extends Controller
     		$product = Product::find($id);
 			$product->name = $request->name;
 			$product->picture = $request->feature_image;
-			$product->slug = Helper::createSlug($request->name, 'product');
+			$product->slug = Helper::createSlug($request->name, 'product', $id);
 			$product->price = $request->price;
-			$product->sale = $request->discount;
+			$product->sale = $request->sale;
 			$product->sku = $request->sku;
 			$product->weight = $request->weight;
 			$product->description = $request->description;

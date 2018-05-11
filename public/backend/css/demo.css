@@ -248,3 +248,21 @@ textarea:focus, input:focus, select:focus, .select2-container--focus{
 span.select2-selection.select2-selection--single {
     outline: none;
 }
+
+.mt-stars {
+    margin: 0;
+    padding: 0 !important;
+    line-height: 1;
+    font-size: 12px;
+    list-style: none;
+}
+
+.mt-stars .fa {
+    color: #c8a760;
+}
+
+.mt-stars li {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0px;
+}

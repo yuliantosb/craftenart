@@ -173,8 +173,8 @@
                                 <div class="form-group">
                                     <label class="control-label">Price <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <span class="input-group-addon">$</span>
-                                        <input type="text" name="price" value="{{ $product->price }}" class="form-control autonumeric text-right" placeholder="0.0" required="required">
+                                        <span class="input-group-addon">{{ Helper::takeCurrency()->symbol }}</span>
+                                        <input type="text" name="price" value="{{ Helper::getCurrency($product->price, session()->get('currency')) }}" class="form-control autonumeric text-right" placeholder="0.0" required="required">
                                     </div>
                                     <span class="help-block"></span>
                                 </div>
@@ -182,8 +182,8 @@
                                 <div class="form-group">
                                     <label class="control-label">Discount</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon">$</span>
-                                        <input type="text" name="discount" value="{{ $product->discount }}" class="form-control autonumeric text-right" placeholder="0.0">
+                                        <span class="input-group-addon">{{ Helper::takeCurrency()->symbol }}</span>
+                                        <input type="text" name="sale" value="{{ Helper::getCurrency($product->sale, session()->get('currency')) }}" class="form-control autonumeric text-right" placeholder="0.0">
                                     </div>
                                 </div>
 

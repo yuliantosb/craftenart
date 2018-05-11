@@ -27,8 +27,9 @@ class UserController extends Controller
 
     public function show($id)
     {
-    	$provinces = RajaOngkir::getProvince();
-    	dd($provinces);
+    	$user = User::find($id);
+
+        return view('backend.user.show', compact(['user']));
     }
 
     public function store(Request $request)
@@ -52,6 +53,7 @@ class UserController extends Controller
             $customer->date_of_birth = $request->date_of_birth;
             $customer->sex = $request->sex;
             $customer->zip = $request->zip;
+            $customer->address = $request->address;
             $user->cust()->save($customer);
 
             $user->roles()->sync($request->role_id);
@@ -62,5 +64,75 @@ class UserController extends Controller
         return redirect()
                 ->route('admin.user.index')
                 ->with('message', 'Date saved successfully!');
+    }
+
+    public function edit($id)
+    {
+        $user = User::find($id);
+        $roles = Role::get();
+        $provinces = RajaOngkir::getProvince();
+        $cities = RajaOngkir::getCity($user->cust->province_id);
+
+        return view('backend.user.edit', compact(['roles', 'provinces', 'user', 'cities']));
+    }
+
+    public function update(Request $request, $id)
+    {
+        DB::transaction(function() use ($request, $id){
+
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+
+            if (!empty($request->password)) {
+                $user->password = bcrypt($request->password);
+            }
+
+            $user->save();
+
+            $user->cust()->delete();
+
+            $customer = new Customer;
+            $customer->picture = !empty($request->feature_image) ? url('uploads/thumbs/'.$request->feature_image) : Gravatar::get($request->email);
+            $customer->identity_number = $request->identity_number;
+            $customer->phone_number = $request->phone_no;
+            $customer->country_id = $request->country_id;
+            $customer->province_id = $request->province_id;
+            $customer->city_id = $request->city_id;
+            $customer->place_of_birth = $request->place_of_birth;
+            $customer->date_of_birth = $request->date_of_birth;
+            $customer->sex = $request->sex;
+            $customer->zip = $request->zip;
+            $customer->address = $request->address;
+            $user->cust()->save($customer);
+
+            $user->roles()->sync($request->role_id);
+
+
+        });
+
+        return redirect()
+                ->route('admin.user.index')
+                ->with('message', 'Date updated successfully!');
+    }
+
+    public function check(Request $request)
+    {
+        if ($request->ajax()) {
+
+
+            $user = User::where('email', $request->email);
+
+            if ($request->has('id')) {
+                clone $user->where('id', '<>', $request->id);
+            }
+
+            if ($user->count() > 0) {
+                return 'false';
+            } else {
+                return 'true';
+            }
+
+        }
     }
 }

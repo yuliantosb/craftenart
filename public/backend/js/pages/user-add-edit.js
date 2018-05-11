@@ -2,12 +2,26 @@ $(document).ready(function(){
 
 	$('#form-add-edit').validate({
 		rules: {
+			email: {
+        	remote: {
+                url: SITE_URL + '/user/check',
+                type: 'post',
+                data: {
+                        email: function() { return $('input[name="email"]').val()},
+                        id: function() { return $('input[name="id"]').val() },
+                        _token : function() { return $('meta[name="csrf-token"]').attr('content')},
+                  	}
+              	},
+          	},
 			retype_password: {
 		      equalTo: '[name="password"]'
 		    }
 		},
 
 	    messages: {
+	    	email: {
+	            remote: '{0} has been used'
+	        },
 			retype_password: {
 	        	equalTo: 'Password not match'
 	        }

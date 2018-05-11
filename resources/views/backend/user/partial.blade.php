@@ -14,10 +14,10 @@
                     <i class="fa fa-ellipsis-h"></i>
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a href="{{ url('user/'.$user->id.'/edit') }}">Edit</a></li>
-                    <li><a href="{{ url('user/'.$user->id) }}">View</a></li>
+                    <li><a href="{{ route('admin.user.edit', $user->id) }}">Edit</a></li>
+                    <li><a href="{{ route('admin.user.show', $user->id) }}">View</a></li>
                     <li><a href="javascript:void(0)" onclick="on_delete({{ $user->id }})">Delete</a></li>
-                    <form action="{{ url('user/'.$user->id) }}" method="POST" id="form-delete-{{ $user->id}}" style="display:none">
+                    <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST" id="form-delete-{{ $user->id}}" style="display:none">
                         {{ method_field('DELETE') }}
                         {{ csrf_field() }}
                     </form>
@@ -29,7 +29,7 @@
             <div class="clearfix"></div>
             <div class="member-card">
                 <div class="thumb-xl member-thumb m-b-10 center-block">
-                    <img src="{{ $user->cust->picture }}" class="img-circle img-thumbnail" alt="profile-image">
+                    <img src="{{ $user->cust->picture }}" class="img-circle img-thumbnail" alt="profile-image" style="width: 90px; height: 90px; object-fit: cover;">
                 </div>
                 <div class="">
                     <h4 class="m-b-5">{{ $user->name }}</h4>

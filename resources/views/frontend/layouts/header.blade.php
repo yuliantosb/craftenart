@@ -73,8 +73,8 @@
 									</div>
 									<!-- cart row total end here -->
 									<div class="cart-btn-row">
-										<a href="#" class="btn-type2">VIEW CART</a>
-										<a href="#" class="btn-type3">CHECKOUT</a>
+										<a href="{{ route('cart.index') }}" class="btn-type2">VIEW CART</a>
+										<a href="{{ route('checkout.index') }}" class="btn-type3">CHECKOUT</a>
 									</div>
 									@else
 									<div class="cart-row text-center">

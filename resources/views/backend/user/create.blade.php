@@ -25,9 +25,8 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<label class="control-label">ID Number <span class="text-danger">*</span></label>
-										<input type="text" name="identity_number" class="form-control" placeholder="eg: Identity Card Number" required="required">
-										<span class="help-block"></span>
+										<label class="control-label">ID Number</label>
+										<input type="text" name="identity_number" class="form-control" placeholder="eg: Identity Card Number">
 									</div>
 								</div>
 
@@ -137,7 +136,7 @@
 
 									<div class="form-group">
 										<label>City</label>
-										<select name="city_id" class="select2 form-control" data-placeholder="Select Province">
+										<select name="city_id" class="select2 form-control" data-placeholder="Select City">
 											
 										</select>
 									</div>

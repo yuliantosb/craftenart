@@ -26,13 +26,28 @@ Route::post('/login/check', 'Auth\LoginController@check')->name('login.check');
 Auth::routes();
 
 // cart
-Route::post('cart', 'CartController@store')->name('cart.store');
-Route::delete('cart/{id}', 'CartController@destroy')->name('cart.destroy');
+Route::post('cart/shipping', 'CartController@addFee')->name('cart.shipping');
+Route::put('cart/update', 'CartController@bulkUpdate')->name('cart.bulk_update');
+Route::resource('cart', 'CartController');
+
+// checkout
+Route::get('checkout', 'CheckoutController@index')->name('checkout.index');
+Route::post('checkout', 'CheckoutController@store')->name('checkout.store');
+
+// region, what you just rewrite existing code? 
+Route::get('/region/city', 'RegionController@city');
+Route::post('/region/cost', 'RegionController@cost');
 
 // coupon
 Route::post('coupon', 'CouponController@apply')->name('coupon.apply');
 Route::get('coupon', 'CouponController@index')->name('coupon.index');
 Route::delete('coupon/{code}', 'CouponController@destroy')->name('coupon.destroy');
+
+// review
+Route::post('review', 'ReviewController@store')->name('review.store');
+
+// payment
+Route::get('payment', 'PaymentController@index');
 
 // admin
 Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group(function(){
@@ -52,10 +67,31 @@ Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group
 	// tag
 	Route::resource('/tag', 'TagController');
 	// user
+	Route::post('/user/check', 'UserController@check');
 	Route::resource('/user', 'UserController');
 	// region
 	Route::get('/region/city', 'RegionController@city');
+	// review
+	Route::resource('review', 'ReviewController');
 });
+
+// testing
+
+
+Route::get('/vtweb', 'VtwebController@vtweb');
+
+Route::get('/vtdirect', 'VtdirectController@vtdirect');
+Route::post('/vtdirect', 'VtdirectController@checkout_process');
+
+Route::get('/vt_transaction', 'TransactionController@transaction');
+Route::post('/vt_transaction', 'TransactionController@transaction_process');
+
+Route::post('/vt_notif', 'VtwebController@notification');
+
+Route::get('/snap', 'SnapController@snap');
+Route::get('/snaptoken', 'SnapController@token');
+Route::post('/snapfinish', 'SnapController@finish');
+
 
 // shop
 Route::get('/shop', 'ShopController@index')->name('shop.index');
