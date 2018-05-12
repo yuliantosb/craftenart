@@ -28,6 +28,7 @@ class CreateShipsTable extends Migration
             $table->string('zip')->nullable();
             $table->text('address')->nullable();
             $table->string('courier_id')->nullable();
+            $table->string('courier_name')->nullable();
             $table->double('total_weight')->nullable();
             $table->double('cost')->nullable();
             $table->string('service_name')->nullable();

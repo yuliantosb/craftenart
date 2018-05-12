@@ -59,6 +59,12 @@ class CheckoutController extends Controller
 
         $index = $request->fee;
 
+        $subtotal = round(Helper::getCurrency(LaraCart::subTotal($format = false, $withDiscount = true), 'idr'));
+        $taxes = round(Helper::getCurrency(LaraCart::taxTotal($formatted = false), 'idr'));
+        $shipping_fee = round(Helper::getCurrency(LaraCart::getFee('shippingFee')->amount, 'idr'));
+        $discount = round(Helper::getCurrency(LaraCart::totalDiscount($formatted = false), 'idr'));
+        $total = ($subtotal + $taxes + $shipping_fee) - $discount;
+
         $data = [
 
             'first_name' => $request->first_name,
@@ -76,7 +82,8 @@ class CheckoutController extends Controller
             'cost' => $request->cost[$index],
             'service_name' => $request->service_name[$index],
             'service_description' => $request->service_description[$index],
-            'estimate_delivery' => $request->estimate_delivery[$index]
+            'estimate_delivery' => $request->estimate_delivery[$index],
+            'order_total' => $total
 
         ];
 
@@ -85,12 +92,6 @@ class CheckoutController extends Controller
         LaraCart::addFee('shippingFee', $request->cost[$index], $taxable =  false, $options = []);
 
         $vt = new Veritrans;
-
-        $subtotal = round(Helper::getCurrency(LaraCart::subTotal($format = false, $withDiscount = true), 'idr'));
-        $taxes = round(Helper::getCurrency(LaraCart::taxTotal($formatted = false), 'idr'));
-        $shipping_fee = round(Helper::getCurrency(LaraCart::getFee('shippingFee')->amount, 'idr'));
-        $discount = round(Helper::getCurrency(LaraCart::totalDiscount($formatted = false), 'idr'));
-        $total = ($subtotal + $taxes + $shipping_fee) - $discount;
 
         $transaction_details = array(
             'order_id' => uniqid(),

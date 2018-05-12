@@ -57,7 +57,7 @@
 									<!-- cart row total start here -->
 									<div class="cart-row-total">
 										<span class="mt-total">Discount</span>
-										<span class="mt-total-txt">{{ Helper::currency(LaraCart::totalDiscount($formatted = false)) }}</span>
+										<span class="mt-total-txt">({{ Helper::currency(LaraCart::totalDiscount($formatted = false)) }})</span>
 									</div>
 
 									<!-- cart row total start here -->
@@ -65,6 +65,14 @@
 										<span class="mt-total">Tax</span>
 										<span class="mt-total-txt">{{ Helper::currency(LaraCart::taxTotal($formatted = false)) }}</span>
 									</div>
+
+									<!-- cart row total start here -->
+									<div class="cart-row-total">
+										<span class="mt-total">Shipping Fee</span>
+										<span class="mt-total-txt">{{ Helper::currency(LaraCart::getFee('shippingFee')->amount) }}</span>
+									</div>
+
+									
 
 									<!-- cart row total start here -->
 									<div class="cart-row-total">

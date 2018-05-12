@@ -19,15 +19,16 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('number')->unique();
             $table->double('amount', 20, 2);
-            $table->string('name')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
             $table->string('phone', 13)->nullable();
             $table->string('email')->nullable();
             $table->text('address')->nullable();
-            $table->date('payment_date')->nullable();
-            $table->string('payment_status')->nullable();
-            $table->string('payment_channel')->nullable();
-            $table->string('payment_approval_code')->nullable();
-            $table->integer('payment_session_id')->nullable();
+            $table->string('payment_date')->nullable();
+            $table->string('transaction_status')->nullable();
+            $table->string('payment_type')->nullable();
+            $table->string('fraud_status')->nullable();
+            $table->string('coupon_code')->nullable();
             $table->timestamps();
         });
     }

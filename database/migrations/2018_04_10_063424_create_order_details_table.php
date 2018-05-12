@@ -19,7 +19,6 @@ class CreateOrderDetailsTable extends Migration
             $table->integer('order_id');
             $table->integer('product_id');
             $table->double('price', 20, 2);
-            $table->string('coupon_code')->nullable();
             $table->bigInteger('qty');
             $table->timestamps();
         });

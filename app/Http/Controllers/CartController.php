@@ -91,7 +91,8 @@ class CartController extends Controller
             'cost' => $request->cost[$index],
             'service_name' => $request->service_name[$index],
             'service_description' => $request->service_description[$index],
-            'estimate_delivery' => $request->estimate_delivery[$index]
+            'estimate_delivery' => $request->estimate_delivery[$index],
+            'order_total' => LaraCart::total($formatted = false, $withDiscount = true)
 
         ];
 

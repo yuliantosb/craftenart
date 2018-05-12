@@ -97,18 +97,64 @@
 
         </form>
 
-        <div class="row">
+        @if (!empty(LaraCart::getCoupons()))
+
+          @foreach (LaraCart::getCoupons() as $coupon)
+
+            <form style="display: none" action="{{ route('coupon.destroy', $coupon->code) }}" method="post" id="coupon-{{ $coupon->code }}">
+
+              {{ csrf_field() }}
+              {{ method_field('DELETE') }}
+
+            </form>
+
+            <div class="row" style="margin-top: 30px">
+              <div class="col-xs-12 col-md-6 col-md-offset-3">
+                <div class="mt-holder">
+                   <center><h3 class="text-primary">Coupon applied</h3></center>
+                   <table class="table">
+                     <thead>
+                       <tr>
+                         <th>Coupon Value</th>
+                         <th>Coupon Code</th>
+                         <th>Coupon Description</th>
+                         <th style="width: 10px"></th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <tr>
+                         <td>{{ strpos($coupon->displayValue(), '%') ? $coupon->dispayValue() : Helper::currency($coupon->displayValue(false, false, false)) }}</td>
+                         <td>{{ $coupon->code }}</td>
+                         <td>{{ $coupon->description }}</td>
+                         <td class="text-center"><button class="mt-link text-danger" data-toggle="tooltip" title="Remove Coupon" onclick="document.getElementById('coupon-{{ $coupon->code }}').submit()"><i class="fa fa-times"></i></button></td>
+                       </tr>
+                     </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+
+          @endforeach
+
+        @else
+
+          <div class="row">
           <div class="col-xs-12">
-            <form action="#" class="coupon-form">
+            <form action="{{ route('coupon.apply') }}" class="coupon-form" method="post">
+              @csrf
               <fieldset>
                 <div class="mt-holder">
-                  <input type="text" class="form-control" placeholder="Your Coupon Code">
+                  <input type="text" class="form-control" placeholder="Your Coupon Code" name="coupon_code">
                   <button type="submit" class="mt-button">APPLY</button>
                 </div>
               </fieldset>
             </form>
           </div>
         </div>
+
+        @endif
+
+        
       </div>
     </div><!-- Mt Product Table of the Page end -->
     <!-- Mt Detail Section of the Page -->
