@@ -8,6 +8,7 @@ use DB;
 use App\Order;
 use App\OrderDetails;
 use App\Ship;
+use LaraCart;
 
 use App\Veritrans\Veritrans;
 
