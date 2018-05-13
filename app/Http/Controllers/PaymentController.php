@@ -9,6 +9,8 @@ use App\Order;
 use App\OrderDetails;
 use App\Ship;
 
+use App\Veritrans\Veritrans;
+
 class PaymentController extends Controller
 {
     public function index()
