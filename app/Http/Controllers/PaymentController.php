@@ -20,14 +20,8 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
-    	
         
         DB::transaction(function() use ($request){
-
-          $transaction = $notif->transaction_status;
-          $type = $notif->payment_type;
-          $order_id = $notif->order_id;
-          $fraud = $notif->fraud_status;
 
           $shipping = session()->get('shipping');
 
