@@ -22,16 +22,16 @@ class PaymentController extends Controller
     {
     	
         $vt = new Veritrans;
-        $json_result = file_get_contents('php://input');
-        $result = json_decode($json_result);
+        // $json_result = $request
+        // $result = json_decode($json_result);
 
-        if($result){
-          $notif = $vt->status($result->order_id);
-        }
+        // if($result){
+        //   $notif = $vt->status($result->order_id);
+        // }
 
         // error_log(print_r($result,TRUE));
 
-        \Log::info('result', print_r($result, true));
+        \Log::info('result', $request->all());
 
         
         // DB::transaction(function() use ($notif, $request){
