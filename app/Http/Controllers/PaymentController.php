@@ -26,7 +26,7 @@ class PaymentController extends Controller
           $shipping = session()->get('shipping');
 
           $order = new Order;
-          $order->number = $order_id;
+          $order->number = $request->order_id;
           $order->amount = $shipping['order_total'];
           $order->first_name = $shipping['first_name'];
           $order->last_name = $shipping['last_name'];
