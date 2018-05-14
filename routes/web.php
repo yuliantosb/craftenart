@@ -49,10 +49,7 @@ Route::post('review', 'ReviewController@store')->name('review.store');
 // payment
 Route::get('payment', 'PaymentController@index')->name('payment.index');
 Route::post('payment/store', 'PaymentController@store')->name('payment.store');
-Route::get('payment/finish', 'PaymentController@finish')->name('payment.finish');
-Route::get('payment/unfinish', 'PaymentController@unfinish')->name('payment.unfinish');
-Route::get('payment/error', 'PaymentController@error')->name('payment.error');
-
+Route::get('payment/complete/{type}', 'PaymentController@complete')->name('payment.complete');
 // admin
 Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group(function(){
 	// dashboard

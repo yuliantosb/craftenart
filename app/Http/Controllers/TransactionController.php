@@ -11,7 +11,7 @@ class TransactionController extends Controller
 {
     public function __construct()
     {   
-        Veritrans::$serverKey = '<your server key>';
+        Veritrans::$serverKey = 'VT-server-LKBf4dk76gQmJHcIIc2Gh5_K';
         Veritrans::$isProduction = false;
     }
 

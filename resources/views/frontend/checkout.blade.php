@@ -9,7 +9,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 text-center">
-					<h1>SHOPPING CART</h1>
+					<h1>CHECKOUT</h1>
 					<!-- Breadcrumbs of the Page -->
 					<nav class="breadcrumbs">
 						<ul class="list-unstyled">

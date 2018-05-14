@@ -21,34 +21,44 @@ class CheckoutController extends Controller
     public function index()
     {
     	$carts = LaraCart::getItems();
-    	$carts = LaraCart::getItems();
-        $provinces = RajaOngkir::getProvince();
-        $weight = collect($carts)->pluck('weight')->sum();
 
-        if (session()->has('shipping')) {
+        if (!empty($carts)) {
+            $provinces = RajaOngkir::getProvince();
+            $weight = collect($carts)->pluck('weight')->sum();
 
-            $cities = RajaOngkir::getCity(session()->get('shipping.province_id'));
-            $costs = [];
-            $couriers = ['jne', 'pos', 'tiki'];
+            if (session()->has('shipping')) {
 
-            foreach ($couriers as $courier) {
-                $costs[] = RajaOngkir::getCost(session()->get('shipping.city_id'), $weight, $courier);
+                $cities = RajaOngkir::getCity(session()->get('shipping.province_id'));
+                $costs = [];
+                $couriers = ['jne', 'pos', 'tiki'];
+
+                foreach ($couriers as $courier) {
+                    $costs[] = RajaOngkir::getCost(session()->get('shipping.city_id'), $weight, $courier);
+                }
+
+            } else {
+
+                $cities = collect([]);
+                $costs = collect([]);
             }
 
-        } else {
+            $amount['subtotal'] = LaraCart::subTotal($format = false, $withDiscount = true);
+            $amount['taxes'] = LaraCart::taxTotal($formatted = false);
+            $amount['shipping_fee'] = LaraCart::getFee('shippingFee')->amount;
+            
+            if (!empty(LaraCart::getCoupons())) {
+                $amount['discount'] = LaraCart::totalDiscount($formatted = false);
+            } else {
+                $amount['discount'] = 0;
+            }
 
-            $cities = collect([]);
-            $costs = collect([]);
+            $amount['total'] = ($amount['subtotal'] + $amount['taxes'] + $amount['shipping_fee']) - $amount['discount'];
+            
+
+            return view('frontend.checkout', compact(['carts', 'provinces', 'cities', 'costs', 'weight', 'amount']));
         }
-
-        $amount['subtotal'] = LaraCart::subTotal($format = false, $withDiscount = true);
-        $amount['taxes'] = LaraCart::taxTotal($formatted = false);
-        $amount['shipping_fee'] = LaraCart::getFee('shippingFee')->amount;
-        $amount['discount'] = LaraCart::totalDiscount($formatted = false);
-        $amount['total'] = ($amount['subtotal'] + $amount['taxes'] + $amount['shipping_fee']) - $amount['discount'];
+        return redirect()->route('cart.index');
         
-
-    	return view('frontend.checkout', compact(['carts', 'provinces', 'cities', 'costs', 'weight', 'amount']));
     }
 
     public function store(Request $request)

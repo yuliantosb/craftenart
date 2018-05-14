@@ -36,7 +36,13 @@ class CartController extends Controller
         $amount['subtotal'] = LaraCart::subTotal($format = false, $withDiscount = true);
         $amount['taxes'] = LaraCart::taxTotal($formatted = false);
         $amount['shipping_fee'] = LaraCart::getFee('shippingFee')->amount;
-        $amount['discount'] = LaraCart::totalDiscount($formatted = false);
+
+        if (!empty(LaraCart::getCoupons())) {
+            $amount['discount'] = LaraCart::totalDiscount($formatted = false);
+        } else {
+            $amount['discount'] = 0;
+        }
+
         $amount['total'] = ($amount['subtotal'] + $amount['taxes'] + $amount['shipping_fee']) - $amount['discount'];
 
         return view('frontend.cart', compact(['carts', 'provinces', 'cities', 'costs', 'weight', 'amount']));
