@@ -34,7 +34,7 @@ class PaymentController extends Controller
 
       // return response()->json(true);
 
-      return print_r($request->all());
+      print_r($request->all());
 
     }
 
