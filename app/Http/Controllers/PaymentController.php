@@ -34,7 +34,7 @@ class PaymentController extends Controller
 
       // return response()->json(true);
 
-      return $request->all();
+      return $request->get('order_id');
 
     }
 
