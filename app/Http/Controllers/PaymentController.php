@@ -23,16 +23,18 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
 
-      $order = new Order;
-      $order->number = $request->order_id;
-      $order->amount = Helper::setCurrency($request->gross_amount, 'idr');
-      $order->payment_date = $request->transaction_time;
-      $order->transaction_status = $request->transaction_status;
-      $order->payment_type = $request->payment_type;
-      $order->fraud_status = $request->fraud_status;
-      $order->save();
+      // $order = new Order;
+      // $order->number = $request->order_id;
+      // $order->amount = Helper::setCurrency($request->gross_amount, 'idr');
+      // $order->payment_date = $request->transaction_time;
+      // $order->transaction_status = $request->transaction_status;
+      // $order->payment_type = $request->payment_type;
+      // $order->fraud_status = $request->fraud_status;
+      // $order->save();
 
-      return response()->json(true);
+      // return response()->json(true);
+
+      return $request->order_id;
 
     }
 
