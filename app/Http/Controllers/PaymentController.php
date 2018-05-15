@@ -23,7 +23,7 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
 
-      return $data->masked_card;
+      return $request->masked_card;
       // $order = new Order;
       // $order->number = $request->order_id;
       // $order->amount = Helper::setCurrency($request->gross_amount, 'idr');
