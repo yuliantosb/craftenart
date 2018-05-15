@@ -30,8 +30,8 @@ class HomeController extends Controller
 
         $products = new Product;
         $categories = Category::take(3)->get();
+
         return view('frontend.home', compact(['products', 'categories']));
-         // dd(LaraCart::getItems());
-        //dd(array_keys(LaraCart::getCoupons())[0]);
+        
     }
 }
