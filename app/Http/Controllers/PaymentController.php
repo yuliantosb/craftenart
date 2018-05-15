@@ -24,7 +24,7 @@ class PaymentController extends Controller
     {
 
       $json_result = file_get_contents('php://input');
-      $result = json_decode($json_result);
+      $result = collect(json_decode($json_result, true));
 
       return $result->masked_card;
 
