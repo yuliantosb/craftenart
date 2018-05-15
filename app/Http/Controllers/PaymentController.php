@@ -23,7 +23,7 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
 
-      $data = collect($request->all());
+      $data = $request->all();
       // $order = new Order;
       // $order->number = $request->order_id;
       // $order->amount = Helper::setCurrency($request->gross_amount, 'idr');
@@ -35,7 +35,7 @@ class PaymentController extends Controller
 
       // return response()->json(true);
 
-      return $data->order_id;
+      return response()->json($data);
 
     }
 
