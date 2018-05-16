@@ -54,6 +54,14 @@ class PaymentController extends Controller
 
           $shipping = session()->get('shipping');
 
+          $order->update([
+              'first_name' => $shipping['first_name'],
+              'last_name' => $shipping['last_name'],
+              'phone' => $shipping['phone_number'],
+              'email' => $shipping['email'],
+              'address' => $shipping['address']
+          ]);
+
           if (!empty(LaraCart::getCoupons()))
           {
             $order->update(['coupon_code' => array_keys(LaraCart::getCoupons())[0]]);
