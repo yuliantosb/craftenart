@@ -124,7 +124,9 @@ class PaymentController extends Controller
           else {
             $status = 'successfully captured using ' . $order->payment_type;
             }
-        }  else if ($order->transaction_status == 'settlement'){
+        }
+
+        else{
          
             $status = 'successfully transfered using ' . $order->payment_type;
           } 
@@ -136,11 +138,11 @@ class PaymentController extends Controller
             $status = 'denied using '. $order->payment_type;
         }
 
-
         $message = 'Your payment with order number '.$order_number.' is '.$status;
-
         return view('frontend.payment.show', compact(['type', 'message']));
-      } else {
+      }
+
+      else {
         return redirect()->route('cart.index');
       }
       
