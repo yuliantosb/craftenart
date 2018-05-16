@@ -8,6 +8,8 @@ use DB;
 use App\Order;
 use App\OrderDetails;
 use App\Ship;
+use App\Stock;
+use App\StockDetails;
 use LaraCart;
 use Helper;
 
@@ -65,6 +67,15 @@ class PaymentController extends Controller
             $order_details->price = $item->price;
             $order_details->qty = $item->qty;
             $order->details()->save($order_details);
+
+            $stock = Stock::where('product_id', $item->id)
+                        ->decrement(['amount', $item->qty]);
+
+            $stock_details = new StockDetails;
+            $stock_details->amount = $request->stock;
+            $stock_details->description = 'Ordered by '.auth()->user()->name;
+            $product->stock->details()->save($stock_details);
+
           }
             
           $ship = new Ship;
