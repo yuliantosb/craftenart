@@ -12,6 +12,9 @@ use App\OrderDetails;
 use App\Ship;
 use Carbon\Carbon;
 
+use App\Stock;
+use App\StockDetails;
+
 class HomeController extends Controller
 {
     /**
@@ -32,6 +35,8 @@ class HomeController extends Controller
         $categories = Category::take(3)->get();
 
         return view('frontend.home', compact(['products', 'categories']));
+
+
         
     }
 }

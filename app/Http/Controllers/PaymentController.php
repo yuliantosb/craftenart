@@ -62,19 +62,24 @@ class PaymentController extends Controller
           $order = $order->first();
 
           foreach (LaraCart::getItems() as $item) {
+            
             $order_details = new OrderDetails;
             $order_details->product_id = $item->id;
             $order_details->price = $item->price;
             $order_details->qty = $item->qty;
             $order->details()->save($order_details);
 
-            $stock = Stock::where('product_id', $item->id)
-                        ->decrement(['amount', $item->qty]);
+            $stock = Stock::where('product_id', '21')->first();
+
+            $stock_update = Stock::find($stock->id);
+            $stock_update->decrement('amount', '2');
+            $stock_update->save();
 
             $stock_details = new StockDetails;
-            $stock_details->amount = $request->stock;
-            $stock_details->description = 'Ordered by '.auth()->user()->name;
-            $product->stock->details()->save($stock_details);
+            $stock_details->amount = '-2';
+            $stock_details->description = 'Ordered by Yulianto';
+            $stock_update->details()->save($stock_details);
+
 
           }
             
