@@ -9,10 +9,10 @@
 				<nav class="breadcrumbs">
 					<ul class="list-unstyled">
 						@foreach ($placeholder_breadcumbs as $breadcumb)
-							@if ($loop->first)
-								<li><a href="{{ $breadcumb['url'] }}">{{ $breadcumb['name'] }}<i class="fa fa-angle-right"></i></a></li>
-							@else
+							@if ($loop->last)
 								<li>{{ $breadcumb['name'] }}</li>
+							@else
+								<li><a href="{{ $breadcumb['url'] }}">{{ $breadcumb['name'] }}<i class="fa fa-angle-right"></i></a></li>
 							@endif
 						@endforeach
 					</ul>
