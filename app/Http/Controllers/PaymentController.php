@@ -80,7 +80,7 @@ class PaymentController extends Controller
             $stock = Stock::where('product_id', '21')->first();
 
             $stock_update = Stock::find($stock->id);
-            $stock_update->decrement('amount', $order->qty);
+            $stock_update->decrement('amount', $item->qty);
             $stock_update->save();
 
             $stock_details = new StockDetails;
