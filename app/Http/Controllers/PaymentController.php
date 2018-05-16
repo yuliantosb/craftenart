@@ -62,7 +62,7 @@ class PaymentController extends Controller
           $order = $order->first();
 
           foreach (LaraCart::getItems() as $item) {
-            
+
             $order_details = new OrderDetails;
             $order_details->product_id = $item->id;
             $order_details->price = $item->price;
@@ -76,8 +76,8 @@ class PaymentController extends Controller
             $stock_update->save();
 
             $stock_details = new StockDetails;
-            $stock_details->amount = '-2';
-            $stock_details->description = 'Ordered by Yulianto';
+            $stock_details->amount = '-'.$item->qty;
+            $stock_details->description = 'Ordered by '.auth()->user()->name;
             $stock_update->details()->save($stock_details);
 
 
@@ -116,14 +116,14 @@ class PaymentController extends Controller
           else {
             $status = 'successfully captured using ' . $order->payment_type;
             }
-        }  else if ($transaction == 'settlement'){
+        }  else if ($order->transaction_status == 'settlement'){
          
             $status = 'successfully transfered using ' . $order->payment_type;
           } 
-          else if($transaction == 'pending'){
+          else if($order->transaction_status == 'pending'){
             $status = 'waiting customer to finish using ' . $order->payment_type;
           } 
-          else if ($transaction == 'deny') {
+          else if ($order->transaction_status == 'deny') {
           
             $status = 'denied using '. $order->payment_type;
         }
