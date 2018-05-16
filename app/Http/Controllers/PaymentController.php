@@ -26,20 +26,17 @@ class PaymentController extends Controller
       $json_result = file_get_contents('php://input');
       $result = stripslashes(trim($json_result, '"'));
       $data = json_decode($result, true);
-      return \Log::info($data['order_id']);
 
-      // $order = new Order;
-      // $order->number = $result['order_id'];
-      // $order->amount = Helper::setCurrency($result['gross_amount'], 'idr');
-      // $order->payment_date = $result['transaction_time'];
-      // $order->transaction_status = $result['transaction_status'];
-      // $order->payment_type = $result['payment_type'];
-      // $order->fraud_status = $result['fraud_status'];
-      // $order->save();
+      $order = new Order;
+      $order->number = $data['order_id'];
+      $order->amount = Helper::setCurrency($data['gross_amount'], 'idr');
+      $order->payment_date = $data['transaction_time'];
+      $order->transaction_status = $data['transaction_status'];
+      $order->payment_type = $data['payment_type'];
+      $order->fraud_status = $data['fraud_status'];
+      $order->save();
 
-      // return response()->json(true);
-
-      //return response()->json($data);
+      return response()->json(true);
 
     }
 
