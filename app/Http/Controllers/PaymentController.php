@@ -110,10 +110,10 @@ class PaymentController extends Controller
           $ship->estimate_delivery = $shipping['estimate_delivery'];
           $order->ship()->save($ship);
 
-          LaraCart::destroyCart();
-          session()->forget('shipping');
-
         });
+
+        LaraCart::destroyCart();
+        session()->forget('shipping');
 
         $order_number = $request->order_id;
 
