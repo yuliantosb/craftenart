@@ -14,7 +14,7 @@
           'url' => '/'
         ],
         [
-          'name' => 'Cart',
+          'name' => 'Shopping Cart',
           'url' => '/cart'
         ],
         [

@@ -6,14 +6,14 @@
 
   <main id="mt-main">
     @include('frontend.layouts.placeholder', [
-      'placeholder_title' => 'CART',
+      'placeholder_title' => 'shopping cart',
       'placeholder_breadcumbs' => [
         [
           'name' => 'Home',
           'url' => '/'
         ],
         [
-          'name' => 'Cart',
+          'name' => 'Shopping Cart',
           'url' => '/cart'
         ],
       ]])
