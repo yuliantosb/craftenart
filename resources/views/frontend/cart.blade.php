@@ -5,23 +5,18 @@
 @section('content')
 
   <main id="mt-main">
-    <section class="mt-contact-banner style4 wow fadeInUp" data-wow-delay="0.4s" style="background-image: url(&quot;http://placehold.it/1920x205&quot;); visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-12 text-center">
-					<h1>SHOPPING CART</h1>
-					<!-- Breadcrumbs of the Page -->
-					<nav class="breadcrumbs">
-						<ul class="list-unstyled">
-							<li><a href="index.html">Home <i class="fa fa-angle-right"></i></a></li>
-							<li><a href="product-detail.html">Products <i class="fa fa-angle-right"></i></a></li>
-							<li>Chairs</li>
-						</ul>
-					</nav><!-- Breadcrumbs of the Page end -->
-				</div>
-			</div>
-		</div>
-	</section>
+    @include('frontend.layouts.placeholder', [
+      'placeholder_title' => 'CART',
+      'placeholder_breadcumbs' => [
+        [
+          'name' => 'Home',
+          'url' => '/'
+        ],
+        [
+          'name' => 'Cart',
+          'url' => '/cart'
+        ],
+      ]])
     <!-- Mt Process Section of the Page -->
     <div class="mt-process-sec wow fadeInUp" data-wow-delay="0.4s">
       <div class="container">

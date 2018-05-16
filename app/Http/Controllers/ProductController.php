@@ -73,7 +73,7 @@ class ProductController extends Controller
     {
     	$categories = Category::get();
     	$tags = Tag::get();
-    	//return view('backend.product.create', compact(['categories', 'tags']));
+    	return view('backend.product.create', compact(['categories', 'tags']));
     }
 
     public function store(Request $request)
