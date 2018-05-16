@@ -25,7 +25,7 @@ class PaymentController extends Controller
 
       $json_result = file_get_contents('php://input');
       $result = stripslashes(trim($json_result, '"'));
-      return $result;
+      return \Log::info($result);
 
       // $order = new Order;
       // $order->number = $result['order_id'];
