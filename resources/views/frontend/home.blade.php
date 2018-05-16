@@ -187,7 +187,7 @@
 									</div>
 									<div class="txt">
 										<strong class="title"><a href="{{ route('shop.show', $best->slug) }}">{{ $best->name }}</a></strong>
-										<span class="price">{{ $best->price_amount }}</span>
+										<span class="price">{!! $best->price_amount !!}</span>
 									</div>
 								</div><!-- mt product1 center end here -->
 							</div>
