@@ -43,8 +43,10 @@ class PaymentController extends Controller
     public function complete($type, Request $request)
     {
 
+      $order = '';
+
       if (session()->has('shipping') && !empty($request)) {
-        DB::transaction(function() use($request){
+        DB::transaction(function() use($request, &$order){
 
           $order = Order::where('number', $request->order_id);
 
