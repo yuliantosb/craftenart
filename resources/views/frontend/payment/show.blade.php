@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('title')
-  Payment {{ $type }} 
+  Payment {{ $status }} 
 @endsection
 
 @section('content')
@@ -66,11 +66,11 @@
                             <div class="col-md-12">
                                 <header>
                                     <div class="col-xs-1 text-center">
-                                        @if ($type == 'Finish') 
+                                        @if ($status == 'Finish') 
                                           <p class="text-success">
                                             <i class="fa fa-check-circle fa-3x"></i>
                                           </p>
-                                        @elseif ($type == 'Unfinish')
+                                        @elseif ($status == 'Unfinish')
                                           <p class="text-warning">
                                             <i class="fa fa-exclamation-circle fa-3x"></i>
                                           </p>
@@ -81,7 +81,7 @@
                                         @endif
                                     </div>
                                     <div class="col-xs-11">
-                                      <h2 style="margin: 0 0 5px;">Your Payment is {{ $type }}!</h2>
+                                      <h2 style="margin: 0 0 5px;">Your Payment is {{ $status }}!</h2>
                                       <p>
                                       {{ $message }}
                                       </p>
