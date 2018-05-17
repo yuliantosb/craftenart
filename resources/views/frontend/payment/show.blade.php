@@ -83,7 +83,7 @@
                                     <div class="col-xs-11">
                                       <h2 style="margin: 0 0 5px;">Your Payment is {{ $status }}!</h2>
                                       <p>
-                                      {{ $message }}
+                                      {!! $message !!}
                                       </p>
                                     </div>
                                 </header>
