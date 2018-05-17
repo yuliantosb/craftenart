@@ -42,7 +42,7 @@ class PaymentController extends Controller
 
     }
 
-    public function complete($type, Request $request)
+    public function complete($status, Request $request)
     {
 
       $order = '';
@@ -115,31 +115,32 @@ class PaymentController extends Controller
         // LaraCart::destroyCart();
         // session()->forget('shipping');
 
-        $order_number = $request->order_id;
+        $order_id = $request->order_id;
+        $transaction = $order->transaction_status;
+        $type = $order->payment_type;
 
-        if ($order->transaction_status ==  'captured') {
-          if($fraud == 'challenge'){
-            $status = 'challenged by FDS';
-          } 
-          else {
-            $status = 'successfully captured using ' . $order->payment_type;
+        if ($transaction == 'capture') {
+          if ($type == 'credit_card'){
+            if($fraud == 'challenge'){
+              $message = "Transaction order_id: " . $order_id ." is challenged by FDS";
+              } 
+              else {
+              $message = "Transaction order_id: " . $order_id ." successfully captured using " . $type;
+              }
             }
+          }
+        else if ($transaction == 'settlement'){
+          $message = "Transaction order_id: " . $order_id ." successfully transfered using " . $type;
+          } 
+          else if($transaction == 'pending'){
+          $message = "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type;
+          } 
+          else if ($transaction == 'deny') {
+          $message = "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.";
         }
 
-        else{
-         
-            $status = 'successfully transfered using ' . $order->payment_type;
-          } 
-          else if($order->transaction_status == 'pending'){
-            $status = 'waiting customer to finish using ' . $order->payment_type;
-          } 
-          else if ($order->transaction_status == 'deny') {
-          
-            $status = 'denied using '. $order->payment_type;
-        }
+        return view('frontend.payment.show', compact(['status', 'message']));
 
-        $message = 'Your payment with order number '.$order_number.' is '.$status;
-        return view('frontend.payment.show', compact(['type', 'message']));
       }
 
       else {
