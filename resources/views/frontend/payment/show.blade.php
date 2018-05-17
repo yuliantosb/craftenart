@@ -66,11 +66,11 @@
                             <div class="col-md-12">
                                 <header>
                                     <div class="col-xs-1 text-center">
-                                        @if ($status == 'Finish') 
+                                        @if (strtolower($status) == 'finish') 
                                           <p class="text-success">
                                             <i class="fa fa-check-circle fa-3x"></i>
                                           </p>
-                                        @elseif ($status == 'Unfinish')
+                                        @elseif (strtolower($status) == 'unfinish')
                                           <p class="text-warning">
                                             <i class="fa fa-exclamation-circle fa-3x"></i>
                                           </p>
