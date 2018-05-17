@@ -123,21 +123,21 @@ class PaymentController extends Controller
         if ($transaction == 'capture') {
           if ($type == 'credit_card'){
             if($fraud == 'challenge'){
-              $message = "Transaction order_id: " . $order_id ." is challenged by FDS";
+              $message = "Transaction order id: " . $order_id ." is challenged by FDS";
               } 
               else {
-              $message = "Transaction order_id: " . $order_id ." successfully captured using " . $type;
+              $message = "Transaction order id: " . $order_id ." successfully captured using " . $type;
               }
             }
           }
         else if ($transaction == 'settlement'){
-          $message = "Transaction order_id: " . $order_id ." successfully transfered using " . $type;
+          $message = "Transaction order id: " . $order_id ." successfully transfered using " . $type;
           } 
           else if($transaction == 'pending'){
-          $message = "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type;
+          $message = "Waiting customer to finish transaction order id: " . $order_id . " using " . $type;
           } 
           else if ($transaction == 'deny') {
-          $message = "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.";
+          $message = "Payment using " . $type . " for transaction order id: " . $order_id . " is denied.";
         }
 
         return view('frontend.payment.show', compact(['status', 'message']));
