@@ -112,8 +112,8 @@ class PaymentController extends Controller
 
         });
 
-        // LaraCart::destroyCart();
-        // session()->forget('shipping');
+        LaraCart::destroyCart();
+        session()->forget('shipping');
 
         $order_id = $request->order_id;
         $transaction = $order->transaction_status;
@@ -123,21 +123,21 @@ class PaymentController extends Controller
         if ($transaction == 'capture') {
           if ($type == 'credit_card'){
             if($fraud == 'challenge'){
-              $message = "Transaction order id: " . $order_id ." is challenged by FDS";
+              $message = 'Transaction order id: <strong>' . $order_id . ' </strong> is challenged by FDS';
               } 
               else {
-              $message = "Transaction order id: " . $order_id ." successfully captured using " . $type;
+              $message = 'Transaction order id: <strong>' . $order_id . ' </strong> successfully captured using <strong>' . str_replace($type, '_', ' ') . '</strong>';
               }
             }
           }
         else if ($transaction == 'settlement'){
-          $message = "Transaction order id: " . $order_id ." successfully transfered using " . $type;
+          $message = 'Transaction order id: <strong>' . $order_id . ' </strong> successfully transfered using <strong>' . str_replace($type, '_', ' ') . '</strong>';
           } 
           else if($transaction == 'pending'){
-          $message = "Waiting customer to finish transaction order id: " . $order_id . " using " . $type;
+          $message = 'Waiting customer to finish transaction order id: <strong>' . $order_id . ' </strong> using <strong>' . str_replace($type, '_', ' ') . '</strong>';
           } 
           else if ($transaction == 'deny') {
-          $message = "Payment using " . $type . " for transaction order id: " . $order_id . " is denied.";
+          $message = 'Payment using <strong>' . str_replace($type, '_', ' ') . '</strong> for transaction order id: <strong>' . $order_id . ' </strong> is denied.';
         }
 
         return view('frontend.payment.show', compact(['status', 'message']));
