@@ -112,8 +112,8 @@ class PaymentController extends Controller
 
         });
 
-        LaraCart::destroyCart();
-        session()->forget('shipping');
+        // LaraCart::destroyCart();
+        // session()->forget('shipping');
 
         $order_number = $request->order_id;
 
