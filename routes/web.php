@@ -50,6 +50,8 @@ Route::post('review', 'ReviewController@store')->name('review.store');
 Route::get('payment', 'PaymentController@index')->name('payment.index');
 Route::post('payment/store', 'PaymentController@store')->name('payment.store');
 Route::get('payment/complete/{type}', 'PaymentController@complete')->name('payment.complete');
+Route::get('payment/paypal', 'PaymentController@paypal')->name('payment.paypal');
+
 // admin
 Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group(function(){
 	// dashboard
@@ -75,23 +77,6 @@ Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group
 	// review
 	Route::resource('review', 'ReviewController');
 });
-
-// testing
-
-
-Route::get('/vtweb', 'VtwebController@vtweb');
-
-Route::get('/vtdirect', 'VtdirectController@vtdirect');
-Route::post('/vtdirect', 'VtdirectController@checkout_process');
-
-Route::get('/vt_transaction', 'TransactionController@transaction');
-Route::post('/vt_transaction', 'TransactionController@transaction_process');
-
-Route::post('/vt_notif', 'VtwebController@notification');
-
-Route::get('/snap', 'SnapController@snap');
-Route::get('/snaptoken', 'SnapController@token');
-Route::post('/snapfinish', 'SnapController@finish');
 
 
 // shop

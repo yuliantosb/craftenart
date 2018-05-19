@@ -7491,27 +7491,27 @@ a:hover {
   color: #7d7d7d;
 }
 
-.mt-detail-sec .bill-detail .form-control {
-  font-size: 14px;
-  line-height: 16px;
-  background: none;
-  outline: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 10px;
-  padding: 10px 18px;
-  width: 100%;
-  height: 55px;
-  color: #7d7d7d;
-  border-color: #dcdcdc;
+.bill-detail .form-control {
+  font-size: 14px !important;
+  line-height: 16px !important;
+  background: none !important;
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-radius: 10px !important;
+  padding: 10px 18px !important;
+  width: 100% !important;
+  height: 55px !important;
+  color: #7d7d7d !important;
+  border-color: #dcdcdc !important;
 }
 
-.mt-detail-sec .bill-detail textarea {
-  min-height: 99px;
-  width: 100%;
-  resize: none;
+.bill-detail textarea {
+  min-height: 99px !important;
+  width: 100% !important;
+  resize: none !important;
 }
 
 .mt-detail-sec .bill-detail input[type='checkbox'] {

@@ -18,7 +18,11 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('number')->unique();
-            $table->double('amount', 20, 2);
+            $table->double('subtotal', 20, 2);
+            $table->double('tax', 20, 2);
+            $table->double('discount', 20, 2);
+            $table->double('shipping_fee', 20, 2);
+            $table->double('total', 20, 2);
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('phone', 13)->nullable();
@@ -29,6 +33,7 @@ class CreateOrdersTable extends Migration
             $table->string('payment_type')->nullable();
             $table->string('fraud_status')->nullable();
             $table->string('coupon_code')->nullable();
+            $table->string('status')->default(0);
             $table->timestamps();
         });
     }

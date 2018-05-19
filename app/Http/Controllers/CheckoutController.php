@@ -6,16 +6,40 @@ use Illuminate\Http\Request;
 use LaraCart;
 use RajaOngkir;
 use Helper;
+
 use App\Veritrans\Veritrans;
+
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Api\Amount;
+use PayPal\Api\Details;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
+use PayPal\Api\Payer;
+use PayPal\Api\Payment;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\ExecutePayment;
+use PayPal\Api\PaymentExecution;
+use PayPal\Api\Transaction;
 
 class CheckoutController extends Controller
 {
+
+    private $_api_context;
+    
     public function __construct()
     {
     	$this->middleware('auth');
 
+        parent::__construct();
+
 	 	Veritrans::$serverKey = 'VT-server-LKBf4dk76gQmJHcIIc2Gh5_K';
         Veritrans::$isProduction = false;
+        
+        /** setup PayPal api context **/
+        $paypal_conf = \Config::get('paypal');
+        $this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']));
+        $this->_api_context->setConfig($paypal_conf['settings']);
     }
 
     public function index()
@@ -63,17 +87,12 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-    	if (session()->has('shipping')) {
+
+        if (session()->has('shipping')) {
             session()->forget('shipping');
         }
 
         $index = $request->fee;
-
-        $subtotal = round(Helper::getCurrency(LaraCart::subTotal($format = false, $withDiscount = true), 'idr'));
-        $taxes = round(Helper::getCurrency(LaraCart::taxTotal($formatted = false), 'idr'));
-        $shipping_fee = round(Helper::getCurrency(LaraCart::getFee('shippingFee')->amount, 'idr'));
-        $discount = round(Helper::getCurrency(LaraCart::totalDiscount($formatted = false), 'idr'));
-        $total = ($subtotal + $taxes + $shipping_fee) - $discount;
 
         $data = [
 
@@ -92,8 +111,7 @@ class CheckoutController extends Controller
             'cost' => $request->cost[$index],
             'service_name' => $request->service_name[$index],
             'service_description' => $request->service_description[$index],
-            'estimate_delivery' => $request->estimate_delivery[$index],
-            'order_total' => $total
+            'estimate_delivery' => $request->estimate_delivery[$index]
 
         ];
 
@@ -101,7 +119,26 @@ class CheckoutController extends Controller
 
         LaraCart::addFee('shippingFee', $request->cost[$index], $taxable =  false, $options = []);
 
+        if ($request->payment_method == 'midtrans') {
+
+            return $this->payWithMidtrans($request);
+
+        }
+
+        return $this->payWithPayPal($request);
+
+    }
+
+
+    private function payWithMidtrans($request)
+    {
         $vt = new Veritrans;
+
+        $subtotal = round(Helper::getCurrency(LaraCart::subTotal($format = false, $withDiscount = true), 'idr'));
+        $taxes = round(Helper::getCurrency(LaraCart::taxTotal($formatted = false), 'idr'));
+        $shipping_fee = round(Helper::getCurrency(LaraCart::getFee('shippingFee')->amount, 'idr'));
+        $discount = round(Helper::getCurrency(LaraCart::totalDiscount($formatted = false), 'idr'));
+        $total = ($subtotal + $taxes + $shipping_fee) - $discount;
 
         $transaction_details = array(
             'order_id' => uniqid(),
@@ -113,38 +150,38 @@ class CheckoutController extends Controller
         $items = [];
 
         foreach (LaraCart::getItems() as $item) {
-        	$items[] = [
-        					'id' => $item->id,
-        					'price' => round(Helper::getCurrency($item->price, 'idr')),
-        					'quantity' => $item->qty,
-        					'name' => $item->name
-        				];
+            $items[] = [
+                            'id' => $item->id,
+                            'price' => round(Helper::getCurrency($item->price, 'idr')),
+                            'quantity' => $item->qty,
+                            'name' => $item->name
+                        ];
         }
 
         if ($discount > 0) {
 
-        	$items[] = [
-        				'id' => 'discount',
-        				'price' => -$discount,
-        				'quantity' => 1,
-        				'name' => 'Discount'
-        			];
+            $items[] = [
+                        'id' => 'discount',
+                        'price' => -$discount,
+                        'quantity' => 1,
+                        'name' => 'Discount'
+                    ];
         }
 
         $items[] = [
-        				'id' => 'shipping_fee',
-        				'price' => $shipping_fee,
-        				'quantity' => 1,
-        				'name' => 'Shipping Fee'
-        			];
+                        'id' => 'shipping_fee',
+                        'price' => $shipping_fee,
+                        'quantity' => 1,
+                        'name' => 'Shipping Fee'
+                    ];
 
 
         $items[] = [
-        				'id' => 'tax',
-        				'price' => $taxes,
-        				'quantity' => 1,
-        				'name' => 'Tax'
-        			];
+                        'id' => 'tax',
+                        'price' => $taxes,
+                        'quantity' => 1,
+                        'name' => 'Tax'
+                    ];
 
         // Populate customer's billing address
         $billing_address = array(
@@ -153,8 +190,8 @@ class CheckoutController extends Controller
             'last_name' => session()->get('shipping.last_name'),
             'address' => session()->get('shipping.address'),
             'city' => RajaOngkir::getCityAttr(
-            			session()->get('shipping.city_id'),
-            			session()->get('shipping.province_id')),
+                        session()->get('shipping.city_id'),
+                        session()->get('shipping.province_id')),
             'postal_code' => session()->get('shipping.zip'),
             'phone' => session()->get('shipping.phone_number'),
             'country_code'  => 'IDN'
@@ -168,8 +205,8 @@ class CheckoutController extends Controller
             'last_name' => session()->get('shipping.last_name'),
             'address' => session()->get('shipping.address'),
             'city' => RajaOngkir::getCityAttr(
-            			session()->get('shipping.city_id'),
-            			session()->get('shipping.province_id')),
+                        session()->get('shipping.city_id'),
+                        session()->get('shipping.province_id')),
             'postal_code' => session()->get('shipping.zip'),
             'phone' => session()->get('shipping.phone_number'),
             'country_code'  => 'IDN'
@@ -208,6 +245,120 @@ class CheckoutController extends Controller
         {   
             return $e->getMessage;
         }
+    }
+
+    private function payWithPayPal($request)
+    {
+
+        $order_id = uniqid();
+        $subtotal = Helper::getCurrency(LaraCart::subTotal($format = false, $withDiscount = true), 'usd');
+        $taxes = Helper::getCurrency(LaraCart::taxTotal($formatted = false), 'usd');
+        $shipping_fee = Helper::getCurrency(LaraCart::getFee('shippingFee')->amount, 'usd');
+        $discount = Helper::getCurrency(LaraCart::totalDiscount($formatted = false), 'usd');
+        $total = ($subtotal + $taxes + $shipping_fee) - $discount;
+
+        $payer = new Payer();
+        $payer->setPaymentMethod('paypal');
+
+        $items = [];
+
+        foreach (LaraCart::getItems() as $item) {
+
+            $items[] = (new Item)->setName($item->name)
+                                ->setCurrency('USD')
+                                ->setQuantity($item->qty)
+                                ->setPrice(Helper::getCurrency($item->price, 'usd'));
+
+        }
+
+        if ($discount > 0) {
+
+            $items[] = (new Item)->setName('Discount')
+                                ->setCurrency('USD')
+                                ->setQuantity(1)
+                                ->setPrice(-$discount);
+        }
+
+        $items[] = (new Item)->setName('Shipping Fee')
+                                ->setCurrency('USD')
+                                ->setQuantity(1)
+                                ->setPrice($shipping_fee);
+                                
+
+        $items[] = (new Item)->setName('Tax')
+                                ->setCurrency('USD')
+                                ->setQuantity(1)
+                                ->setPrice($taxes);
+
+
+        $item_list = new ItemList;
+        $item_list->setItems($items);
+
+        $amount = new Amount();
+        $amount->setCurrency('USD')
+                    ->setTotal($total);
+
+
+        $transaction = new Transaction();
+        $transaction->setAmount($amount)
+                    ->setItemList($item_list)
+                    ->setDescription('Craftenart payment #'.$order_id);
+
+        $redirect_urls = new RedirectUrls();
+        $redirect_urls->setReturnUrl(url()->route('payment.paypal')) /** Specify return URL **/
+                        ->setCancelUrl(url()->route('payment.paypal'));
+
+        $payment = new Payment();
+        $payment->setIntent('Sale')
+                ->setPayer($payer)
+                ->setRedirectUrls($redirect_urls)
+                ->setTransactions(array($transaction));
+            /** dd($payment->create($this->_api_context));exit; **/
+
+        try {
+
+            $payment->create($this->_api_context);
+
+        } catch (\PayPal\Exception\PPConnectionException $ex) {
+            
+            if (config()->get('app.debug')) {
+
+                return redirect()->route('payment.paypal')
+                                    ->with('message', ['status' => 'failed', 'content' => 'Error timeout, please try again']);
+                /** echo "Exception: " . $ex->getMessage() . PHP_EOL; **/
+                /** $err_data = json_decode($ex->getData(), true); **/
+                /** exit; **/
+
+            } else {
+                
+                return redirect()->route('payment.paypal')
+                                ->with('message', ['status' => 'failed', 'content' => 'Some error occur, sorry for inconvenient']);
+                /** die('Some error occur, sorry for inconvenient'); **/
+            }
+        }
+
+        foreach($payment->getLinks() as $link) {
+
+            if($link->getRel() == 'approval_url') {
+                $redirect_url = $link->getHref();
+                break;
+            }
+        }
+
+        /** add payment ID to session **/
+        session()->put('paypal_payment_id', $payment->getId());
+        session()->put('order_number', $order_id);
+
+        if(isset($redirect_url)) {
+            /** redirect to paypal **/
+            return redirect()->away($redirect_url);
+        }
+
+        return redirect()->route('payment.paypal')
+                        ->with('message', ['status' => 'failed', 'content' => 'Unknown error occurred']);
 
     }
+        
+
+    
 }
