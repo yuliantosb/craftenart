@@ -118,7 +118,7 @@
                      </thead>
                      <tbody>
                        <tr>
-                         <td>{{ strpos($coupon->displayValue(), '%') ? $coupon->dispayValue() : Helper::currency($coupon->displayValue(false, false, false)) }}</td>
+                         <td>{{ strpos($coupon->displayValue(), '%') ? $coupon->displayValue() : Helper::currency($coupon->displayValue(false, false, false)) }}</td>
                          <td>{{ $coupon->code }}</td>
                          <td>{{ $coupon->description }}</td>
                          <td class="text-center"><button class="mt-link text-danger" data-toggle="tooltip" title="Remove Coupon" onclick="document.getElementById('coupon-{{ $coupon->code }}').submit()"><i class="fa fa-times"></i></button></td>
