@@ -321,7 +321,7 @@ class PaymentController extends Controller
             session()->forget('shipping');
 
             return redirect()->route('payment.index')
-                            ->with('message', ['status' => 'finish', 'content' => 'Your payment using <strong>Paypal</strong> with order number #'.$order_number.' is success']);
+                            ->with('message', ['status' => 'finish', 'content' => 'Transaction <strong>'.$order_number.'</strong> using <strong>Paypal</strong> is success']);
         }
 
             return redirect()->route('payment.index')
