@@ -106,14 +106,16 @@ class PaymentController extends Controller
           $tax = LaraCart::taxTotal($formatted = false);
           $shipping_fee = LaraCart::getFee('shippingFee')->amount;
           $discount = LaraCart::totalDiscount($formatted = false);
+          $total = LaraCart::total($formatted = false, $withDiscount = true);
 
           $order = new Order;
           $order->number = $check_order->order_id;
+          $order->user_id = auth()->user()->id;
           $order->subtotal = $subtotal;
           $order->shipping_fee = $shipping_fee;
           $order->discount = $discount;
           $order->tax = $tax;
-          $order->total = Helper::setCurrency($check_order->gross_amount, 'idr');
+          $order->total = $total;
           $order->payment_date = $check_order->transaction_time;
           $order->transaction_status = $check_order->transaction_status;
           $order->payment_type = $check_order->payment_type;
@@ -254,6 +256,7 @@ class PaymentController extends Controller
                 $shipping = session()->get('shipping');
 
                 $order = new Order;
+                $order->user_id = auth()->user()->id;
                 $order->number = $order_number;
                 $order->subtotal = $subtotal;
                 $order->shipping_fee = $shipping_fee;

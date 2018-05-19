@@ -15,4 +15,14 @@ class Order extends Model
     {
     	return $this->hasOne('App\Ship');
     }
+
+    public function getFullNameAttribute()
+	{
+	    return "{$this->first_name} {$this->last_name}";
+	}
+
+	public function user()
+	{
+		return $this->belongsTo('App\User', 'user_id');
+	}
 }

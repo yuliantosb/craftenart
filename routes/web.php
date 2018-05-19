@@ -76,6 +76,8 @@ Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group
 	Route::get('/region/city', 'RegionController@city');
 	// review
 	Route::resource('review', 'ReviewController');
+	// order
+	Route::resource('order', 'OrderController');
 });
 
 
