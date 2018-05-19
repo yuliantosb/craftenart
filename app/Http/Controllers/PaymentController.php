@@ -37,6 +37,12 @@ class PaymentController extends Controller
     {
 
       $this->middleware('auth'); 
+
+      parent::__construct();
+
+      Veritrans::$serverKey = 'VT-server-LKBf4dk76gQmJHcIIc2Gh5_K';
+      Veritrans::$isProduction = false;
+
       /** setup PayPal api context **/
       $paypal_conf = config()->get('paypal');
       $this->_api_context = new ApiContext(
