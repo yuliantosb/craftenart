@@ -11,7 +11,16 @@ class CouponController extends Controller
     public function apply(Request $request)
     {
 
-    	$coupon = new \LukePOLO\LaraCart\Coupons\Fixed($request->coupon_code, 10, [
+        if ($request->coupon_code == 'ASDF123') {
+
+            $coupon = new \LukePOLO\LaraCart\Coupons\Fixed($request->coupon_code, 10, [
+                'description' => '$10 OFF'
+            ]);
+
+            $add_coupon = LaraCart::addCoupon($coupon);
+        }
+
+        $coupon = new \LukePOLO\LaraCart\Coupons\Percentage($request->coupon_code, .10, [
             'description' => '10% OFF'
         ]);
 
