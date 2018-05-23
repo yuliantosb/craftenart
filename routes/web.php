@@ -40,8 +40,7 @@ Route::post('/region/cost', 'RegionController@cost');
 
 // coupon
 Route::post('coupon', 'CouponController@apply')->name('coupon.apply');
-Route::get('coupon', 'CouponController@index')->name('coupon.index');
-Route::delete('coupon/{code}', 'CouponController@destroy')->name('coupon.destroy');
+Route::delete('coupon/{code}', 'CouponController@remove')->name('coupon.remove');
 
 // review
 Route::post('review', 'ReviewController@store')->name('review.store');
@@ -78,6 +77,10 @@ Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group
 	Route::resource('review', 'ReviewController');
 	// order
 	Route::resource('order', 'OrderController');
+	// stock
+	Route::resource('stock', 'StockController');
+	// coupon
+	Route::resource('coupon', 'CouponController');
 });
 
 

@@ -3,7 +3,7 @@
 @endif
 
 @foreach ($users as $user)
-	<div class="col-md-4">
+	<div class="col-md-4" style="margin-bottom: 20px">
 		<div class="text-center card-box">
 
             <div class="dropdown pull-right" style="padding: 10px">

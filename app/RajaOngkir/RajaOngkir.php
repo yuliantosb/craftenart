@@ -55,6 +55,21 @@ class RajaOngkir
 		return json_decode($results)->rajaongkir->results;
 	}
 
+	public static function getProvinceAttr($province_id)
+	{
+		$client = new Client;
+
+		$res = $client->request('GET', 'https://api.rajaongkir.com/'.config('rajaongkir.type').'/province?id='.$province_id, [
+		    'headers' => [
+		    			'key' => config('rajaongkir.api')
+	    			]
+		]);
+
+		$results = $res->getBody()->getContents();
+		$province = json_decode($results)->rajaongkir->results;
+		return $province->province;
+	}
+
 	public static function getCityAttr($city_id, $province_id)
 	{
 		$client = new Client;

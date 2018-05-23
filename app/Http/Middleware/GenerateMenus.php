@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Review;
+use App\Order;
 
 class GenerateMenus
 {
@@ -19,6 +20,7 @@ class GenerateMenus
         \Menu::make('MyNavBar', function ($menu) {
 
             $review_count = Review::where('status', 0)->count();
+            $order_count = Order::countOrder();
 
             $menu->add('Dashboard', ['route' => 'admin.dashboard.index'])
                 ->append('<i class="ti-panel"></i>');
@@ -50,7 +52,7 @@ class GenerateMenus
 
             $menu->add('Order', 'admin/order')
                 ->append('<i class="ti-shopping-cart"></i>')
-                ->append('<label class="label label-primary" style="margin-left: 10px">2</label>');
+                ->append( $order_count > 0 ? '<label class="label label-primary" style="margin-left: 10px">'. $order_count .'</label>' : '');
 
             $menu->add('Review', 'admin/review')
                 ->append('<i class="ti-comment"></i>')

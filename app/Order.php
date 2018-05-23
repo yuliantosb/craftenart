@@ -25,4 +25,10 @@ class Order extends Model
 	{
 		return $this->belongsTo('App\User', 'user_id');
 	}
+
+	public function scopeCountOrder($query)
+	{
+		return $query->where('status', 0)
+						->count();
+	}
 }

@@ -36,9 +36,12 @@
 
     <!-- datepicker -->
     <link href="{{ url('backend/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- datetimepicker -->
+    <link href="{{ url('backend/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
     
     <!--  Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ url('backend/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
     <link href="{{ url('backend/css/themify-icons.css') }}" rel="stylesheet">
 
@@ -113,8 +116,15 @@
     <!-- Jquery Validator -->
     <script src="{{ url('backend/plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>
 
+    <!-- moment -->
+    <script src="{{ url('backend/plugins/moment/moment.js') }}"></script>
     <!-- Datepicker -->
     <script src="{{ url('backend/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+
+    <!-- datetimepicker -->
+    <script src="{{ url('backend/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
+    
+
     <!-- autoNumeric -->
     <script src="{{ url('backend/plugins/autoNumeric/autoNumeric.js') }}"></script>
     <!-- tinymce -->

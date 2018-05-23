@@ -13,15 +13,19 @@ class CreateCouponsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('coupons');
+        
         Schema::create('coupons', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
             $table->decimal('amount', 15, 2);
             $table->integer('type')->nullable()->default(0);
+            $table->decimal('min_amount', 15, 2)->nullable();
+            $table->decimal('max_amount', 15, 2)->nullable();
             $table->date('valid_thru');
-            $table->string('exclude_item');
-            $table->string('exclude_category');
             $table->boolean('is_single_user')->default(0);
+            $table->string('exculde_user')->nullable();
+            $table->boolean('is_single_use')->default(0);
             $table->timestamps();
         });
     }

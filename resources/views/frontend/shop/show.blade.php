@@ -56,6 +56,10 @@
 						</div>
 
 						<div class="txt-wrap">
+							@if ($product->stock->amount <= 0)
+							<p class="text-danger">This product has been out of stock</p>
+							@endif
+
 							{!! $product->description !!}
 						</div>
 						<div class="text-holder">

@@ -116,6 +116,12 @@ $('.datepicker').datepicker({
     todayHighlight: true
 });
 
+$('.datetimepicker').datetimepicker({
+    format: 'YYYY-MM-DD', 
+    locale: 'id',
+    useCurrent: false,
+});
+
 $('.number').keypress(function (e) {
      if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
         $("#errmsg").html("Digits Only").show().fadeOut("slow");

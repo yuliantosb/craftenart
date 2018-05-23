@@ -28,6 +28,8 @@
 												<span>shop now</span>
 												<i class="fa fa-angle-right"></i>
 											</a>
+
+
 											@if (!empty($product->sale))
 											<div class="discount">
 												<span>-{{ round(( ($product->price - $product->sale) / $product->price) * 100) }}%</span>
@@ -116,6 +118,10 @@
 														<a href="{{ route('shop.show', $product->slug) }}"><img src="{{ url('uploads/thumbs/'.$product->picture) }}" alt="image description" style="width: 215px; height: 215px; object-fit: cover"></a>
 
 														<span class="caption">
+															@if ($product->stock->amount <= 0)
+																<span class="stock">Out of stock</span>
+															@endif
+
 															@if (!empty($product->sale))
 															<span class="off">{{ round(( ($product->price - $product->sale) / $product->price) * 100) }}% Off</span>
 															@endif
@@ -172,6 +178,19 @@
 										<div class="b1">
 											<div class="b2">
 												<a href="{{ route('shop.show', $best->slug) }}"><img src="{{ url('uploads/thumbs/'.$best->picture) }}" style="width: 275px; height: 285px; object-fit: scale-down;"></a>
+
+												<span class="caption">
+													@if ($best->stock->amount <= 0)
+														<span class="stock">Out of stock</span>
+													@endif
+
+													@if (!empty($best->sale))
+													<span class="off">{{ round(( ($best->price - $best->sale) / $best->price) * 100) }}% Off</span>
+													@endif
+												</span>
+
+												{!! Helper::getRate($best->reviews->avg('rate')) !!} 
+
 												<ul class="links add">
 													<form style="display: none" action="{{ route('cart.store') }}" method="post" id="best-{{ $best->id }}">
 														{{ csrf_field() }}

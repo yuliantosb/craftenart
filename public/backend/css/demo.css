@@ -266,3 +266,20 @@ span.select2-selection.select2-selection--single {
     vertical-align: middle;
     margin-right: 0px;
 }
+
+.table-custom {
+    border: 1px solid #e1e1e1;
+}
+
+.table-custom tr > td:nth-child(2) {
+    border-right: 1px solid #e1e1e1
+}
+
+.table-custom tr > td {
+    vertical-align: top !important;
+}
+
+.hasDatepicker {
+    position: relative;
+    z-index: 9999;
+}

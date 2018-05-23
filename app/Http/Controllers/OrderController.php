@@ -17,7 +17,7 @@ class OrderController extends Controller
     {
     	if ($request->ajax()) {
 
-    		$order = Order::get();
+    		$order = Order::orderBy('payment_date', 'desc')->get();
 
     		return DataTables::of($order)
 
@@ -40,7 +40,7 @@ class OrderController extends Controller
     		})
 
     		->addColumn('number', function($data){
-    			return '<p>'.$data->number.'<br><small class="text-muted">'.Carbon::parse($data->created_at)->format('m/d/Y').'</small></p>';
+    			return '<p>'.$data->number.'<br><small class="text-primary">'.Carbon::parse($data->created_at)->format('m/d/Y').'</small></p>';
     		})
 
 			->addColumn('status', function($data){
@@ -48,12 +48,45 @@ class OrderController extends Controller
 			})
 
 			->addColumn('total', function($data){
-				return Helper::currency($data->total);
+				return Helper::currency(($data->subtotal + $data->tax + $data->ship->cost ) - $data->discount);
 			})
 
 			->toJson();
     	}
 
     	return view('backend.order.index');
+    }
+
+    public function show($id)
+    {
+    	$order = Order::with('ship')->find($id);
+
+    	return view('backend.order.show', compact(['order']));
+
+    }
+
+    public function update(Request $request, $id)
+    {
+    	$order = Order::find($id);
+    	$order->status = $request->status;
+    	$order->save();
+
+    	return redirect()->route('admin.order.index')
+    			->with('message', 'Order has been updated');
+    }
+
+    public function destroy($id)
+    {
+        DB::transaction(function() use ($id){
+
+            $order = Order::find($id);
+            $order->ship()->delete();
+            $order->details()->delete();
+            $order->delete();
+
+        });
+
+        return redirect()->route('admin.order.index')
+                ->with('message', 'Order has been deleted');
     }
 }

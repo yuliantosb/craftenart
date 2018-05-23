@@ -5767,14 +5767,14 @@ a:hover {
   position: absolute;
 }
 
-.mt-product1 .caption .off {
+/*.mt-product1 .caption .off {
   color: #fff;
   display: block;
   padding: 3px 6px;
   margin-bottom: 1px;
   background: #b2cc29;
   font: 700 14px/16px "Montserrat", sans-serif;
-}
+}*/
 
 .mt-product1 .caption .new {
   color: #fff;
@@ -13027,4 +13027,21 @@ span.select2-selection.select2-selection--single, .select2-search__field:focus {
 
 .mt-link:focus {
   outline: none;
+}
+
+
+.mt-product1 .caption .off {
+  color: #fff;
+  padding: 3px 6px;
+  background: #b2cc29;
+  font: 700 14px/16px "Montserrat", sans-serif;
+}
+
+.mt-product1 .caption .stock {
+    color: #fff;
+    display: block;
+    padding: 3px 6px;
+    margin-bottom: 5px;
+    background: maroon;
+    font: 700 11px/14px "Montserrat", sans-serif;
 }

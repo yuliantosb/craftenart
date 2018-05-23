@@ -96,7 +96,7 @@
 
           @foreach (LaraCart::getCoupons() as $coupon)
 
-            <form style="display: none" action="{{ route('coupon.destroy', $coupon->code) }}" method="post" id="coupon-{{ $coupon->code }}">
+            <form style="display: none" action="{{ route('coupon.remove', $coupon->code) }}" method="post" id="coupon-{{ $coupon->code }}">
 
               {{ csrf_field() }}
               {{ method_field('DELETE') }}
