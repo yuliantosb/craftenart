@@ -24,7 +24,7 @@ class CreateCouponsTable extends Migration
             $table->decimal('max_amount', 15, 2)->nullable();
             $table->date('valid_thru');
             $table->boolean('is_single_user')->default(0);
-            $table->string('exculde_user')->nullable();
+            $table->string('include_user')->nullable();
             $table->boolean('is_single_use')->default(0);
             $table->timestamps();
         });
