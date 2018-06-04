@@ -56,7 +56,6 @@ class MediaController extends Controller
     	if (isset($request->keyword)) {
     		clone $images->where('name', 'like', '%'.$request->keyword.'%')
     					->orWhere('alt', 'like', '%'.$request->keyword.'%')
-    					->orWhere('caption', 'like', '%'.$request->keyword.'%')
     					->orWhere('description', 'like', '%'.$request->keyword.'%');
     	}
 

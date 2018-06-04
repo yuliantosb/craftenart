@@ -11,7 +11,7 @@ var mediaDropzone = new Dropzone('.drag-and-drop', {
 	autoQueue: true,
 	previewsContainer: '.preview',
 	clickable: '#browse-file',
-	acceptedFiles: '.jpg, .jpeg, .png,',
+	acceptedFiles: '.jpg, .jpeg, .png, .gif',
 	params: { _token:  $('meta[name="csrf-token"]').attr('content')},
 	uploadMultiple: true,
 	parallelUploads: 100,
@@ -20,7 +20,7 @@ var mediaDropzone = new Dropzone('.drag-and-drop', {
 
 mediaDropzone.on('addedfile', function(file) {
 
-  if (file.type != 'image/jpeg' && file.type != 'image/png'){
+  if (file.type != 'image/jpeg' && file.type != 'image/png' && file.type != 'image/gif'){
     show_notification('Error', 'error', 'File not supported');
     mediaDropzone.removeFile(file);
     console.log(file.type);

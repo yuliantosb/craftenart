@@ -1,0 +1,1 @@
+@include('widgets.partials.product', ['name' => $config['name'], 'products' => $products])

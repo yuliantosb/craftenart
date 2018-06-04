@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<!-- mt logo start here -->
-				<div class="mt-logo" style="margin: 0px"><a href="#"><img src="{{ url('frontend/images/mt-logo.png') }}" alt="craftenart" style="width: 180px"></a></div>
+				<div class="mt-logo" style="margin: 0px"><a href="#"><img src="{{ url('uploads/'.App\Setting::getSetting('logo')->img) }}" alt="craftenart" style="width: 180px"></a></div>
 				<!-- mt icon list start here -->
 				<ul class="mt-icon-list">
 					<li class="hidden-lg hidden-md">
@@ -50,25 +50,25 @@
 									
 									<!-- cart row total start here -->
 									<div class="cart-row-total">
-										<span class="mt-total">Sub Total</span>
+										<span class="mt-total">@lang('label.subtotal')</span>
 										<span class="mt-total-txt">{{ Helper::currency(LaraCart::subTotal($format = false, $withDiscount = true)) }}</span>
 									</div>
 
 									<!-- cart row total start here -->
 									<div class="cart-row-total">
-										<span class="mt-total">Discount</span>
+										<span class="mt-total">@lang('label.discount')</span>
 										<span class="mt-total-txt">({{ Helper::currency(LaraCart::totalDiscount($formatted = false)) }})</span>
 									</div>
 
 									<!-- cart row total start here -->
 									<div class="cart-row-total">
-										<span class="mt-total">Tax</span>
+										<span class="mt-total">@lang('label.tax')</span>
 										<span class="mt-total-txt">{{ Helper::currency(LaraCart::taxTotal($formatted = false)) }}</span>
 									</div>
 
 									<!-- cart row total start here -->
 									<div class="cart-row-total">
-										<span class="mt-total">Shipping Fee</span>
+										<span class="mt-total">@lang('label.shipping_fee')</span>
 										<span class="mt-total-txt">{{ Helper::currency(LaraCart::getFee('shippingFee')->amount) }}</span>
 									</div>
 
@@ -76,17 +76,17 @@
 
 									<!-- cart row total start here -->
 									<div class="cart-row-total">
-										<span class="mt-total">Total</span>
+										<span class="mt-total">@lang('label.total')</span>
 										<span class="mt-total-txt">{{ Helper::currency(LaraCart::total($formatted = false, $withDiscount = true)) }}</span>
 									</div>
 									<!-- cart row total end here -->
 									<div class="cart-btn-row">
-										<a href="{{ route('cart.index') }}" class="btn-type2">VIEW CART</a>
-										<a href="{{ route('checkout.index') }}" class="btn-type3">CHECKOUT</a>
+										<a href="{{ route('cart.index') }}" class="btn-type2">@lang('label.view_cart')</a>
+										<a href="{{ route('checkout.index') }}" class="btn-type3">@lang('label.checkout')</a>
 									</div>
 									@else
 									<div class="cart-row text-center">
-										<strong>Your cart is currently empty</strong>
+										<strong>@lang('label.empty_cart')</strong>
 									</div>
 									@endif
 								</div><!-- mt side widget end here -->

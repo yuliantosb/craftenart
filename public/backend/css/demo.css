@@ -279,7 +279,66 @@ span.select2-selection.select2-selection--single {
     vertical-align: top !important;
 }
 
-.hasDatepicker {
-    position: relative;
-    z-index: 9999;
+.datepicker-dropdown.dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.datepicker {
+    padding: 7px 18px !important;
+}
+
+.select2-container--disabled {
+    opacity: .5;
+
+}
+
+.select2-container--default.select2-container--disabled .select2-selection--multiple {
+    cursor: not-allowed !important;
+}
+
+.clickable{
+    cursor: pointer;   
+}
+
+.panel-heading span {
+    margin-top: -20px;
+    font-size: 15px;
+}
+
+.sortable li {
+    border: 2px solid rgb(225, 225, 225);
+    padding: 10px;
+    cursor: move;
+    margin: 10px 0px;
+    clear: both;
+    width: 100%;
+    list-style: none;
+    user-select: none;
+}
+
+.sortable li ol {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.placeholder {
+    padding: 0 10px;
+    outline: 1px dashed #e1e1e1;
+    height: 40px;
+}
+
+.mjs-nestedSortable-error {
+    background: #fbe3e4;
+    border-color: transparent;
+    cursor: disabled;
+}
+
+.select2 {
+    width: 100% !important;
+}
+
+.right-toggle {
+    float: right;
 }

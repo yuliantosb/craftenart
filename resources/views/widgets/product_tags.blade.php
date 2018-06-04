@@ -1,0 +1,1 @@
+@include('widgets.partials.tags', ['name' => $config['name'], 'tags' => $tags])

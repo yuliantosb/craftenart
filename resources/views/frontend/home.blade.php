@@ -25,7 +25,7 @@
 										<span class="price">{!! $product->price_amount !!}</span>
 										<div class="txts">
 											<a class="btn-shop" href="{{ route('shop.show', $product->slug) }}">
-												<span>shop now</span>
+												<span>@lang('label.shop_now')</span>
 												<i class="fa fa-angle-right"></i>
 											</a>
 
@@ -53,7 +53,7 @@
 										<span class="price">{!! $product->price_amount !!}</span>
 										<div class="txts">
 											<a class="btn-shop" href="{{ route('shop.show', $product->slug) }}">
-												<span>shop now</span>
+												<span>@lang('label.shop_now')</span>
 												<i class="fa fa-angle-right"></i>
 											</a>
 											@if (!empty($product->sale))
@@ -73,7 +73,7 @@
 									<div class="holder">
 										<h2>{{ $product->name }}</h2>
 										<span class="price">{!! $product->price_amount !!}</span>
-										<a href="{{ route('shop.show', $product->slug) }}" class="shop">SHOP NOW</a>
+										<a href="{{ route('shop.show', $product->slug) }}" class="shop">@lang('label.shop_now')</a>
 									</div>
 								</div>
 									
@@ -119,7 +119,7 @@
 
 														<span class="caption">
 															@if ($product->stock->amount <= 0)
-																<span class="stock">Out of stock</span>
+																<span class="stock">@lang('label.out_of_stock')</span>
 															@endif
 
 															@if (!empty($product->sale))
@@ -132,7 +132,7 @@
 															<li>																
 																<a href="javascript:void(0)" onclick="document.getElementById('tab-{{ $product->id }}').submit()">
 																	<i class="icon-handbag"></i>
-																	<span>Add to Cart</span>
+																	<span>@lang('label.add_to_cart')</span>
 																</a>
 															</li>
 															<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
@@ -163,8 +163,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-12 mt-heading text-uppercase">
-						<h2 class="heading">BEST SELLER</h2>
-						<p>EXCEPTEUR SINT OCCAECAT</p>
+						<h2 class="heading">{{ App\Setting::getSetting('mid')->heading }}</h2>
+						<p>{{ App\Setting::getSetting('mid')->text }}</p>
 					</div>
 				</div>
 				<div class="row">

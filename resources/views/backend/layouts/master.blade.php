@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<link rel="apple-touch-icon" sizes="76x76" href="{{ url('backend/img/apple-icon.png') }}">
-	<link rel="icon" type="image/png" sizes="96x96" href="{{ url('backend/img/favicon.png') }}">
+	<link rel="icon" type="image/png" href="{{ url('uploads/'.App\Setting::getSetting('favicon')->img) }}" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -131,7 +130,7 @@
     <script src="{{ url('backend/plugins/tinymce/tinymce.js') }}"></script>
 
     <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script> -->
 
     <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
 	<script src="{{ url('backend/js/paper-dashboard.js') }}"></script>

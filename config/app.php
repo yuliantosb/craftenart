@@ -165,7 +165,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Lavary\Menu\ServiceProvider::class,
         LukePOLO\LaraCart\LaraCartServiceProvider::class,
-        Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class
+        Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
+        Arrilot\Widgets\ServiceProvider::class,
 
     ],
 
@@ -224,7 +225,8 @@ return [
         'Coupons' => LukePOLO\LaraCart\Coupons::class,
         'Gravatar' => Thomaswelton\LaravelGravatar\Facades\Gravatar::class,
         'RajaOngkir' => App\RajaOngkir\RajaOngkir::class,
-
+        'Widget'       => Arrilot\Widgets\Facade::class,
+        'AsyncWidget'  => Arrilot\Widgets\AsyncFacade::class,
         
     ],
 

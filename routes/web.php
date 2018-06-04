@@ -51,7 +51,15 @@ Route::post('payment/store', 'PaymentController@store')->name('payment.store');
 Route::get('payment/complete/{type}', 'PaymentController@complete')->name('payment.complete');
 Route::get('payment/paypal', 'PaymentController@paypal')->name('payment.paypal');
 
+// language
+Route::get('language', 'LanguageController@set')->name('language.set');
+
 // admin
+
+Route::get('admin', function(){
+	return redirect()->route('admin.dashboard.index');
+});
+
 Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group(function(){
 	// dashboard
 	Route::resource('/dashboard', 'DashboardController');
@@ -81,6 +89,14 @@ Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group
 	Route::resource('stock', 'StockController');
 	// coupon
 	Route::resource('coupon', 'CouponController');
+	// menu
+	Route::post('/menu/bulk_edit', 'MenuController@bulkEdit')->name('menu.bulk_edit');
+	Route::resource('menu', 'MenuController');
+	// widget
+	Route::resource('widget', 'WidgetController');
+	// settings
+	Route::get('settings/get_widget', 'SettingController@getWidget')->name('settings.get_widget');
+	Route::resource('settings', 'SettingController');
 });
 
 

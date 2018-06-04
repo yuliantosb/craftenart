@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-6 col-md-3 mt-paddingbottomsm">
 
-			<h3 class="heading">Hot Sale</h3>
+			<h3 class="heading">@lang('label.hot_sale')</h3>
 
 			@foreach ($products->whereNotNull('sale')->take(3)->get() as $product)
 			<!-- mt product4 start here -->
@@ -25,7 +25,7 @@
 
 
 		<div class="col-xs-12 col-sm-6 col-md-3 mt-paddingbottomsm">
-			<h3 class="heading">New Product</h3>
+			<h3 class="heading">@lang('label.new_product')</h3>
 
 			@foreach ($products->orderBy('id', 'desc')->take(3)->get() as $product)
 			<!-- mt product4 start here -->
@@ -50,7 +50,7 @@
 
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-3 mt-paddingbottomxs">
-			<h3 class="heading">Stared Product</h3>
+			<h3 class="heading">@lang('label.stared_product')</h3>
 			@foreach ($products->whereHas('reviews')->take(3)->get() as $product)
 			<!-- mt product4 start here -->
 			<div class="mt-product4 mt-paddingbottom20">
@@ -73,7 +73,7 @@
 			@endforeach
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-3">
-			<h3 class="heading">Best Seller</h3>
+			<h3 class="heading">@lang('label.best_seller')</h3>
 			@foreach ($products->whereHas('orders')->withCount('orders')->orderBy('orders_count', 'desc')->take(3)->get() as $product)
 			<!-- mt product4 start here -->
 			<div class="mt-product4 mt-paddingbottom20">

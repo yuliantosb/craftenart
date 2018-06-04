@@ -143,5 +143,18 @@ tinymce.init({
         'searchreplace visualblocks code fullscreen',
         'insertdatetime media table contextmenu paste code help'
         ],
-        toolbar: ' formatselect | undo redo  | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat ',
+        toolbar: ' formatselect | undo redo  | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code ',
+});
+
+$(document).on('click', '.panel-heading span.clickable', function(e){
+    var $this = $(this);
+    if(!$this.hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body').slideUp();
+        $this.addClass('panel-collapsed');
+        $this.find('i').removeClass('fa-angle-up').addClass('fa-angle-down');
+    } else {
+        $this.parents('.panel').find('.panel-body').slideDown();
+        $this.removeClass('panel-collapsed');
+        $this.find('i').removeClass('fa-angle-down').addClass('fa-angle-up');
+    }
 });

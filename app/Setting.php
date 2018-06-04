@@ -11,7 +11,13 @@ class Setting extends Model
     	$return = $query->where('name', $name)
     					->first();
 
-    	return !empty($return) ? json_decode($return->content_en) : json_decode('[]');
+    	if (app()->getLocale() == 'en') {
+    		$result = $return->content_en;
+    	} else {
+    		$result = $return->content_id;
+    	}
+
+    	return !empty($return) ? json_decode($result) : json_decode('[]');
 
     }
 }

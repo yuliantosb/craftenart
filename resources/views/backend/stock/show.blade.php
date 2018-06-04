@@ -12,7 +12,7 @@
                         <p class="stock">Display all stock details list</p>
                     </div>
                     <div class="pull-right">
-                        <button class="btn btn-primary" type="button" id="btn-add">Add Stock</button>
+                        <button class="btn btn-primary" type="button" id="btn-add">Update Stock</button>
                         <a class="btn btn-default" href="{{ route('admin.stock.index') }}">Back</a>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-                <h4 class="modal-title">Add Stock</h4>
+                <h4 class="modal-title">Update Stock</h4>
             </div>
             <div class="modal-body">
                 <div class="row">

@@ -92,6 +92,7 @@
 
         </form>
 
+
         @if (!empty(LaraCart::getCoupons()))
 
           @foreach (LaraCart::getCoupons() as $coupon)
@@ -134,18 +135,21 @@
         @else
 
           <div class="row">
-          <div class="col-xs-12">
-            <form action="{{ route('coupon.apply') }}" class="coupon-form" method="post">
-              @csrf
-              <fieldset>
-                <div class="mt-holder">
-                  <input type="text" class="form-control" placeholder="Your Coupon Code" name="coupon_code">
-                  <button type="submit" class="mt-button">APPLY</button>
-                </div>
-              </fieldset>
-            </form>
+            <div class="col-xs-12">
+              <form action="{{ route('coupon.apply') }}" class="coupon-form" method="post">
+                @csrf
+                <fieldset>
+                  <div class="mt-holder form-group {{ session()->get('data')['type'] == 'error' ? 'has-error' : '' }}">
+                    <input type="text" class="form-control" placeholder="Your Coupon Code" name="coupon_code">
+                    <button type="submit" class="mt-button">APPLY</button>
+                    @if (session()->has('data'))
+                    <span class="help-block text-danger">{{ session()->get('data')['message'] }}</span>
+                    @endif
+                  </div>
+                </fieldset>
+              </form>
+            </div>
           </div>
-        </div>
 
         @endif
 

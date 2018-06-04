@@ -25,8 +25,8 @@
                 <div class="holder" style="margin: 0;">
                     <div class="mt-side-widget">
                       <header>
-                        <h2 style="margin: 0 0 5px;">Reset your password</h2>
-                        <p>Type your email to send password reset link</p>
+                        <h2 style="margin: 0 0 5px;">@lang('label.reset_your_password')</h2>
+                        <p>@lang('label.type_email_to_send_a_password_link')</p>
                       </header>
 
                         @if (session('status'))
@@ -40,7 +40,7 @@
                         <fieldset>
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <input required="required" type="email" placeholder="Email address" class="input" name="email">
+                                <input required="required" type="email" placeholder="@lang('label.email_address')" class="input" name="email">
 
                                 @if ($errors->has('email'))
                                     <span class="help-block text-danger">
@@ -50,7 +50,7 @@
 
                             </div>
 
-                            <button type="submit" class="btn-type1">Send Password Reset Link</button>
+                            <button type="submit" class="btn-type1">@lang('label.send_password_link')</button>
 
                         </fieldset>
                       </form>

@@ -25,8 +25,8 @@
                 <div class="holder" style="margin: 0;">
                     <div class="mt-side-widget">
                       <header>
-                        <h2 style="margin: 0 0 5px;">Change your password</h2>
-                        <p>Type new password to change</p>
+                        <h2 style="margin: 0 0 5px;">@lang('label.change_your_password')</h2>
+                        <p>@lang('label.type_new_password_to_reset')</p>
                       </header>
                       <form method="POST" action="{{ route('password.request') }}">
                         @csrf
@@ -34,7 +34,7 @@
                             <input type="hidden" name="token" value="{{ $token }}">
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <input type="text" placeholder="Email address" class="input" name="email" required="required">
+                                <input type="text" placeholder="@lang('label.email_address')" class="input" name="email" required="required">
 
                                 @if ($errors->has('email'))
                                     <span class="help-block text-danger">
@@ -45,7 +45,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <input type="password" placeholder="New password" class="input" name="password" required="required">
+                                <input type="password" placeholder="@lang('label.new_password')" class="input" name="password" required="required">
 
                                 @if ($errors->has('password'))
                                     <span class="help-block text-danger">
@@ -56,7 +56,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                <input type="password" placeholder="Re-Type new password" class="input" name="password_confirmation" required="required">
+                                <input type="password" placeholder="@lang('label.retype_new_password')" class="input" name="password_confirmation" required="required">
 
                                 @if ($errors->has('password_confirmation'))
                                     <span class="help-block text-danger">
@@ -66,7 +66,7 @@
 
                             </div>
 
-                            <button type="submit" class="btn-type1">Change Password</button>
+                            <button type="submit" class="btn-type1">@lang('label.change_password')</button>
 
                         </fieldset>
                       </form>
