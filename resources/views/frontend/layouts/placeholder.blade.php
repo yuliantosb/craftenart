@@ -1,4 +1,4 @@
-@php ($placeholder_img = (App\Setting::getSetting('banner_placeholder')->img))
+@php ($placeholder_img = (App\Setting::getSetting('default_placeholder')->img))
 
 <section class="mt-contact-banner style4 wow fadeInUp" data-wow-delay="0.4s" style="background-image: url(&quot;{{ url('uploads/'.$placeholder_img)  }}&quot;); visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
 	<div class="container">
