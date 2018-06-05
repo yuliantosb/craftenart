@@ -50,8 +50,21 @@
 	  gtag('js', new Date());
 
 	  gtag('config', 'UA-120224836-1');
+
+	  ga('require', 'ecommerce');
+	  
 	</script>
 
+
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-MV4B887');</script>
+	<!-- End Google Tag Manager -->
+
+	<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="60010c4e-5f04-496d-8efa-3b787043c221";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 
     @stack('css')
 
@@ -129,6 +142,10 @@
 </head>
 
 <body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MV4B887"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
 	<!-- main container of all the page elements -->
 	<div id="wrapper">
 		<!-- Page Loader -->
