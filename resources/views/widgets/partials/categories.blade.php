@@ -3,7 +3,7 @@
 	<div class="sub-drop">
 		<ul>
 			@foreach ($categories as $category)
-				<li><a href="{{ url('shop/category/'.$category->slug) }}">{{ $category->name }}</a></li>
+				<li><a href="{{ url('shop?category='.$category->slug) }}">{{ $category->name }}</a></li>
 			@endforeach
 		</ul>
 	</div>

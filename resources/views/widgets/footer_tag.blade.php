@@ -5,7 +5,7 @@
 	
 	<ul class="list-unstyled tabs">
 		@foreach ($tags as $tag)
-		<li><a href="{{ url('shop/tag/'.$tag->slug) }}">{{ $tag->name }}</a></li>
+		<li><a href="{{ url('shop?tags%5B%5D='.$tag->slug) }}">{{ $tag->name }}</a></li>
 		@endforeach
 	</ul>
 </div>

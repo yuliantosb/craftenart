@@ -7123,7 +7123,7 @@ a:hover {
 }
 
 .mt-product-detial .comment-list a:hover {
-  color: #e67e22;
+  color: #e84c3c;
 }
 
 .mt-product-detial .product-slider {
@@ -7231,7 +7231,7 @@ a:hover {
 }
 
 .mt-product-detial .breadcrumbs a:hover {
-  color: #e67e22;
+  color: #e84c3c;
 }
 
 .mt-product-detial .rank-rating {
@@ -7385,7 +7385,7 @@ a:hover {
   -webkit-transition: all 0.25s linear;
   -o-transition: all 0.25s linear;
   transition: all 0.25s linear;
-  background: #e67e22;
+  background: #e84c3c;
   color: #fff;
 }
 
@@ -8342,7 +8342,7 @@ a:hover {
 }
 
 .product-post .title a:hover {
-  color: #e67e22;
+  color: #e84c3c;
 }
 
 .product-post .price {
@@ -8412,7 +8412,7 @@ a:hover {
 }
 
 .product-post .btn-cart:hover {
-  background: #e67e22;
+  background: #e84c3c;
   color: #fff;
 }
 
@@ -8444,7 +8444,7 @@ a:hover {
 }
 
 .product-post .nav a:hover {
-  color: #e67e22;
+  color: #e84c3c;
 }
 
 /*------------------------------------------------------------------
@@ -10840,7 +10840,7 @@ a:hover {
   -webkit-transition: all 0.25s linear;
   -o-transition: all 0.25s linear;
   transition: all 0.25s linear;
-  background: #e67e22;
+  background: #e84c3c;
   color: #fff;
 }
 
@@ -12071,7 +12071,7 @@ a:hover {
 }
 
 .shop-widget .category-list a:hover {
-  color: #e67e22;
+  color: #e84c3c;
 }
 
 .shop-widget .price-range {
@@ -12141,7 +12141,7 @@ a:hover {
 }
 
 .shop-widget .filter-btn:hover {
-  background: #e67e22;
+  background: #e84c3c;
 }
 
 /*------------------------------------------------------------------
@@ -12900,7 +12900,7 @@ a:hover, a:active, a:focus {
 }
 
 .mt-primary-button {
-  background-color: #e67e22;
+  background-color: #e84c3c;
   color: #fff;
   border: 1px solid #fff;
 }
@@ -12945,7 +12945,7 @@ span.select2-selection.select2-selection--single, .select2-search__field:focus {
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-    background-color: #e67e22 !important;
+    background-color: #e84c3c !important;
     color: white;
 }
 
@@ -12984,7 +12984,7 @@ span.select2-selection.select2-selection--single, .select2-search__field:focus {
 }
 
 .container-radio input:checked ~ .checkmark {
-  background-color: #e67e22;
+  background-color: #e84c3c;
 }
 
 .checkmark:after {
@@ -13048,4 +13048,28 @@ span.select2-selection.select2-selection--single, .select2-search__field:focus {
 
 .form-group.has-error input[type=text] {
   border: 1px solid #a94442 !important;
+}
+
+.slider {
+  margin-bottom: 20px;
+}
+
+.slider.slider-horizontal .slider-track {
+  height: 6px !important;
+}
+
+.slider-handle {
+  width: 15px !important;
+  height: 15px !important;
+  background-color: #484848 !important;
+  background-image: none !important;
+}
+
+.slider-selection {
+  background-color: #9c9c9c !important;
+  background-image: none !important;
+}
+
+.tooltip.tooltip-main {
+  margin-top: -40px;
 }

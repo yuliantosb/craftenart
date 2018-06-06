@@ -4,15 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Tag;
+use App\Setting;
+use App\Category;
 
 class ShopController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::paginate(12);
 
-        return view('frontend.shop', compact(['products']));
+        $limit = !empty($request->limit) ? $request->limit : 12;
+        $products = Product::getProduct($request->category, $request->tags, $request->keyword, $request->price_range)
+                        ->paginate($limit);
+
+        $category = Category::where('slug', $request->category)->first();
+        $default_placeholder = Setting::getSetting('default_placeholder');
+
+        $placeholder = !empty($request->category) ? url('uploads/'.$category->feature_image) : url('uploads/'.$default_placeholder->img);
+
+        return view('frontend.shop', compact(['products', 'placeholder', 'category']));
+
+
     }
 
     public function show($slug)

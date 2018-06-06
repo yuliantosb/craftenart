@@ -72,4 +72,35 @@ class Product extends Model
        return $this->hasMany('App\OrderDetails', 'product_id');
     }
 
+    public function scopeGetProduct($query, $category, $tag, $keyword, $price)
+    {  
+
+        if (!empty($category)) {
+            $query->whereHas('categories', function($where) use ($category){
+                $where->where('slug', $category);
+            });
+        }
+
+        if (!empty($tag)) {
+            $query->whereHas('tags', function($where) use ($tag){
+                $where->whereIn('slug', $tag);
+            });
+        }
+
+        if (!empty($keyword)) {
+            $query->where('name', 'like', '%'.$keyword.'%');
+        }
+
+        if (!empty($price)) {
+
+            $price = explode(',', $price);
+            $min = Helper::setCurrency($price[0]);
+            $max = Helper::setCurrency($price[1]);
+
+            $query->whereBetween('price', [$min, $max]);
+        }
+
+        return $query;
+    }
+
 }

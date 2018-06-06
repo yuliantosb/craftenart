@@ -44,7 +44,7 @@
 											{{ method_field('DELETE') }}
 										</form>
 
-										<a href="javascript:void(0)" onclick="document.getElementById('destroy-{{ $item->getHash() }}').submit()" class="close fa fa-times"></a>
+										<a href="javascript:void(0)" onclick="document.getElementById('destroy-{{ $item->getHash() }}').submit()" class="close fa fa-times" data-toggle="tooltip" data-placement="left" title="Remove"></a>
 									</div><!-- cart row end here -->
 									@endforeach
 									

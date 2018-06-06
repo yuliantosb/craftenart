@@ -44,8 +44,8 @@
 					<div class="detial-holder">
 						<!-- Breadcrumbs of the Page -->
 						<ul class="list-unstyled breadcrumbs">
-							<li><a href="#">Chairs <i class="fa fa-angle-right"></i></a></li>
-							<li>Products</li>
+							<li><a href="{{ url('shop') }}">Shop <i class="fa fa-angle-right"></i></a></li>
+							<li>{{ $product->name }}</li>
 						</ul>
 						<!-- Breadcrumbs of the Page end -->
 						<h2>{{ $product->name }}</h2>
@@ -94,7 +94,7 @@
 								<ul class="list-unstyled tabs">
 									<li style="margin-right: 10px"><i class="fa fa-tags"></i></li>
 									@foreach ($product->tags as $tag)
-									<li><a href="#">{{ $tag->name }}</a></li>
+									<li><a href="{{ url('shop?tags%5B%5D='. $tag->slug) }}">{{ $tag->name }}</a></li>
 									@endforeach
 								</ul>
 							</div>

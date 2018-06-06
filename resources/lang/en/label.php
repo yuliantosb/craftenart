@@ -60,4 +60,7 @@ return [
 	'reset_your_password' => 'Reset your password',
 	'type_email_to_send_a_password_link' => 'Type email to send a password link',
 	'send_password_link' => 'Send Password Link',
+
+	// shop
+	'categories' => 'Categories',
 ];

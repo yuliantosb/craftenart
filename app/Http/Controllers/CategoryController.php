@@ -72,7 +72,7 @@ class CategoryController extends Controller
     	$category = Category::find($id);
     	$category->name = $request->name;
     	$category->description = $request->description;
-    	$category->slug = Helper::createSlug($request->name, 'category');
+    	$category->slug = Helper::createSlug($request->name, 'category', $id);
     	$category->feature_image = $request->feature_image;
     	$category->save();
 

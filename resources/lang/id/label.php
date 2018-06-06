@@ -61,4 +61,6 @@ return [
 	'type_email_to_send_a_password_link' => 'Ketik email untuk mengirim tautan kata sandi',
 	'send_password_link' => 'Kirim Tautan Sandi',
 
+	// shop
+	'categories' => 'Kategori',
 ];

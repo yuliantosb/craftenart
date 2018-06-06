@@ -3,7 +3,7 @@
 	<div class="sub-drop">
 		<ul>
 			@foreach ($tags as $tags)
-				<li><a href="{{ url('shop/tag/'.$tags->slug) }}">{{ $tags->name }}</a></li>
+				<li><a href="{{ url('shop?tags%5B%5D='.$tags->slug) }}">{{ $tags->name }}</a></li>
 			@endforeach
 		</ul>
 	</div>
