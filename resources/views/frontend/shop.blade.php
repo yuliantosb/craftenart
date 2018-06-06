@@ -135,3 +135,7 @@
 @push('js')
 <script src="{{ url('frontend/js/shop.js') }}"></script>
 @endpush
+
+@push('css')
+<link href="{{ url('frontend/bootstrap-slider/bootstrap-slider.min.css') }}" rel="stylesheet" type="text/css" />
+@endpush

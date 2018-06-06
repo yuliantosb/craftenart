@@ -41,8 +41,7 @@
 	<link rel="stylesheet" href="{{ url('frontend/css/responsive.css') }}">
 	<!-- Select2 -->
     <link href="{{ url('backend/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('frontend/bootstrap-slider/bootstrap-slider.min.css') }}" rel="stylesheet" type="text/css" />
-
+    
     <!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120224836-1"></script>
 	<script>
