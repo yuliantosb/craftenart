@@ -62,7 +62,13 @@ Route::get('user', function(){
 
 Route::prefix('/user')->as('user.')->middleware(['auth', 'role:admin|user'])->group(function(){
 	// dashboard
-	Route::resource('/dashboard', 'MyDashboardController');
+	Route::get('/dashboard', 'MyDashboardController@index')->name('dashboard.index');
+	// profile
+	Route::get('/profile', 'MyProfileController@index')->name('profile.index');
+	Route::get('/profile/edit', 'MyProfileController@edit')->name('profile.edit');
+	Route::put('/profile/edit', 'MyProfileController@update')->name('profile.update');
+	Route::post('/profile/upload', 'MyProfileController@upload')->name('profile.upload');
+
 });
 
 // admin

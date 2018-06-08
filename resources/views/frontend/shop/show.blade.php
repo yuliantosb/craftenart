@@ -140,15 +140,6 @@
 								
 								@if (auth()->check())
 
-								@if(session()->has('message'))
-
-								<div class="alert alert-success alert-dismissible" role="alert">
-								  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								  <strong>Success!</strong> {{ session()->get('message') }}
-								</div>
-
-								@endif
-
 								<form action="{{ route('review.store') }}" class="p-commentform" method="post">
 									@csrf
 									<fieldset>
@@ -234,3 +225,13 @@
 </main><!-- mt main end here -->
 
 @endsection
+
+@if (session()->has('message'))
+
+@push('js')
+<script type="text/javascript">
+    show_notification('<b>Success</b>','success', "{{ session()->get('message') }}");
+</script>
+@endpush
+
+@endif

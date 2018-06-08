@@ -13098,3 +13098,119 @@ span.select2-selection.select2-selection--single, .select2-search__field:focus {
     text-decoration: none;
     background-color: #eee;
 }
+
+.text-muted {
+    color: #777 !important;
+}
+
+.text-primary {
+    color: #337ab7 !important;
+}
+
+a.text-primary:focus,a.text-primary:hover {
+    color: #286090 !important;
+}
+
+.text-success {
+    color: #3c763d !important;
+}
+
+a.text-success:focus,a.text-success:hover {
+    color: #2b542c !important;
+}
+
+.text-info {
+    color: #31708f !important;
+}
+
+a.text-info:focus,a.text-info:hover {
+    color: #245269 !important;
+}
+
+.text-warning {
+    color: #8a6d3b !important;
+}
+
+a.text-warning:focus,a.text-warning:hover {
+    color: #66512c !important;
+}
+
+.text-danger {
+    color: #a94442 !important;
+}
+
+a.text-danger:focus,a.text-danger:hover {
+    color: #843534 !important;
+}
+
+.btn-circle {
+  border-radius: 50%;
+  position: absolute;
+  right: 30px;
+}
+
+.change-btn-wrapper {
+  position: relative;
+}
+
+.bill-detail .cotrol-label {
+  margin-bottom: 10px !important;
+}
+
+.btn-custom-primary {
+  width: 173px;
+  padding: 12px 10px 10px;
+  text-align: center;
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  -webkit-transition: all 0.25s linear;
+  -o-transition: all 0.25s linear;
+  transition: all 0.25s linear;
+  background: #e84c3c;
+  color: #fff;
+  border: 1px solid #e84c3c;
+  margin: 0px 10px;
+}
+
+.btn-custom-secondary {
+  width: 173px;
+  padding: 12px 10px 10px;
+  text-align: center;
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 20px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  -webkit-transition: all 0.25s linear;
+  -o-transition: all 0.25s linear;
+  transition: all 0.25s linear;
+  background: #fff;
+  color: #333;
+  border: 1px solid #333;
+  margin: 0px 10px;
+}
+
+.btn-custom-primary:hover, .btn-custom-secondary:hover {
+  background: #333;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.mb20 {
+  margin-bottom: 20px;
+}

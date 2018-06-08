@@ -84,4 +84,9 @@ class RajaOngkir
 		$city = json_decode($results)->rajaongkir->results;
 		return $city->type.' '.$city->city_name;
 	}
+
+	public static function getCountryAttr($country_id)
+	{
+		return 'Indonesia';
+	}
 }

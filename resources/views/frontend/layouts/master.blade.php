@@ -41,6 +41,10 @@
 	<link rel="stylesheet" href="{{ url('frontend/css/responsive.css') }}">
 	<!-- Select2 -->
     <link href="{{ url('backend/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- datepicker -->
+    <link href="{{ url('backend/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- dropzone -->
+    <link href="{{ url('backend/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
     
     <!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120224836-1"></script>
@@ -225,6 +229,11 @@
     <script src="{{ url('frontend/bootstrap-slider/bootstrap-slider.min.js') }}"></script>
     <!-- autoNumeric -->
     <script src="{{ url('frontend/js/jquery.number.min.js') }}"></script>
+    <!-- Datepicker -->
+    <script src="{{ url('backend/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <!--  Notifications Plugin    -->
+    <script src="{{ url('backend/plugins/dropzone/dropzone.min.js') }}"></script>
+    <script src="{{ url('backend/js/bootstrap-notify.js') }}"></script>
 	<!-- custom -->
 	<script src="{{ url('frontend/js/custom.js') }}"></script>
 	<script src="{{ url('frontend/js/form.js') }}"></script>
