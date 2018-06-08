@@ -14,7 +14,20 @@ class ShopController extends Controller
     public function index(Request $request)
     {
 
-        $limit = !empty($request->limit) ? $request->limit : 12;
+
+        if ($request->has('limit')) {
+            session()->put('limit', $request->limit);
+        }
+
+        if ($request->has('view')) {
+            session()->put('view', $request->view);
+        }
+
+        if ($request->has('sort') && $request->has('type')) {
+            session()->put(['sort' => $request->sort, 'type' => $request->type]);
+        }
+
+        $limit = session()->has('limit') ? session()->get('limit') : 12;
         $products = Product::getProduct($request->category, $request->tags, $request->keyword, $request->price_range)
                         ->paginate($limit);
 
@@ -23,7 +36,25 @@ class ShopController extends Controller
 
         $placeholder = !empty($request->category) ? url('uploads/'.$category->feature_image) : url('uploads/'.$default_placeholder->img);
 
-        return view('frontend.shop', compact(['products', 'placeholder', 'category']));
+        $sort = session()->get('sort');
+        $type = session()->get('type');
+
+        if ($sort == 'price' && $type == 'asc') {
+            $sort_type = trans('label.low_to_high');
+        } else if ($sort == 'price' && $type == 'desc') {
+            $sort_type = trans('label.high_to_low');
+        } else if ($sort == 'name' && $type == 'desc') {
+            $sort_type = trans('label.z_to_a');
+        } else {
+            $sort_type = trans('label.a_to_z');
+        }
+
+        if (session()->get('view') == 'list') {
+
+            return view('frontend.shop.list', compact(['products', 'placeholder', 'category', 'sort_type']));    
+        }
+
+        return view('frontend.shop.grid', compact(['products', 'placeholder', 'category', 'sort_type']));
 
 
     }

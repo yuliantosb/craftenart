@@ -63,4 +63,16 @@ return [
 
 	// shop
 	'categories' => 'Kategori',
+	'add_to_wishlist' => 'Tambahkan ke Daftar Keinginan',
+	'shop' => 'Toko',
+	'oops' => 'Ups ... hasil tidak ditemukan!',
+	'a_to_z' => 'A sampai Z',
+	'z_to_a' => 'Z ke A',
+	'low_to_high' => 'Rendah ke tinggi',
+	'high_to_low' => 'Tinggi sampai rendah',
+	'showing' => 'Menunjukkan',
+	'of' => 'dari',
+	'result' => 'hasil',
+	'list_view' => 'Tampilan Daftar',
+	'grid_view' => 'Tampilan bergaris',
 ];

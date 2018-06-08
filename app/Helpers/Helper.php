@@ -74,6 +74,25 @@ class Helper
         return $result;
     }
 
+    public static function customRate($rate) {
+
+        $result = '';
+        
+        for($i = 1; $i <= round($rate); $i++){
+            $result .= '<li class="active" style="margin-right: 2px"><a><i class="fa fa-star"></i></a></li>';
+        }
+
+        if (5 - round($rate) > 0) {
+
+            for ($i = 1; $i <= 5 - round($rate); $i++) {
+                $result .= '<li style="margin-right: 2px"><a><i class="fa fa-star-o"></i></a></li>';
+            }
+
+        }
+
+        return $result;
+    }
+
     public static function currency($amount)
     {
         if (session()->has('currency')) {

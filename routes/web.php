@@ -54,6 +54,17 @@ Route::get('payment/paypal', 'PaymentController@paypal')->name('payment.paypal')
 // language
 Route::get('language', 'LanguageController@set')->name('language.set');
 
+// user
+
+Route::get('user', function(){
+	return redirect()->route('user.dashboard.index');
+});
+
+Route::prefix('/user')->as('user.')->middleware(['auth', 'role:admin|user'])->group(function(){
+	// dashboard
+	Route::resource('/dashboard', 'MyDashboardController');
+});
+
 // admin
 
 Route::get('admin', function(){

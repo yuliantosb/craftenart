@@ -100,6 +100,15 @@ class Product extends Model
             $query->whereBetween('price', [$min, $max]);
         }
 
+        if (session()->has('sort') && session()->has('type')) {
+
+            $query->orderBy(session()->get('sort'), session()->get('type'));
+
+        } else {
+            
+            $query->orderBy('name', 'asc');
+        }
+
         return $query;
     }
 

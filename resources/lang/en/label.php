@@ -63,4 +63,16 @@ return [
 
 	// shop
 	'categories' => 'Categories',
+	'add_to_wishlist' => 'Add to wishlist',
+	'shop' => 'Shop',
+	'oops' => 'Oops... result not found!',
+	'a_to_z' => 'A to Z',
+	'z_to_a' => 'Z to A',
+	'low_to_high' => 'Low to High',
+	'high_to_low' => 'High to Low',
+	'showing' => 'Showing',
+	'of' => 'of',
+	'result' => 'result',
+	'list_view' => 'List View',
+	'grid_view' => 'Grid View',
 ];

@@ -13073,3 +13073,28 @@ span.select2-selection.select2-selection--single, .select2-search__field:focus {
 .tooltip.tooltip-main {
   margin-top: -40px;
 }
+
+.drop-link {
+  min-width: 100px;
+}
+
+.drop-link i {
+  float: right;
+}
+
+.mt-textbox a.active, .btn-box li.active > a {
+  color: #e74c3c !important;
+  border-color: #e74c3c !important;
+}
+
+.sidebar .nav li {
+    float: left;
+    margin-right: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.nav>li.active>a {
+    text-decoration: none;
+    background-color: #eee;
+}
