@@ -18,12 +18,28 @@
 
                 <div class="col-md-12">
                     <hr>
+
+                    <div class="col-md-6 pull-right form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Filter by type</label>
+                            <div class="col-sm-8">
+                                <select name="type" class="select2" data-placeholder="Select Type">
+                                    <option value="all">all</option>
+                                    <option value="product">product</option>
+                                    <option value="post">post</option>
+                                    <option value="page">page</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="content table-responsive table-full-width">
                         <table class="table table-striped" id="table-category">
                             <thead>
                                 <tr>
                                 	<th style="width: 150px">Name</th>
     	                        	<th>Description</th>
+                                    <th style="width: 150px">Type</th>
                             	</tr>
                         	</thead>
                         </table>

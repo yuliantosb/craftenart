@@ -36,13 +36,13 @@ class FilterProduct extends AbstractWidget
 
         if (!empty(request()->category)) {
 
-            $tags = Tag::whereHas('products.categories', function($where){
+            $tags = Tag::where('type', 'product')->whereHas('products.categories', function($where){
                     $where->where('slug', request()->category);
             })->get();
 
         } else {
             
-            $tags = Tag::get();
+            $tags = Tag::where('type', 'product')->get();
         }
 
         return view('widgets.filter_product', [

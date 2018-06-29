@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use LaraCart;
 use RajaOngkir;
 use Helper;
+use App\Order;
 
 use App\Veritrans\Veritrans;
 
@@ -50,14 +51,18 @@ class CheckoutController extends Controller
             $provinces = RajaOngkir::getProvince();
             $weight = collect($carts)->pluck('weight')->sum();
 
-            if (session()->has('shipping')) {
+            if (session()->has('shipping') || !empty(auth()->user()->cust->province_id)) {
 
-                $cities = RajaOngkir::getCity(session()->get('shipping.province_id'));
+                $province_id = !empty(auth()->user()->cust->province_id) ? auth()->user()->cust->province_id : session()->get('shipping.province_id');
+
+                $cities = RajaOngkir::getCity($province_id);
+                $city_id = !empty(auth()->user()->cust->city_id) ? auth()->user()->cust->city_id : session()->get('shipping.city_id');
+
                 $costs = [];
                 $couriers = ['jne', 'pos', 'tiki'];
 
                 foreach ($couriers as $courier) {
-                    $costs[] = RajaOngkir::getCost(session()->get('shipping.city_id'), $weight, $courier);
+                    $costs[] = RajaOngkir::getCost($city_id, $weight, $courier);
                 }
 
             } else {
@@ -140,8 +145,13 @@ class CheckoutController extends Controller
         $discount = round(Helper::getCurrency(LaraCart::totalDiscount($formatted = false), 'idr'));
         $total = ($subtotal + $taxes + $shipping_fee) - $discount;
 
+        $user_id = auth()->user()->id;
+        $count_order = Order::where('user_id', $user_id)
+                            ->count();
+        $pad = str_pad($count_order, 5, "0", STR_PAD_LEFT);
+
         $transaction_details = array(
-            'order_id' => uniqid(),
+            'order_id' => time().'-'.$user_id.'-'.$pad,
             'gross_amount' => $total
         );
 
@@ -250,7 +260,13 @@ class CheckoutController extends Controller
     private function payWithPayPal($request)
     {
 
-        $order_id = uniqid();
+        $user_id = auth()->user()->id;
+        $count_order = Order::where('user_id', $user_id)
+                            ->count();
+
+        $pad = str_pad($count_order, 5, "0", STR_PAD_LEFT);
+
+        $order_id = time().'-'.$user_id.'-'.$pad;
         $subtotal = Helper::getCurrency(LaraCart::subTotal($format = false, $withDiscount = true), 'usd');
         $taxes = Helper::getCurrency(LaraCart::taxTotal($formatted = false), 'usd');
         $shipping_fee = Helper::getCurrency(LaraCart::getFee('shippingFee')->amount, 'usd');

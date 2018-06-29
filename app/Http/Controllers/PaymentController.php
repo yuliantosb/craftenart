@@ -203,7 +203,7 @@ class PaymentController extends Controller
         $message = 'Payment using <strong>' . $type . '</strong> for transaction order id: <strong>' . $order_id . ' </strong> is denied.';
         }
 
-        return redirect()->route('payment.index')->with('message', ['status' => $status, 'content' => $message]);
+        return redirect()->route('payment.index')->with('message', ['status' => $status, 'content' => $message, 'order_number' => $order_id]);
 
       }
 
@@ -324,11 +324,11 @@ class PaymentController extends Controller
             session()->forget('shipping');
 
             return redirect()->route('payment.index')
-                            ->with('message', ['status' => 'finish', 'content' => 'Transaction <strong>'.$order_number.'</strong> using <strong>Paypal</strong> is success']);
+                            ->with('message', ['status' => 'finish', 'content' => 'Transaction <strong>'.$order_number.'</strong> using <strong>Paypal</strong> is success', 'order_number' => $order_number]);
         }
 
             return redirect()->route('payment.index')
-                            ->with('message', ['status' => 'error', 'content' => 'Payment with <strong> Paypal </strong> is failed']);
+                            ->with('message', ['status' => 'error', 'content' => 'Payment with <strong> Paypal </strong> is failed', 'order_number' => $order_number]);
 
       }
 
@@ -339,8 +339,37 @@ class PaymentController extends Controller
     public function index()
     {
       if (session()->has('message')) {
-        return view('frontend.payment');  
+
+        if (session()->get('message')['status'] == 'finish') {
+
+          $order_number = session()->get('message')['order_number'];
+          $order = Order::where('number', $order_number)
+                    ->first();
+
+          $order_details = [];
+
+        foreach ($order->details as $details) {
+
+            $order_details[] = [
+                                    'sku' => $details->product->sku,
+                                    'name' => $details->product->name,
+                                    'price' => Helper::getCurrency($details->price, 'usd'),
+                                    'quantity' => $details->qty
+
+                                ];
+
+        }
+
+
+        } else {
+          $order = collect([]);
+          $order_details = [];
+        }
+
+        return view('frontend.payment', compact(['order', 'order_details']));
+
       }
+
       return redirect()->route('cart.index');
     }
 

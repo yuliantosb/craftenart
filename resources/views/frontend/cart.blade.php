@@ -170,7 +170,6 @@
                 @php(session()->get('shipping'))
                 </p>
 
-
                 <form action="{{ route('cart.shipping') }}" method="post">
                 	@csrf
                   <fieldset>
@@ -183,23 +182,27 @@
                     <div class="form-group">
                       <select class="form-control select2" data-placeholder="State or Province" name="province_id">
                         <option></option>
+
+                        @php ($province_id = !empty(auth()->user()->cust->province_id) ? auth()->user()->cust->province_id : session()->get('shipping.province_id'))
+
                         @foreach ($provinces as $province)
-                        	<option value="{{ $province->province_id }}" {{ session()->get('shipping.province_id') == $province->province_id ? 'selected=selected' : '' }}>{{ $province->province }}</option>
+                        	<option value="{{ $province->province_id }}" {{ $province_id == $province->province_id ? 'selected=selected' : '' }}>{{ $province->province }}</option>
                         @endforeach
                       </select>
                     </div>
                     
                     <div class="form-group">
                       <select class="form-control select2" data-placeholder="City" name="city_id">
+                        @php ($city_id = !empty(auth()->user()->cust->city_id) ? auth()->user()->cust->city_id : session()->get('shipping.city_id'))
                         @foreach ($cities as $city)
-                          <option value="{{ $city->city_id }}" {{ session()->get('shipping.city_id') == $city->city_id ? 'selected=selected' : '' }}>{{ $city->type.' '.$city->city_name }}</option>
+                          <option value="{{ $city->city_id }}" {{ $city_id == $city->city_id ? 'selected=selected' : '' }}>{{ $city->type.' '.$city->city_name }}</option>
                         @endforeach
                       </select>
                     </div>
 
                     <div class="form-group">
                     	<div id="shipping">
-                        @if (!empty($costs) && session()->has('shipping'))
+                        @if (!empty($costs))
                           @include('frontend.cart.partial', ['costs' => collect($costs), 'total_weight' => $weight])
                         @endif
                       </div>

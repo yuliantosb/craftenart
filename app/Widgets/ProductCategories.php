@@ -26,7 +26,7 @@ class ProductCategories extends AbstractWidget
     {
         //
 
-        $categories = Category::take($this->config['count'])
+        $categories = Category::where('type', 'product')->take($this->config['count'])
                         ->get();
 
         return view('widgets.product_categories', [

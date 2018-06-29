@@ -21,6 +21,7 @@ class CreateTagsTable extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->string('feature_image')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

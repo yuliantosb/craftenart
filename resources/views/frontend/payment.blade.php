@@ -100,3 +100,19 @@
 </main>
 
 @endsection
+
+
+  @push('js')
+    <script type="text/javascript">
+      window.dataLayer = window.dataLayer || []
+      dataLayer.push({
+         'transactionId': "{{ $order->number }}",
+         'transactionAffiliation': "{{ config('app.name') }}",
+         'transactionTotal': {{ Helper::getCurrency($order->total, 'usd') }},
+         'transactionTax': {{ Helper::getCurrency($order->tax, 'usd') }},
+         'transactionShipping': {{ Helper::getCurrency($order->shipping_fee, 'usd') }},
+         'transactionProducts': {!! collect($order_details)->toJson() !!},
+         'event' : 'transactionComplete'
+      });
+    </script>
+  @endpush

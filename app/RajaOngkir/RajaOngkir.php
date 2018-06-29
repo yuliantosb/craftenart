@@ -61,7 +61,8 @@ class RajaOngkir
 
 		$res = $client->request('GET', 'https://api.rajaongkir.com/'.config('rajaongkir.type').'/province?id='.$province_id, [
 		    'headers' => [
-		    			'key' => config('rajaongkir.api')
+		    			'key' => config('rajaongkir.api'),
+		    			'content-type' => 'content-type: application/x-www-form-urlencoded'
 	    			]
 		]);
 
@@ -88,5 +89,23 @@ class RajaOngkir
 	public static function getCountryAttr($country_id)
 	{
 		return 'Indonesia';
+	}
+
+	public static function getTrack($waybill, $courier)
+	{
+		$client = new Client;
+
+		$res = $client->request('GET', 'https://api.rajaongkir.com/'.config('rajaongkir.type').'/waybil', [
+		    'headers' => [
+		    			'key' => config('rajaongkir.api')
+	    			],
+	    	'form_params' => [
+	    		'waybill' => $waybill,
+	    		'courier' => $courier
+	    	]
+		]);
+
+		$results = $res->getBody()->getContents();
+		return json_decode($results->result);
 	}
 }

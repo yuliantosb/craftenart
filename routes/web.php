@@ -51,6 +51,18 @@ Route::post('payment/store', 'PaymentController@store')->name('payment.store');
 Route::get('payment/complete/{type}', 'PaymentController@complete')->name('payment.complete');
 Route::get('payment/paypal', 'PaymentController@paypal')->name('payment.paypal');
 
+// post
+Route::get('blog', 'BlogController@index')->name('blog.index');
+Route::get('blog/{slug}', 'BlogController@show')->name('blog.show');
+Route::post('blog/{post_id}', 'BlogController@comment')->name('blog.comment');
+
+// page
+Route::get('pages/{slug}', 'ArticleController@show')->name('page.show');
+
+// subscribe
+Route::post('subscribe', 'NewsLetterController@save')->name('subscribe.save');
+Route::post('subscribe/check', 'NewsLetterController@check')->name('subscribe.check');
+
 // language
 Route::get('language', 'LanguageController@set')->name('language.set');
 
@@ -114,6 +126,10 @@ Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group
 	// settings
 	Route::get('settings/get_widget', 'SettingController@getWidget')->name('settings.get_widget');
 	Route::resource('settings', 'SettingController');
+	// pages
+	Route::resource('page', 'PageController');
+	// post
+	Route::resource('post', 'PostController');
 });
 
 

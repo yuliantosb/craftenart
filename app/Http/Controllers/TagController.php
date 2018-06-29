@@ -54,6 +54,7 @@ class TagController extends Controller
     	$tag->description = $request->description;
     	$tag->slug = Helper::createSlug($request->name, 'tag');
     	$tag->feature_image = $request->feature_image;
+        $tag->type = $request->type;
     	$tag->save();
 
     	return redirect()
@@ -72,8 +73,9 @@ class TagController extends Controller
     	$tag = Tag::find($id);
     	$tag->name = $request->name;
     	$tag->description = $request->description;
-    	$tag->slug = Helper::createSlug($request->name, 'tag');
+    	$tag->slug = Helper::createSlug($request->name, 'tag', $id);
     	$tag->feature_image = $request->feature_image;
+        $tag->type = $request->type;
     	$tag->save();
 
     	return redirect()

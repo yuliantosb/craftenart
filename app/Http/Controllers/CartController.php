@@ -18,14 +18,18 @@ class CartController extends Controller
         $provinces = RajaOngkir::getProvince();
         $weight = collect($carts)->pluck('weight')->sum();
 
-        if (session()->has('shipping')) {
+        if (session()->has('shipping') || !empty(auth()->user()->cust->province_id)) {
 
-            $cities = RajaOngkir::getCity(session()->get('shipping.province_id'));
+            $province_id = !empty(auth()->user()->cust->province_id) ? auth()->user()->cust->province_id : session()->get('shipping.province_id');
+
+            $cities = RajaOngkir::getCity($province_id);
+            $city_id = !empty(auth()->user()->cust->city_id) ? auth()->user()->cust->city_id : session()->get('shipping.city_id');
+
             $costs = [];
             $couriers = ['jne', 'pos', 'tiki'];
 
             foreach ($couriers as $courier) {
-                $costs[] = RajaOngkir::getCost(session()->get('shipping.city_id'), $weight, $courier);
+                $costs[] = RajaOngkir::getCost($city_id, $weight, $courier);
             }
 
         } else {

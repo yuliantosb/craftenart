@@ -7,6 +7,7 @@ use RajaOngkir;
 use App\Category;
 use App\Tag;
 use App\Product;
+use App\Article;
 
 class Helper
 {
@@ -233,6 +234,12 @@ class Helper
 
         if ($type == 'product') {
             return Product::select('slug')->where('slug', 'like', $slug.'%')
+                ->where('id', '<>', $id)
+                ->get();
+        }
+
+        if ($type == 'article') {
+            return Article::select('slug')->where('slug', 'like', $slug.'%')
                 ->where('id', '<>', $id)
                 ->get();
         }

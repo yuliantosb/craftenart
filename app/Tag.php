@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    protected $fillable = ['id', 'name', 'slug', 'description'];
+    protected $fillable = ['id', 'name', 'slug', 'description', 'type'];
 
     public function products()
     {

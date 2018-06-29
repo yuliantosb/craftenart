@@ -13,7 +13,11 @@ class CategoryController extends Controller
     {
     	if ($request->ajax()) {
 
-    		$category = Category::get();
+    		$category = Category::where(function($where) use ($request){
+                if ($request->type != 'all') {
+                    $where->where('type', $request->type);
+                }
+            })->get();
 
     		return DataTables::of($category)
     		->rawColumns(['name'])
@@ -36,7 +40,6 @@ class CategoryController extends Controller
     		})
     		->toJson();
 
-
     	} else {
     		return view('backend.category.index');
     	}
@@ -54,6 +57,7 @@ class CategoryController extends Controller
     	$category->description = $request->description;
     	$category->slug = Helper::createSlug($request->name, 'category');
     	$category->feature_image = $request->feature_image;
+        $category->type = $request->type;
     	$category->save();
 
     	return redirect()
@@ -74,6 +78,7 @@ class CategoryController extends Controller
     	$category->description = $request->description;
     	$category->slug = Helper::createSlug($request->name, 'category', $id);
     	$category->feature_image = $request->feature_image;
+        $category->type = $request->type;
     	$category->save();
 
     	return redirect()

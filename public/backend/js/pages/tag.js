@@ -4,9 +4,10 @@ $(document).ready(function(){
 		ajax : SITE_URL + '/tag',
 		columns: [
 			{ data: 'name', name: 'name' },
-			{ data: 'description', name: 'description' }
+			{ data: 'description', name: 'description' },
+			{ data: 'type', name: 'type' },
 		],
-		order: [1, 'asc']
+		order: [0, 'asc']
 	});
 
 	$('#btn-confirm').click(function(){

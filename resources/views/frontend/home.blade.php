@@ -171,6 +171,12 @@
 					<div class="col-xs-12">
 						<div class="bestseller-slider">
 							@foreach ($products->whereHas('orders')->withCount('orders')->orderBy('orders_count', 'desc')->take(10)->get() as $best)
+
+							<form style="display: none" action="{{ route('cart.store') }}" method="post" id="best-{{ $best->id }}">
+								@csrf()
+								<input type="text" name="id" value="{{ $best->id }}" hidden="hidden">
+							</form>
+
 							<div class="slide">
 								<!-- mt product1 center start here -->
 								<div class="mt-product1 large">
@@ -192,10 +198,7 @@
 												{!! Helper::getRate($best->reviews->avg('rate')) !!} 
 
 												<ul class="links add">
-													<form style="display: none" action="{{ route('cart.store') }}" method="post" id="best-{{ $best->id }}">
-														{{ csrf_field() }}
-														<input type="text" name="id" value="{{ $best->id }}" hidden="hidden">
-													</form>
+													
 													
 													
 													<li><a href="javascript:void(0)" onclick="document.getElementById('best-{{ $best->id }}').submit()"><i class="icon-handbag"></i></a></li>
@@ -222,4 +225,58 @@
 		</div><!-- mt bestseller end here -->
 	</main><!-- mt main end here -->
 
+	<div id="test-popup" class="white-popup mfp-hide">
+	  Popup content
+	</div>
+
+	<!-- <a id="newsletter-hiddenlink" href="#popup2" class="lightbox" style="display: none;">NEWSLETTER</a> -->
+	<div class="popup-holder">
+		<!-- Popup of the Page -->
+		<div id="popup2" class="lightbox" style="background-color: #fff;">
+			<!-- Mt Newsletter Popup of the Page -->
+			<section class="mt-newsletter-popup">
+				<span class="title">NEWSLETTER</span>
+				<div class="holder">
+					<div class="txt-holder">
+						<h1>JOIN OUR NEWSLETTER</h1>
+						<span class="txt">Subscribe now to get <b>15%</b> off on any product!</span>
+						<!-- Newsletter Form of the Page -->
+						<form class="newsletter-form" action="{{ route('subscribe.save') }}" method="post" id="form-subscribe-popup">
+						@csrf
+							<div class="form-group">
+								<fieldset>
+									<input type="email" class="form-control" placeholder="Enter your e-mail" name="email">
+									<span class="help-block"></span>
+									<button type="submit">SUBSCRIBE</button>
+								</fieldset>
+							</div>
+						</form><!-- Newsletter Form of the Page -->
+					</div>
+					<div class="img-holder">
+						<img src="{{ url('uploads/1523091441_1299041992.jpg') }}" alt="image description" style="width: 293px; height: 261px; object-fit: cover">
+					</div>
+				</div><!-- Popup Form of the Page -->
+				<!-- <form action="#" class="popup-form">
+					<fieldset>
+						<input type="checkbox" class="form-control">Don’t show this popup again
+					</fieldset>
+				</form> -->
+				<!-- Popup Form of the Page end -->
+			</section><!-- Mt Newsletter Popup of the Page -->
+		</div><!-- Popup of the Page end -->
+	</div>
+
 @endsection
+
+@push('js')
+<script src="{{ url('frontend/js/home.js') }}"></script>
+<script type="text/javascript">
+	$.magnificPopup.open({
+	  items: {
+	    src: '#popup2', // can be a HTML string, jQuery object, or CSS selector
+	    type: 'inline',
+	    effect: 'mfp-zoom-in'
+	  }
+	});
+</script>
+@endpush

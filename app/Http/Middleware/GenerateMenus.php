@@ -25,30 +25,37 @@ class GenerateMenus
             $menu->add('Dashboard', ['route' => 'admin.dashboard.index'])
                 ->append('<i class="ti-panel"></i>');
 
-            $menu->add('Product')
-                    ->append('<i class="ti-package"></i>')
-                    ->link
-                    ->attr(['data-toggle' => 'collapse'])
-                    ->href('#product')
-                    ->active('admin/product/*');
+            $menu->add('Page')
+                ->append('<i class="ti-folder"></i>')
+                ->link
+                ->attr(['data-toggle' => 'collapse'])
+                ->href('#page');
 
-            $menu->product->add('All Product', ['route' => 'admin.product.index'])
-                    ->active('admin/product/*')
+
+            $menu->page->add('All Pages', ['route' => 'admin.page.index'])
+                    ->active('admin/page/*')
                     ->append('</span>')
                     ->prepend('<span class="sidebar-normal"> ')
-                    ->nickname('product');
+                    ->nickname('page');
 
-            $menu->product->add('Category', ['route' => 'admin.category.index'])
+            $menu->page->add('Category', ['route' => 'admin.category.index'])
                     ->active('admin/category/*')
                     ->append('</span>')
                     ->prepend('<span class="sidebar-normal"> ')
-                    ->nickname('product');
+                    ->nickname('page');
 
-            $menu->product->add('Tag', ['route' => 'admin.tag.index'])
+            $menu->page->add('Tag', ['route' => 'admin.tag.index'])
                     ->active('admin/tag/*')
                     ->append('</span>')
                     ->prepend('<span class="sidebar-normal"> ')
-                    ->nickname('product');
+                    ->nickname('page');
+
+            $menu->add('Post', ['route' => 'admin.post.index'])
+                ->append('<i class="ti-file"></i>');
+
+            $menu->add('Product', ['route' => 'admin.product.index'])
+                    ->append('<i class="ti-package"></i>')
+                    ->active('admin/product/*');
 
             $menu->add('Order', 'admin/order')
                 ->append('<i class="ti-shopping-cart"></i>')

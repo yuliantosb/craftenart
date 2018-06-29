@@ -1,4 +1,10 @@
 $(document).ready(function(){
+
+	$('[name="fee"]').click(function(){
+		$('#btn-shipping').removeAttr('disabled');
+		$(this).prev().find('[name="selected"]').attr('selected', 'selected');
+	});
+
 	$('.select2').select2();
 
 	$('[name="province_id"]').change(function(){

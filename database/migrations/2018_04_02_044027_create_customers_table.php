@@ -16,6 +16,7 @@ class CreateCustomersTable extends Migration
         Schema::dropIfExists('customers');
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->string('identity_number')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('country_id')->nullable();
@@ -27,7 +28,10 @@ class CreateCustomersTable extends Migration
             $table->date('date_of_birth')->nullable();
             $table->text('address')->nullable();
             $table->string('picture')->nullable();
-            $table->integer('user_id');
+            $table->text('bio')->nullable();
+            $table->string('facebook_url')->nullable();
+            $table->string('twitter_url')->nullable();
+            $table->string('instagram_url')->nullable();
             $table->timestamps();
         });
     }

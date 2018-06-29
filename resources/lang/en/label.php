@@ -75,4 +75,8 @@ return [
 	'result' => 'result',
 	'list_view' => 'List View',
 	'grid_view' => 'Grid View',
+
+	// blog
+	'recent_post' => 'Recent Post',
+	'tags' => 'Tags',
 ];

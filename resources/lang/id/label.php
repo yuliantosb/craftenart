@@ -75,4 +75,8 @@ return [
 	'result' => 'hasil',
 	'list_view' => 'Tampilan Daftar',
 	'grid_view' => 'Tampilan bergaris',
+
+	// blog
+	'recent_post' => 'Posting Terbaru',
+	'tags' => 'Tag',
 ];

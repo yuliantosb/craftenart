@@ -45,6 +45,16 @@
                                     </span>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Type <span class="text-danger">*</span></label>
+                                <select name="type" class="select2" data-placeholder="Select Type" required="required">
+                                    <option value="product">product</option>
+                                    <option value="post">post</option>
+                                    <option value="page">page</option>
+                                </select>
+                            </div>
+
                         </div>
 
                         <div class="col-md-12 text-right">

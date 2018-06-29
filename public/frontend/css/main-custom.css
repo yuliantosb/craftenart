@@ -12818,7 +12818,8 @@ a:hover, a:active, a:focus {
 }
 
 .holder {
-  background: rgba(125, 125, 125, 0.09);
+  /*background: rgba(125, 125, 125, 0.09);*/
+  background: transparent;
 }
 
 .mt-top-list2 > li > a {
@@ -13213,4 +13214,100 @@ a.text-danger:focus,a.text-danger:hover {
 
 .mb20 {
   margin-bottom: 20px;
+}
+
+.list-unstyled.pagination li.active a {
+  background-color: transparent !important; 
+}
+
+.article-wrapper img {
+  border: 1px solid #e1e1e1;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.tags li:not(:last-child):after {
+  content: ',';
+}
+
+.comment-form-custom input,  .comment-form-custom textarea {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  border: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+  margin: 0 0 0 20px;
+  padding: 11px 10px 5px 26px;
+  color: #868686;
+  background: #f7f7f7;
+  width: 100%;
+}
+
+.comment-form-custom input {
+  height: 47px;
+}
+
+.comment-form-custom span.help-block {
+  margin: 0 0 0 20px;
+}
+
+.comment-form-custom input:focus {
+  box-shadow: none;
+  border: none;
+}
+
+.mt-comments-section .media .txt h3 {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    color: #000;
+}
+
+.mt-comments-section .media .img-box {
+    float: left;
+    overflow: hidden;
+    margin: 0 20px 0 0;
+}
+
+.mt-comments-section .media .txt .mt-time {
+    font-size: 11px;
+    line-height: 12px;
+    font-weight: 200;
+    font-style: italic;
+    display: block;
+    margin: 0 0 19px;
+    color: #000;
+}
+
+.mt-comments-section .media .txt {
+    font-size: 14px;
+    line-height: 22px;
+    padding: 7px 0 30px;
+    color: #868686;
+}
+
+.media-body .txt p {
+  margin: 0 0 10px;
+  overflow-wrap: break-word;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.newsletter-form .form-group.has-error input {
+  border: 1px solid #a94442 !important;
+}
+
+.mfp-content {
+  width: auto !important;
 }

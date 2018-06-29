@@ -23,7 +23,7 @@ class CategoriesList extends AbstractWidget
      */
     public function run()
     {
-        $categories = Category::get();
+        $categories = Category::where('type', 'product')->get();
 
         return view('widgets.categories_list', [
             'config' => $this->config,

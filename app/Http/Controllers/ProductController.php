@@ -71,8 +71,8 @@ class ProductController extends Controller
 
     public function create()
     {
-    	$categories = Category::get();
-    	$tags = Tag::get();
+    	$categories = Category::where('type', 'product')->get();
+    	$tags = Tag::where('type', 'product')->get();
     	return view('backend.product.create', compact(['categories', 'tags']));
     }
 
@@ -106,7 +106,8 @@ class ProductController extends Controller
 
                     $tag = Tag::firstOrCreate([
                                     'name' => $tag,
-                                    'slug' => str_slug($tag)]);
+                                    'slug' => str_slug($tag),
+                                    'type' => 'product', ]);
                     if ($tag) {
                         $tagIds[] = $tag->id;
                     }
@@ -121,7 +122,8 @@ class ProductController extends Controller
 
                     $category = Category::firstOrCreate([
                                 'name' => $category,
-                                'slug' => str_slug($category)]);
+                                'slug' => str_slug($category),
+                                'type' => 'product', ]);
 
                     if ($category) {
                         $categoryIds[] = $category->id;
@@ -203,7 +205,8 @@ class ProductController extends Controller
 
                     $tag = Tag::firstOrCreate([
                                     'name' => $tag,
-                                    'slug' => str_slug($tag)]);
+                                    'slug' => str_slug($tag),
+                                    'type' => 'product', ]);
                     if ($tag) {
                         $tagIds[] = $tag->id;
                     }
@@ -218,7 +221,8 @@ class ProductController extends Controller
 
                     $category = Category::firstOrCreate([
                                 'name' => $category,
-                                'slug' => str_slug($category)]);
+                                'slug' => str_slug($category),
+                                'type' => 'product', ]);
 
                     if ($category) {
                         $categoryIds[] = $category->id;
@@ -274,6 +278,7 @@ class ProductController extends Controller
    			$product->attributes()->delete();
    			$product->categories()->detach();
    			$product->tags()->detach();
+            $product->reviews()->delete();
    			$product->delete();
 
    		});
