@@ -19,4 +19,19 @@ $(document).ready(function(){
     },
     	onkeyup: function(element){$(element).valid()},
 	});
+
+
+    if(localStorage.getItem('popState') != 'shown'){
+      
+      $.magnificPopup.open({
+        items: {
+          src: '#popup2', // can be a HTML string, jQuery object, or CSS selector
+          type: 'inline',
+          effect: 'mfp-zoom-in'
+        }
+      });
+
+      localStorage.setItem('popState','shown')
+    }  
+
 });

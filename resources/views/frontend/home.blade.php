@@ -270,13 +270,4 @@
 
 @push('js')
 <script src="{{ url('frontend/js/home.js') }}"></script>
-<script type="text/javascript">
-	$.magnificPopup.open({
-	  items: {
-	    src: '#popup2', // can be a HTML string, jQuery object, or CSS selector
-	    type: 'inline',
-	    effect: 'mfp-zoom-in'
-	  }
-	});
-</script>
 @endpush
