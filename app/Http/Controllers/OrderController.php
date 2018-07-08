@@ -44,7 +44,8 @@ class OrderController extends Controller
     		})
 
 			->addColumn('status', function($data){
-				return $data->status ? '<span class="label label-success">COMPLETE</span>' : '<span class="label label-primary">PROCESSING</span>';
+				return '<label class="label label-'.$data->status_transaction['label'].'" style="color:#fff">
+                        '.$data->status_transaction['status'].'</label>';
 			})
 
 			->addColumn('total', function($data){

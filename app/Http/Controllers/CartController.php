@@ -55,18 +55,39 @@ class CartController extends Controller
     public function store(Request $request)
     {
     	$product = Product::find($request->id);
-    	$price = !empty($product->sale) ? $product->sale : $product->price;
-    	LaraCart::add(
-		    $product->id,
-		    $name = $product->name,
-		    $qty = $request->has('qty') ? $request->qty : 1,
-		    $price = $price,
-		    $options = ['thumbnail' => $product->picture, 'tax' => .10, 'weight' => $product->weight],
-		    $taxable = true,
-		    $lineItem = false
-		);
 
-		return redirect()->back();
+        if ($product->stock->amount < 1) {
+
+            return redirect()
+                    ->back()
+                    ->with('alert', ['type' => 'warning',
+                        'title' => 'Information',
+                        'message' => 'This product is out of stock!']);
+
+        } else if ($product->stock->amount < $request->qty) {
+
+            return redirect()
+                    ->back()
+                    ->with('alert', ['type' => 'warning',
+                        'title' => 'Information',
+                        'message' => 'Your order exceeded stock limit!']);
+
+        } else {
+
+            $price = !empty($product->sale) ? $product->sale : $product->price;
+            LaraCart::add(
+                $product->id,
+                $name = $product->name,
+                $qty = $request->has('qty') ? $request->qty : 1,
+                $price = $price,
+                $options = ['thumbnail' => $product->picture, 'tax' => .10, 'weight' => $product->weight],
+                $taxable = true,
+                $lineItem = false
+            );
+
+            return redirect()->back();
+        }
+
     }
 
     public function destroy($id)

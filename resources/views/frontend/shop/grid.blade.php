@@ -42,6 +42,17 @@
 					@if (count($products) > 0)
 					<ul class="mt-productlisthold list-inline">
 						@foreach ($products as $product)
+
+						<form style="display: none" action="{{ route('cart.store') }}" method="post" id="cart-{{ $product->id }}">
+							{{ csrf_field() }}
+							<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
+						</form>
+
+						<form style="display: none" action="{{ route('wishlist.store') }}" method="post" id="cart-wishlist-{{ $product->id }}">
+							{{ csrf_field() }}
+							<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
+						</form>
+
 						<li>
 							<!-- mt product1 large start here -->
 							<div class="mt-product1 mt-paddingbottom20">
@@ -59,16 +70,32 @@
 											{!! Helper::getRate($product->reviews->avg('rate')) !!} 
 											<ul class="links">
 												<li>
-													<form style="display: none" action="{{ route('cart.store') }}" method="post" id="cart-{{ $product->id }}">
-														{{ csrf_field() }}
-														<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
-													</form>
+													
 													<a href="javascript:void(0)" onclick="document.getElementById('cart-{{ $product->id }}').submit()">
 														<i class="icon-handbag"></i>
 														<span>@lang('label.add_to_cart')</span>
 													</a>
 												</li>
-												<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
+												<li>
+													@if (auth()->check())
+
+														@if (in_array($product->id, auth()->user()->wishlist->pluck('product_id')->toArray()))
+
+														<a class="icon-active">
+															<i class="fa fa-heart"></i>
+														</a>
+
+
+														@else
+														<a href="javascript:void(0)" onclick="document.getElementById('cart-wishlist-{{ $product->id }}').submit()">
+															<i class="icomoon icon-heart-empty"></i></a>
+														@endif
+
+													@else
+														<a href="javascript:void(0)" onclick="document.getElementById('cart-wishlist-{{ $product->id }}').submit()">
+															<i class="icomoon icon-heart-empty"></i></a>
+													@endif
+												</li>
 											</ul>
 										</div>
 									</div>

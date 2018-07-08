@@ -56,15 +56,8 @@
                                 <tr>
                                     <td><strong>Status</strong></td>
                                     <td>
-                                        @if ($order->status)
-
-                                        <span class="label label-success">COMPLETE</span>
-
-                                        @else
-
-                                        <span class="label label-primary">PROCESSING</span>
-
-                                        @endif
+                                        <label class="label label-{{ $order->status_transaction['label'] }}" style="color:#fff">
+                                        {{ $order->status_transaction['status'] }}</label>
                                     </td>
 
                                     <td rowspan="4"><strong>Address</strong></td>
@@ -78,18 +71,8 @@
                                 </tr>
 
                                 <tr>
-                                    <td><strong>Transaction Status</strong></td>
-                                    <td><span class="label label-primary">{{ $order->transaction_status }}</span></td>
-                                </tr>
-
-                                <tr>
-                                    <td><strong>Fraud Status</strong></td>
-                                    <td><span class="label label-primary">{{ $order->fraud_status }}</span></td>
-                                </tr>
-
-                                <tr>
-                                    <td><strong>Coupon Code</strong></td>
-                                    <td><span class="label label-primary">{{ $order->coupon_code }}</span></td>
+                                    <td rowspan="3"><strong>Coupon Code</strong></td>
+                                    <td rowspan="3"><span class="label label-primary">{{ $order->coupon_code }}</span></td>
                                 </tr>
 
                             </thead>

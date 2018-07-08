@@ -28,81 +28,103 @@
 
                 <div class="col-sm-9 col-md-10">
                     <div class="row">
-                        <div class="col-md-12 mb20">
-                            <h2>My Order</h2>
-                            <table class="table table-primary table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th class="text-right">Order Total</th>
-                                        <th>Transaction Status</th>
-                                        <th>Fraud Status</th>
-                                        <th>Payment Type</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (count($orders) > 0)
-                                        @foreach ($orders as $order)
-                                            <tr>
-                                                <td><a href="#" class="text-primary">{{ $order->number }}</a></td>
-                                                <td class="text-right">{{ Helper::currency($order->total) }}</td>
-                                                <td>{{ $order->transaction_status }}</td>
-                                                <td>{{ $order->fraud_status }}</td>
-                                                <td>{{ $order->payment_type }}</td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                    <tr>
-                                        <td colspan="5" class="text-center">No Order yet</td>
-                                    </tr>
-                                    @endif
-                                </tbody>
-                            </table>
+                        <div class="col-md-3">
+
+                            <div class="card">
+                                <img src="{{ $user->cust->picture }}" class="img img-responsive">
+                                <div class="container-card">
+                                    <h1>{{ $user->name }}</h1>
+                                    <p class="bio">{{ $user->cust->bio }}</p>
+                                    <div class="social-media">
+                                        <ul>
+
+                                            @if (!empty($user->cust->facebook_url))
+                                            <li>
+                                                <a href="{{ $user->cust->facebook_url }}"><i class="fa fa-facebook"></i></a>
+                                            </li>
+                                            @endif
+                                            @if (!empty($user->cust->twitter_url))
+                                            <li>
+                                                <a href="{{ $user->cust->twitter_url }}"><i class="fa fa-twitter"></i></a>
+                                            </li>
+                                            @endif
+                                            @if (!empty($user->cust->instagram_url))
+                                            <li>
+                                                <a href="{{ $user->cust->instagram_url }}"><i class="fa fa-instagram"></i></a>
+                                            </li>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="col-md-6 mb20">
-                            <h2>My Review</h2>
-                            <table class="table table-primary table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Rate</th>
-                                        <th>Review</th>
-                                        <th>Product</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                        <div class="col-md-9">
+                           <div class="row">
+                                <div class="col-md-6">
+                                    <h2>Recent Order</h2>
+                                    <hr>
+                                    <div class="recent-order">
+
+                                        @if (count($orders) > 0)
+                                            
+                                            @foreach ($orders as $order)
+                                                <a href="#" class="wrapper">
+                                                    <span class="order-badge {{ $order->status_transaction['label'] }}">{{ $order->status_transaction['status'] }}</span>
+                                                    <span class="text-muted">#{{ $order->number }}</span>
+                                                </a>
+                                            @endforeach
+                                            
+                                            <div class="text-right">
+                                                <a href="{{ route('user.order.index') }}"><strong><i class="fa fa-angle-right"></i>&nbsp;See all</strong></a>
+                                            </div>
+
+                                        @else
+                                            <p class="text-muted">
+                                                <i class="fa fa-times"></i>
+                                                No orders yet
+                                            </p>
+                                        @endif
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h2>Latest Review</h2>
+                                    <hr>
+
                                     @if (count($reviews) > 0)
-                                        @foreach ($reviews as $review)
-                                            <tr>
-                                                <td>{{ $review->rate }}</td>
-                                                <td>{{ $review->content }}</td>
-                                                <td>{{ $review->product->name }}</td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                    <tr>
-                                        <td colspan="3" class="text-center">No Review yet</td>
-                                    </tr>
-                                    @endif
-                                </tbody>
-                            </table>
-                        </div>
 
-                        <div class="col-md-6 mb20">
-                            <h2>My Wishlist</h2>
-                            <table class="table table-primary table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Product Name</th>
-                                        <th>Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="2" class="text-center">No Wishlist yet</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    @foreach ($reviews as $review)
+
+                                        <div class="review-wrapper">
+                                            <img src="{{ url('uploads/thumbs/'.$review->product->picture) }}">
+                                            <div class="review-text">
+                                                <p class="review-title">{{ $review->product->name }}</p>
+                                                <div class="product-comment">
+                                                   {!! Helper::getRate($review->rate, ['class' => 'mt-star']) !!}
+                                                </div>
+                                                <p class="review-content">{{ substr($review->content, 0, 25) }} ...</p>
+                                            </div>
+                                        </div>
+
+                                    @endforeach
+
+                                    <div class="text-right">
+                                      <a href="{{ route('user.review.index') }}"><strong><i class="fa fa-angle-right"></i>&nbsp;See all</strong></a>
+                                    </div>
+
+                                    @else
+                                    <p class="text-muted">
+                                        <i class="fa fa-times"></i>
+                                        No reviews yet
+                                    </p>
+                                    @endif
+                                </div>
+
+                           </div>
                         </div>
 
                     </div>

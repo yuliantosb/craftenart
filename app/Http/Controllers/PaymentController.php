@@ -270,6 +270,7 @@ class PaymentController extends Controller
                 $order->phone = $shipping['phone_number'];
                 $order->email = $shipping['email'];
                 $order->address = $shipping['address'];
+                $order->transaction_status = 'settlement';
 
                 if (!empty(LaraCart::getCoupons())){ 
                   $order->coupon_code = array_keys(LaraCart::getCoupons())[0];

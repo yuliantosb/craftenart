@@ -9,6 +9,7 @@ use Image;
 use App\User;
 use App\Customer;
 use App\Media;
+use Hash;
 
 class MyProfileController extends Controller
 {
@@ -110,5 +111,35 @@ class MyProfileController extends Controller
 
     	return response()->json($res);
         
+    }
+
+    public function password()
+    {
+    	return view('frontend.profile.password');
+    }
+
+    public function checkPassword(Request $request)
+    {
+    	if ($request->ajax()) {
+
+    		$user = User::find(auth()->user()->id);
+    		if (Hash::check($request->old_password, $user->password)) {
+    			return response()->json(true);
+    		} else {
+    			return response()->json(false);
+    		}
+
+    	}
+    }
+
+    public function changePasswd(Request $request)
+    {
+    	$user = User::find(auth()->user()->id);
+    	$user->password = Hash::make($request->new_password);
+    	$user->save();
+
+    	return redirect()
+    			->back()
+    			->with('alert', ['type' => 'success', 'title' => 'Success', 'message' => 'Password changed successfully!']);
     }
 }

@@ -112,4 +112,9 @@ class Product extends Model
         return $query;
     }
 
+    public function wishlist()
+    {
+        return $this->hasMany('App\Wishlist', 'product_id');
+    }
+
 }

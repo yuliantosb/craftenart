@@ -346,3 +346,28 @@ span.select2-selection.select2-selection--single {
 .select2-container--default .select2-selection--single .select2-selection__clear {
     margin-right: 15px;
 }
+
+.chart-legend ul {
+    padding: 0px;
+    list-style: none;
+}
+
+.chart-legend ul > li {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #ffffffed;
+    z-index: 2;
+    text-align: center;
+    top: 0;
+}
+
+.loading i {
+    top: 50%;
+    position: absolute;
+}

@@ -60,6 +60,8 @@
 							<p class="text-danger">This product has been out of stock</p>
 							@endif
 
+							<p class="text-primary">Available Stock : {{ $product->stock->amount }}</p>
+
 							{!! $product->description !!}
 						</div>
 						<div class="text-holder">
@@ -77,7 +79,7 @@
 							<fieldset>
 								<div class="row-val">
 									<label for="qty">qty</label>
-									<input type="number" id="qty" placeholder="1" name="qty" value="1" min="1">
+									<input type="number" id="qty" placeholder="1" name="qty" value="1" min="1" max="{{ $product->stock->amount }}">
 								</div>
 								<div class="row-val">
 									<button type="submit">ADD TO CART</button>

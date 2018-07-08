@@ -108,6 +108,11 @@
 										<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
 									</form>
 
+									<form style="display: none" action="{{ route('wishlist.store') }}" method="post" id="tab-wishlist-{{ $product->id }}">
+										{{ csrf_field() }}
+										<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
+									</form>
+
 									<!-- slide start here -->
 									<div class="slide">
 										<!-- mt product1 large start here -->
@@ -135,7 +140,28 @@
 																	<span>@lang('label.add_to_cart')</span>
 																</a>
 															</li>
-															<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
+															<li>
+
+																@if (auth()->check())
+
+																	@if (in_array($product->id, auth()->user()->wishlist->pluck('product_id')->toArray()))
+
+																	<a class="icon-active" data-toggle="tooltip" title="You like this">
+																		<i class="fa fa-heart"></i>
+																	</a>
+
+
+																	@else
+																	<a href="javascript:void(0)" onclick="document.getElementById('tab-wishlist-{{ $product->id }}').submit()">
+																		<i class="icomoon icon-heart-empty"></i></a>
+																	@endif
+
+																@else
+																	<a href="javascript:void(0)" onclick="document.getElementById('tab-wishlist-{{ $product->id }}').submit()">
+																		<i class="icomoon icon-heart-empty"></i></a>
+																@endif
+
+															</li>
 														</ul>
 													</div>
 												</div>
@@ -177,6 +203,11 @@
 								<input type="text" name="id" value="{{ $best->id }}" hidden="hidden">
 							</form>
 
+							<form style="display: none" action="{{ route('wishlist.store') }}" method="post" id="best-wishlist-{{ $best->id }}">
+								{{ csrf_field() }}
+								<input type="text" name="product_id" value="{{ $best->id }}" hidden="hidden">
+							</form>
+
 							<div class="slide">
 								<!-- mt product1 center start here -->
 								<div class="mt-product1 large">
@@ -202,7 +233,30 @@
 													
 													
 													<li><a href="javascript:void(0)" onclick="document.getElementById('best-{{ $best->id }}').submit()"><i class="icon-handbag"></i></a></li>
-													<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>
+
+													<li>
+													@if (auth()->check())
+
+														@if (in_array($best->id, auth()->user()->wishlist->pluck('product_id')->toArray()))
+
+														<a class="icon-active" data-toggle="tooltip" title="You like this">
+															<i class="fa fa-heart"></i>
+														</a>
+
+
+														@else
+
+
+														<a href="javascript:void(0)" onclick="document.getElementById('best-wishlist-{{ $best->id }}').submit()">
+															<i class="icomoon icon-heart-empty"></i></a>
+														@endif
+
+													@else
+														<a href="javascript:void(0)" onclick="document.getElementById('best-wishlist-{{ $best->id }}').submit()">
+															<i class="icomoon icon-heart-empty"></i></a>
+													@endif
+													</li>
+
 												</ul>
 											</div>
 										</div>

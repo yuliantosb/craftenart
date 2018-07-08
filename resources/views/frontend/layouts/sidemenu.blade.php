@@ -12,20 +12,20 @@
 		<div class="mt-side-widget">
 			<nav class="mt-side-nav">
 				<ul>
-					<li><a href="homepage1.html" class="drop-link"><i class="fa fa-home"></i>@lang('label.dashboard')</a></li>
-					<li><a href="homepage1.html" class="drop-link"><i class="fa fa-shopping-cart"></i>@lang('label.order_history')</a></li>
-					<li><a href="homepage1.html" class="drop-link"><i class="fa fa-heart"></i>@lang('label.wishlist')</a></li>
-					<li><a href="homepage1.html" class="drop-link"><i class="fa fa-cog"></i>@lang('label.account_settings')</a></li>
+					<li><a onclick="window.location = '{{ route('user.dashboard.index') }}'" href="{{ route('user.dashboard.index') }}" class="drop-link"><i class="fa fa-home"></i>@lang('label.dashboard')</a></li>
+					<li><a onclick="window.location = '{{ route('user.order.index') }}'" href="{{ route('user.order.index') }}" class="drop-link"><i class="fa fa-shopping-cart"></i>@lang('label.order_history')</a></li>
+					<li><a onclick="window.location = '{{ route('user.wishlist.index') }}'" href="{{ route('user.wishlist.index') }}" class="drop-link"><i class="fa fa-heart"></i>@lang('label.wishlist')</a></li>
+					<li><a onclick="window.location = '{{ route('user.profile.index') }}'" href="{{ route('user.profile.index') }}" class="drop-link"><i class="fa fa-cog"></i>@lang('label.account_settings')</a></li>
 					<li>
 						<a href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                                     document.getElementById('logout-form').submit();"
-                         	class="drop-link"><i class="fa fa-sign-out"></i>@lang('label.logout')</a>
-                 	</li>
+                 onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();"
+               	class="drop-link"><i class="fa fa-sign-out"></i>@lang('label.logout')</a>
+       	</li>
 
-                 	<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+       	<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+          </form>
                     
 				</ul>
 			</nav>

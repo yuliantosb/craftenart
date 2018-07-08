@@ -10,6 +10,11 @@ class ArticleController extends Controller
     public function show($slug)
     {
     	$post = Article::where('type', 'page')->where('slug', $slug)->first();
-    	return view('frontend.article', compact(['post']));
+    	
+    	if (!empty($post)) {
+    		return view('frontend.article', compact(['post']));
+    	}
+    	abort(404);
+    	
     }
 }

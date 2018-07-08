@@ -66,6 +66,10 @@ Route::post('subscribe/check', 'NewsLetterController@check')->name('subscribe.ch
 // language
 Route::get('language', 'LanguageController@set')->name('language.set');
 
+// wishlist
+Route::post('wishlist', 'WishlistController@store')->name('wishlist.store');
+Route::delete('wishlist/{id}', 'WishlistController@destroy')->name('wishlist.destroy');
+
 // user
 
 Route::get('user', function(){
@@ -80,6 +84,17 @@ Route::prefix('/user')->as('user.')->middleware(['auth', 'role:admin|user'])->gr
 	Route::get('/profile/edit', 'MyProfileController@edit')->name('profile.edit');
 	Route::put('/profile/edit', 'MyProfileController@update')->name('profile.update');
 	Route::post('/profile/upload', 'MyProfileController@upload')->name('profile.upload');
+	Route::get('/profile/password', 'MyProfileController@password')->name('password.edit');
+	Route::post('/profile/check_password', 'MyProfileController@checkPassword')->name('password.check_password');
+	Route::post('/password/change', 'MyProfileController@changePasswd')->name('password.change');
+	// order
+	Route::get('/order', 'MyOrderController@index')->name('order.index');
+	// wishlist
+	Route::get('/wishlist', 'MyWishlistController@index')->name('wishlist.index');
+	// review
+	Route::get('/review', 'MyReviewController@index')->name('review.index');
+	// 
+	Route::get('/testing', 'MyTestingController@index')->name('testing.index');
 
 });
 
@@ -91,6 +106,8 @@ Route::get('admin', function(){
 
 Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group(function(){
 	// dashboard
+	Route::get('/dashboard/get_data_payment', 'DashboardController@getDataPayment')->name('dashboard.get_data_payment');
+	Route::get('/dashboard/get_data_top', 'DashboardController@getDataTop')->name('dashboard.get_data_top');
 	Route::resource('/dashboard', 'DashboardController');
 	// product
 	Route::resource('product', 'ProductController');

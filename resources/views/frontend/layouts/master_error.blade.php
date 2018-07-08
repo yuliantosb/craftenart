@@ -139,6 +139,10 @@
 			text-align: left !important;
 		}
 
+		body {
+			overflow-y: hidden !important;
+		}
+
 	</style>
 
 	<script type="text/javascript">
@@ -160,63 +164,11 @@
         <img src="{{ url('uploads/'.App\Setting::getSetting('loading')->img) }}" alt="loader">
       </div>
     </div>
-		<!-- W1 start here -->
-		<div class="w1">
-			<!-- mt header style4 start here -->
-			<header id="mt-header" class="style17">
-				<div class="mt-top-bar">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-xs-12 col-sm-6 hidden-xs">
-								<span class="tel"> <i class="fa fa-phone" aria-hidden="true"></i>{{ App\Setting::getSetting('phone')->text }}</span>
-								<a href="#" class="tel"> <i class="fa fa-envelope-o" aria-hidden="true"></i>  {{ App\Setting::getSetting('email')->text }}</a>
-							</div>
-							<div class="col-xs-12 col-sm-6 text-right">
-
-								<ul class="nav mt-top-list2">
-								    <li>
-								        <a href="#">
-								        	{{ session()->has('currency') ? strtoupper(session()->get('currency')) : 'USD' }}
-							        	</a>
-								        <ul class="dropdown">
-								        	@foreach (App\Currency::get() as $currency)
-								            <li><a href="{{ route('currency.set', $currency->alias) }}">{{ $currency->name }}</a></li>
-								            @endforeach
-								        </ul>
-								    </li>
-								    <li>
-								        <a href="#">{{ app()->getLocale() == 'en' ? 'English' : 'Bahasa Indonesia' }}</a>
-								        <ul class="dropdown">
-								            <li><a href="{{ route('language.set', 'lang=en') }}">English</a></li>
-								            <li><a href="{{ route('language.set', 'lang=id') }}">Bahasa Indonesia</a></li>
-								        </ul>
-								    </li>
-								</ul>
-
-							</div>
-						</div>
-					</div>
-				</div>
-				@include('frontend.layouts.header')
-			</header><!-- mt header style4 end here -->
-			<!-- mt side menu start here -->
-			<div class="mt-side-menu">
-				@include('frontend.layouts.sidemenu')
-			</div><!-- mt side menu end here -->
-			<!-- mt search popup start here -->
-			<div class="mt-search-popup">
-				@include('frontend.layouts.search')
-			</div><!-- mt search popup end here -->
-			<!-- mt main slider start here -->
+		
 
 			@yield('content')
 
-			<!-- footer of the Page -->
-			<footer id="mt-footer" class="style1 wow fadeInUp" data-wow-delay="0.4s">
-				@include('frontend.layouts.footer')
-			</footer><!-- footer of the Page end -->
-		</div><!-- W1 end here -->
-		<span id="back-top" class="fa fa-arrow-up"></span>
+			
 	</div>
 	<!-- include jQuery -->
 	<script src="{{ url('frontend/js/jquery.js') }}"></script>

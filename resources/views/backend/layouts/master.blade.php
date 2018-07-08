@@ -44,6 +44,9 @@
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
     <link href="{{ url('backend/css/themify-icons.css') }}" rel="stylesheet">
 
+    <!-- morrins -->
+    <link rel="stylesheet" type="text/css" href="{{ url('backend/plugins/morris/morris.css') }}">
+
 </head>
 <body>
 <script type="text/javascript">

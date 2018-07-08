@@ -1,10 +1,10 @@
-@extends('frontend.layouts.master')
+@extends('frontend.layouts.master_error')
 
 @section('title', '404 Not Found')
 
 @section('content')
 
-<section class="mt-error-sec dark style3">
+<section class="mt-error-sec style3">
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-6">

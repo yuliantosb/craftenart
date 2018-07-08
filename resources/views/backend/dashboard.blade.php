@@ -5,126 +5,127 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
                 <div class="card">
                     <div class="content">
                         <div class="row">
-                            <div class="col-xs-5">
+                            <div class="col-xs-3">
                                 <div class="icon-big icon-warning text-center">
-                                    <i class="ti-server"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Capacity</p>
-                                    105GB
-                                </div>
-                            </div>
-                        </div>
-                        <div class="footer">
-                            <hr />
-                            <div class="stats">
-                                <i class="ti-reload"></i> Updated now
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-success text-center">
                                     <i class="ti-wallet"></i>
                                 </div>
                             </div>
-                            <div class="col-xs-7">
+                            <div class="col-xs-9">
                                 <div class="numbers">
-                                    <p>Revenue</p>
-                                    $1,345
+                                    <p>Total income this month</p>
+                                    {{ Helper::currency($order->sum('total')) }}
                                 </div>
                             </div>
                         </div>
                         <div class="footer">
                             <hr />
                             <div class="stats">
-                                <i class="ti-calendar"></i> Last day
+                                <a href="{{ route('admin.order.index') }}"><i class="ti-angle-right"></i> See all orders</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
+                <div class="card">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="icon-big icon-success text-center">
+                                    <i class="ti-user"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="numbers">
+                                    <p>Total users right now</p>
+                                    {{ count($users) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                                <a href="{{ route('admin.user.index') }}"><i class="ti-angle-right"></i> See all users</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
                 <div class="card">
                     <div class="content">
                         <div class="row">
                             <div class="col-xs-5">
                                 <div class="icon-big icon-danger text-center">
-                                    <i class="ti-pulse"></i>
+                                    <i class="ti-shopping-cart"></i>
                                 </div>
                             </div>
                             <div class="col-xs-7">
                                 <div class="numbers">
-                                    <p>Errors</p>
-                                    23
+                                    <p>New Order</p>
+                                    {{ count($orders) }}
                                 </div>
                             </div>
                         </div>
                         <div class="footer">
                             <hr />
                             <div class="stats">
-                                <i class="ti-timer"></i> In the last hour
+                                <a href="{{ route('admin.order.index') }}"><i class="ti-angle-right"></i> See all orders</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="card">
-                    <div class="content">
-                        <div class="row">
-                            <div class="col-xs-5">
-                                <div class="icon-big icon-info text-center">
-                                    <i class="ti-twitter-alt"></i>
-                                </div>
-                            </div>
-                            <div class="col-xs-7">
-                                <div class="numbers">
-                                    <p>Followers</p>
-                                    +45
-                                </div>
-                            </div>
-                        </div>
-                        <div class="footer">
-                            <hr />
-                            <div class="stats">
-                                <i class="ti-reload"></i> Updated now
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
         <div class="row">
 
             <div class="col-md-12">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Users Behavior</h4>
-                        <p class="category">24 Hours performance</p>
+                        <div class="col-md-8">
+                            <h4 class="title">Most using payment</h4>
+                            <p class="category">Payment method most used</p>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="year" class="select2">
+                                @for ($i = $years['sub']->format('Y'); $i <= $years['add']->format('Y'); $i++)
+                                <option value="{{ $i }}" {{ Carbon\Carbon::now()->format('Y') == $i ? 'selected=selected' : '' }}>{{ $i }}</option>
+                                @endfor
+                            </select>
+                        </div>
                     </div>
                     <div class="content">
-                        <div id="chartHours" class="ct-chart"></div>
+                        <!-- <div id="loading" class="loading"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div> -->
+                        <div id="chart-payment" class="ct-chart"></div>
+
                         <div class="footer">
-                            <div class="chart-legend">
-                                <i class="fa fa-circle text-info"></i> Open
-                                <i class="fa fa-circle text-danger"></i> Click
-                                <i class="fa fa-circle text-warning"></i> Click Second Time
-                            </div>
                             <hr>
                             <div class="stats">
-                                <i class="ti-reload"></i> Updated 3 minutes ago
+                                <div class="chart-legend">
+                                    <ul>
+                                        <li><i class="fa fa-circle" style="color: #00b894"></i>Paypal</li>
+                                        <li><i class="fa fa-circle" style="color: #00cec9"></i>Credit Card</li>
+                                        <li><i class="fa fa-circle" style="color: #0984e3"></i>BCA Klik Pay</li>
+                                        <li><i class="fa fa-circle" style="color: #6c5ce7"></i>Klik BCA</li>
+                                        <li><i class="fa fa-circle" style="color: #fdcb6e"></i>E-pay Mandiri</li>
+                                        <li><i class="fa fa-circle" style="color: #e17055"></i>CIMB Clicks</li>
+                                        <li><i class="fa fa-circle" style="color: #d63031"></i>Mandiri Click Pay</li>
+                                        <li><i class="fa fa-circle" style="color: #e84393"></i>Telkomsel Cash</li>
+                                        <li><i class="fa fa-circle" style="color: #f1c40f"></i>XL Tunai</li>
+                                        <li><i class="fa fa-circle" style="color: #e67e22"></i>Mandiri Bill</li>
+                                        <li><i class="fa fa-circle" style="color: #e74c3c"></i>Indosat Dompetku</li>
+                                        <li><i class="fa fa-circle" style="color: #f39c12"></i>Mandiri e-cash</li>
+                                        <li><i class="fa fa-circle" style="color: #d35400"></i>Indomaret</li>
+                                        <li><i class="fa fa-circle" style="color: #c0392b"></i>Gift Card Indonesia</li>
+                                        <li><i class="fa fa-circle" style="color: #16a085"></i>Danamon Online</li>
+                                        <li><i class="fa fa-circle" style="color: #2980b9"></i>Bank Transfer</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -135,21 +136,17 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title">Email Statistics</h4>
-                        <p class="category">Last Campaign Performance</p>
+                        <h4 class="title">5 Top Sell</h4>
+                        <p class="category">5 porducts top sell</p>
                     </div>
                     <div class="content">
-                        <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+                        <div id="chart-top-product" class="ct-chart ct-perfect-fourth"></div>
 
                         <div class="footer">
-                            <div class="chart-legend">
-                                <i class="fa fa-circle text-info"></i> Open
-                                <i class="fa fa-circle text-danger"></i> Bounce
-                                <i class="fa fa-circle text-warning"></i> Unsubscribe
-                            </div>
+
                             <hr>
                             <div class="stats">
-                                <i class="ti-timer"></i> Campaign sent 2 days ago
+                                <a href="#"><i class="fa fa-angle-right"></i> Go to product</a>
                             </div>
                         </div>
                     </div>
@@ -158,20 +155,36 @@
             <div class="col-md-6">
                 <div class="card ">
                     <div class="header">
-                        <h4 class="title">2015 Sales</h4>
-                        <p class="category">All products including Taxes</p>
+                        <h4 class="title">Run out stock</h4>
+                        <p class="category">Product with less stock</p>
                     </div>
                     <div class="content">
-                        <div id="chartActivity" class="ct-chart"></div>
+                        <div class="ct-chart ct-perfect-fourth" style="overflow-y: scroll;">
+                            <table class="table table-primary" class="table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Product Name</th>
+                                        <th>Stock</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($stocks as $stock)
+                                        <tr {{ $stock->amount < 1 ? ' class=alert-danger' : '' }}>
+                                            <td><img src="{{ url('uploads/thumbs/'.$stock->product->picture) }}" style="width: 50px" class="img img-circle"></td>
+                                            <td>{{ $stock->product->name }}</td>
+                                            <th>{{ $stock->amount }}</th>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div class="footer">
-                            <div class="chart-legend">
-                                <i class="fa fa-circle text-info"></i> Tesla Model S
-                                <i class="fa fa-circle text-warning"></i> BMW 5 Series
-                            </div>
+
                             <hr>
                             <div class="stats">
-                                <i class="ti-check"></i> Data information certified
+                                <a href="#"><i class="fa fa-angle-right"></i> Go to stock</a>
                             </div>
                         </div>
                     </div>
@@ -181,3 +194,9 @@
     </div>
     
 @endsection
+
+@push('js')
+<script src="{{ url('backend/plugins/raphael/raphael.min.js') }}"></script>
+<script src="{{ url('backend/plugins/morris/morris.min.js') }}"></script>
+<script src="{{ url('backend/js/pages/dashboard.js') }}"></script>
+@endpush

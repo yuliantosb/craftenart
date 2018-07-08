@@ -43,6 +43,16 @@
 					
 						@foreach ($products as $product)
 
+							<form style="display: none" action="{{ route('cart.store') }}" method="post" id="cart-{{ $product->id }}">
+								@csrf
+								<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
+							</form>
+
+							<form style="display: none" action="{{ route('wishlist.store') }}" method="post" id="cart-wishlist-{{ $product->id }}">
+								{{ csrf_field() }}
+								<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
+							</form>
+
 							<div class="product-post">
 								<!-- img holder start here -->
 								<div class="img-holder">
@@ -63,16 +73,28 @@
 											{!! Helper::customRate($product->reviews->avg('rate')) !!}
 											<li>Reviews ({{ $product->reviews->count() }})</li>
 										</ul>
-										
-										<form style="display: none" action="{{ route('cart.store') }}" method="post" id="cart-{{ $product->id }}">
-											@csrf
-											<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
-										</form>
 
 										<a href="javascript:void(0)" onclick="document.getElementById('cart-{{ $product->id }}').submit()" class="btn-cart">@lang('label.add_to_cart')</a>
 
 										<ul class="list-unstyled nav">
-											<li><a href="#"><i class="fa fa-heart"></i>@lang('label.add_to_wishlist')</a></li>
+											<li>
+
+												@if (auth()->check())
+
+													@if (in_array($product->id, auth()->user()->wishlist->pluck('product_id')->toArray()))
+
+													<a class="icon-active"><i class="fa fa-heart"></i>&nbsp; You like this</a>
+
+
+													@else
+														<a href="javascript:void(0)" onclick="document.getElementById('cart-wishlist-{{ $product->id }}').submit()"><i class="fa fa-heart"></i>&nbsp; @lang('label.add_to_wishlist')</a>
+													@endif
+
+												@else
+													<a href="javascript:void(0)" onclick="document.getElementById('cart-wishlist-{{ $product->id }}').submit()"><i class="fa fa-heart"></i>&nbsp; @lang('label.add_to_wishlist')</a>
+												@endif
+												
+											</li>
 										</ul>
 									</div><!-- align right end here -->
 								</div><!-- txt holder end here -->

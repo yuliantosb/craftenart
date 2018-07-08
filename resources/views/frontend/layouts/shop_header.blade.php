@@ -16,10 +16,10 @@
 				</div>
 			</li>
 			<li {{ session()->get('view') == 'grid' || !session()->has('view') ? 'class=active' : '' }}>
-				<a class="mt-viewswitcher" href="{{ url('shop?view=grid') }}" data-toggle="tooltip" title="@lang('label.list_view')"><i class="fa fa-th-large" aria-hidden="true"></i></a>
+				<a class="mt-viewswitcher" href="{{ url('shop?view=grid') }}" data-toggle="tooltip" title="@lang('label.grid_view')"><i class="fa fa-th-large" aria-hidden="true"></i></a>
 			</li>
 			<li {{ session()->get('view') == 'list' ? 'class=active' : '' }}>
-				<a class="mt-viewswitcher" href="{{ url('shop?view=list') }}" data-toggle="tooltip" title="@lang('label.grid_view')"><i class="fa fa-th-list" aria-hidden="true"></i></a>
+				<a class="mt-viewswitcher" href="{{ url('shop?view=list') }}" data-toggle="tooltip" title="@lang('label.list_view')"><i class="fa fa-th-list" aria-hidden="true"></i></a>
 			</li>
 		</ul>
 	</div><!-- btn-box end here -->

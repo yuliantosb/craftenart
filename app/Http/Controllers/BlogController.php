@@ -46,7 +46,10 @@ class BlogController extends Controller
     public function show($slug)
     {
     	$post = Article::where('type', 'post')->where('slug', $slug)->first();
-    	return view('frontend.blog.show', compact(['post']));
+        if (!empty($post)) {
+            return view('frontend.blog.show', compact(['post']));    
+        }
+    	abort(404);
     }
 
     public function comment(Request $request, $article_id)

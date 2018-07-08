@@ -4,7 +4,7 @@
 	<li {{ $menu->is_mega ? 'class=drop' : '' }}>
 
 
-		<a href="{{ $menu->url }}">
+		<a onclick="window.location = '{{ $menu->url }}'" href="{{ $menu->url }}">
 		{{ $menu->name }}
 		@if (count($menu->child) > 0)
 		<i class="fa fa-angle-down" aria-hidden="true"></i>
