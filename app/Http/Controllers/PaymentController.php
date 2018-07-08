@@ -107,9 +107,13 @@ class PaymentController extends Controller
           $shipping_fee = LaraCart::getFee('shippingFee')->amount;
           $discount = LaraCart::totalDiscount($formatted = false);
           $total = LaraCart::total($formatted = false, $withDiscount = true);
+          $order_id = $request->order_id;
+          $transaction = $check_order->transaction_status;
+          $type = $check_order->payment_type;
+          $fraud = $check_order->fraud_status;
 
           $order = new Order;
-          $order->number = $check_order->order_id;
+          $order->number = $order_id;
           $order->user_id = auth()->user()->id;
           $order->subtotal = $subtotal;
           $order->shipping_fee = $shipping_fee;
@@ -117,9 +121,15 @@ class PaymentController extends Controller
           $order->tax = $tax;
           $order->total = $total;
           $order->payment_date = $check_order->transaction_time;
-          $order->transaction_status = $check_order->transaction_status;
-          $order->payment_type = $check_order->payment_type;
-          $order->fraud_status = $check_order->fraud_status;
+          $order->transaction_status = $transaction;
+
+          if ($transaction == 'capture') {
+            if ($type == 'credit_card'){
+              $order->fraud_status = $fraud;
+            }
+          }
+
+          $order->payment_type = $type;
           $order->first_name = $shipping['first_name'];
           $order->last_name = $shipping['last_name'];
           $order->phone = $shipping['phone_number'];
@@ -177,11 +187,6 @@ class PaymentController extends Controller
 
         LaraCart::destroyCart();
         session()->forget('shipping');
-
-        $order_id = $request->order_id;
-        $transaction = $check_order->transaction_status;
-        $type = $check_order->payment_type;
-        $fraud = $check_order->fraud_status;
 
         if ($transaction == 'capture') {
           if ($type == 'credit_card'){
