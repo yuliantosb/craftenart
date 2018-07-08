@@ -76,9 +76,12 @@ class PaymentController extends Controller
     {
 
       $check_order = '';
+      $transaction = '';
+      $type = '';
+      $fraud = '';
 
       if (session()->has('shipping') && !empty($request)) {
-        DB::transaction(function() use($request, &$check_order){
+        DB::transaction(function() use($request, &$check_order, &$transaction, &$type, &$fraud){
 
           /*$order = Order::where('number', $request->order_id);
 
@@ -110,7 +113,7 @@ class PaymentController extends Controller
           $order_id = $request->order_id;
           $transaction = $check_order->transaction_status;
           $type = $check_order->payment_type;
-          
+
           if ($type == 'credit_card') {
             $fraud = $check_order->fraud_status;
           }
