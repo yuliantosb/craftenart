@@ -79,28 +79,10 @@ class PaymentController extends Controller
       $transaction = '';
       $type = '';
       $fraud = '';
+      $order_id = '';
 
       if (session()->has('shipping') && !empty($request)) {
-        DB::transaction(function() use($request, &$check_order, &$transaction, &$type, &$fraud){
-
-          /*$order = Order::where('number', $request->order_id);
-
-          
-
-          $order->update([
-              'first_name' => $shipping['first_name'],
-              'last_name' => $shipping['last_name'],
-              'phone' => $shipping['phone_number'],
-              'email' => $shipping['email'],
-              'address' => $shipping['address']
-          ]);
-
-          if (!empty(LaraCart::getCoupons()))
-          {
-            $order->update(['coupon_code' => array_keys(LaraCart::getCoupons())[0]]);
-          }
-            
-          $order = $order->first();*/
+        DB::transaction(function() use($request, &$check_order, &$transaction, &$type, &$fraud, &$order_id){
 
           $shipping = session()->get('shipping');
           $check_order = Veritrans::status($request->order_id);
