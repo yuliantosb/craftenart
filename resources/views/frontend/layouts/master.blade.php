@@ -47,7 +47,7 @@
     <link href="{{ url('backend/plugins/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- popup -->
     <link href="{{ url('frontend/jquery.magnific.popup/magnific-popup.css') }}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ url('backend/css/themify-icons.css') }}" rel="stylesheet">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120224836-1"></script>
 	<script>
