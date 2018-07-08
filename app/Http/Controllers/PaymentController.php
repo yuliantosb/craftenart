@@ -110,7 +110,10 @@ class PaymentController extends Controller
           $order_id = $request->order_id;
           $transaction = $check_order->transaction_status;
           $type = $check_order->payment_type;
-          $fraud = $check_order->fraud_status;
+          
+          if ($type == 'credit_card') {
+            $fraud = $check_order->fraud_status;
+          }
 
           $order = new Order;
           $order->number = $order_id;
