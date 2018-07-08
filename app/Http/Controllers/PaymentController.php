@@ -150,16 +150,37 @@ class PaymentController extends Controller
             $order_details->qty = $item->qty;
             $order->details()->save($order_details);
 
-            $stock = Stock::where('product_id', $item->id)->first();
+            if ($transaction == 'capture') {
+              if ($type == 'credit_card'){
+                if($fraud == 'accept'){
 
-            $stock_update = Stock::find($stock->id);
-            $stock_update->decrement('amount', $item->qty);
-            $stock_update->save();
+                  $stock = Stock::where('product_id', $item->id)->first();
 
-            $stock_details = new StockDetails;
-            $stock_details->amount = '-'.$item->qty;
-            $stock_details->description = 'Ordered by '.auth()->user()->name;
-            $stock_update->details()->save($stock_details);
+                  $stock_update = Stock::find($stock->id);
+                  $stock_update->decrement('amount', $item->qty);
+                  $stock_update->save();
+
+                  $stock_details = new StockDetails;
+                  $stock_details->amount = '-'.$item->qty;
+                  $stock_details->description = 'Ordered by '.auth()->user()->name;
+                  $stock_update->details()->save($stock_details);
+                }
+              }
+            }
+
+            if ($transaction == 'settlement') {
+
+              $stock = Stock::where('product_id', $item->id)->first();
+
+              $stock_update = Stock::find($stock->id);
+              $stock_update->decrement('amount', $item->qty);
+              $stock_update->save();
+
+              $stock_details = new StockDetails;
+              $stock_details->amount = '-'.$item->qty;
+              $stock_details->description = 'Ordered by '.auth()->user()->name;
+              $stock_update->details()->save($stock_details);
+            }
 
 
           }
