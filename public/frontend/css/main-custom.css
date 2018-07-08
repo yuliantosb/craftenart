@@ -13477,3 +13477,6 @@ a:hover {
 .banner-frame .holder {
   /*background-color: rgba(245, 245, 245, 0.5);*/
 }
+.panel-body p {
+  font-weight: 500;
+}

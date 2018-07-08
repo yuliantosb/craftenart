@@ -213,7 +213,7 @@
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                   <!-- Panel Panel Default of the Page -->
                   <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingOne">
+                    <div class="panel-heading" style="padding-bottom: 20px;" role="tab" id="headingOne">
                       <h4 class="panel-title">
 <!--                         <a role="button" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> -->
                           MIDRTANS
@@ -229,14 +229,30 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                       <div class="panel-body">
-                        <p>Use payment gateway Midtrans to pay, with many Payment channel</p>
+                        <p>Use payment gateway Midtrans to pay, with many Payment channel, payment gateway list such as : 
+                          Credit Card, 
+                          BCA Klik Pay, 
+                          Klik BCA, 
+                          E-pay Mandiri, 
+                          CIMB Clicks, 
+                          Mandiri Click Pay, 
+                          Telkomsel Cash, 
+                          XL Tunai, 
+                          Mandiri Bill, 
+                          Indosat Dompetku, 
+                          Mandiri e-cash, 
+                          Indomaret, 
+                          Gift Card Indonesia, 
+                          Danamon Online, and
+                          Bank Transfer.
+                        </p>
                       </div>
                     </div>
                   </div>
                   <!-- Panel Panel Default of the Page end -->
                   <!-- Panel Panel Default of the Page -->
                   <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingTwo">
+                    <div class="panel-heading" style="padding-bottom: 20px;" role="tab" id="headingTwo">
                       <h4 class="panel-title">
                         <!-- <a class="collapsed" role="button" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> -->
                           Paypal
