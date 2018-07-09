@@ -53,7 +53,7 @@ class DashboardController extends Controller
 					'echannel',
 					'indosat_dompetku',
 					'mandiri_ecash',
-					'indomaret',
+					'cstore',
 					'gift_card_indonesia',
 					'danamon_online',
 					'bank_transfer'
@@ -130,7 +130,7 @@ class DashboardController extends Controller
     					'echannel' => Order::countByType($request->year, $index, 'echannel'),
     					'indosat_dompetku' => Order::countByType($request->year, $index, 'indosat_dompetku'),
     					'mandiri_ecash' => Order::countByType($request->year, $index, 'mandiri_ecash'),
-    					'indomaret' => Order::countByType($request->year, $index, 'indomaret'),
+    					'cstore' => Order::countByType($request->year, $index, 'cstore'),
     					'gift_card_indonesia' => Order::countByType($request->year, $index, 'gift_card_indonesia'),
     					'danamon_online' => Order::countByType($request->year, $index, 'danamon_online'),
     					'bank_transfer' => Order::countByType($request->year, $index, 'bank_transfer')
