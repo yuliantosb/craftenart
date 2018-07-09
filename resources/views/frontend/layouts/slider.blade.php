@@ -3,7 +3,8 @@
 	<div class="slider banner-slider">
 
 		@foreach (App\Setting::getSetting('banner') as $banner)
-		@if (!empty($banner))
+		
+		@if (!empty($banner->title) && !empty($banner->content))
 		<!-- holder start here -->
 		<div class="holder text-center" style="background-image: url({{ url('uploads/'.$banner->img)  }});">
 			<div class="container">
@@ -24,6 +25,7 @@
 		</div>
 		<!-- holder end here -->
 		@endif
+		
 		@endforeach
 
 	</div>
