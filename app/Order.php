@@ -91,4 +91,42 @@ class Order extends Model
 					->count();
 	}
 
+	public function scopeCountOrderStatus($query, $status, $year)
+	{
+		if ($status == 'complete'){
+			$result = $query->where('status', 1)
+					->whereYear('payment_date', $year)
+					->count();
+		}
+		else if ($status == 'process'){
+			$result = $query->where(function($where) use ($status, $year){
+						$where->where('transaction_status', 'settlement')
+							->orWhere('fraud_status', 'accept');
+					})
+					->where('status', 0)
+					->whereYear('payment_date', $year)
+					->count();
+		}
+		else if ($status == 'pending'){
+			$result = $query->where('transaction_status', 'pending')
+					->where('status', 0)
+					->whereYear('payment_date', $year)
+					->count();
+		}
+		else if ($status == 'challenge'){
+			$result = $query->where('fraud_status', 'challenge')
+					->where('status', 0)
+					->whereYear('payment_date', $year)
+					->count();
+		}
+		else {
+			$result = $query->where('transaction_status', 'deny')
+					->where('status', 0)
+					->whereYear('payment_date', $year)
+					->count();
+		}
+
+		return $result;
+	}
+
 }

@@ -371,3 +371,7 @@ span.select2-selection.select2-selection--single {
     top: 50%;
     position: absolute;
 }
+
+.mt-stars .fa {
+    width: auto !important;
+}

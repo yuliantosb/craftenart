@@ -108,6 +108,7 @@ Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group
 	// dashboard
 	Route::get('/dashboard/get_data_payment', 'DashboardController@getDataPayment')->name('dashboard.get_data_payment');
 	Route::get('/dashboard/get_data_top', 'DashboardController@getDataTop')->name('dashboard.get_data_top');
+	Route::get('/dashboard/get_data_order_status', 'DashboardController@getDataOrderStatus')->name('dashboard.get_data_order_status');
 	Route::resource('/dashboard', 'DashboardController');
 	// product
 	Route::resource('product', 'ProductController');

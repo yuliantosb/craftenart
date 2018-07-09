@@ -8,6 +8,7 @@ use App\Order;
 use App\User;
 use App\Product;
 use App\Stock;
+use App\Review;
 
 class DashboardController extends Controller
 {
@@ -26,8 +27,9 @@ class DashboardController extends Controller
     	$years = collect(['add' => $add_years, 'sub' => $sub_years]);
 
     	$stocks = Stock::orderBy('amount')->take(5)->get();
+        $reviews = Review::where('status', 0)->get();
 
-    	return view('backend.dashboard', compact(['order', 'users', 'orders', 'years', 'stocks']));
+    	return view('backend.dashboard', compact(['order', 'users', 'orders', 'years', 'stocks', 'reviews']));
 
     }
 
@@ -41,14 +43,14 @@ class DashboardController extends Controller
     	$ykeys = [
     				'paypal',
 					'credit_card',
-					'bca_klik_pay',
+					'bca_klikpay',
 					'bca_klikbca',
-					'e_pay_mandiri',
+					'bri_epay',
 					'cimb_clicks',
-					'mandiri_click_pay',
+					'mandiri_clickpay',
 					'telkomsel_cash',
 					'xl_tunai',
-					'mandiri_bill',
+					'echannel',
 					'indosat_dompetku',
 					'mandiri_ecash',
 					'indomaret',
@@ -62,7 +64,7 @@ class DashboardController extends Controller
 					'Credit Card',
 					'BCA Klik Pay',
 					'Klik BCA',
-					'E-pay Mandiri',
+					'BRI E-Pay',
 					'CIMB Clicks',
 					'Mandiri Click Pay',
 					'Telkomsel Cash',
@@ -118,14 +120,14 @@ class DashboardController extends Controller
     					'y' => $month,
     					'paypal' => Order::countByType($request->year, $index, 'paypal'),
     					'credit_card' => Order::countByType($request->year, $index, 'credit_card'),
-    					'bca_klik_pay' => Order::countByType($request->year, $index, 'bca_klik_pay'),
+    					'bca_klikpay' => Order::countByType($request->year, $index, 'bca_klikpay'),
     					'bca_klikbca' => Order::countByType($request->year, $index, 'bca_klikbca'),
-    					'e_pay_mandiri' => Order::countByType($request->year, $index, 'e_pay_mandiri'),
+    					'bri_epay' => Order::countByType($request->year, $index, 'bri_epay'),
     					'cimb_clicks' => Order::countByType($request->year, $index, 'cimb_clicks'),
-    					'mandiri_click_pay' => Order::countByType($request->year, $index, 'mandiri_click_pay'),
+    					'mandiri_clickpay' => Order::countByType($request->year, $index, 'mandiri_clickpay'),
     					'telkomsel_cash' => Order::countByType($request->year, $index, 'telkomsel_cash'),
     					'xl_tunai' => Order::countByType($request->year, $index, 'xl_tunai'),
-    					'mandiri_bill' => Order::countByType($request->year, $index, 'mandiri_bill'),
+    					'echannel' => Order::countByType($request->year, $index, 'echannel'),
     					'indosat_dompetku' => Order::countByType($request->year, $index, 'indosat_dompetku'),
     					'mandiri_ecash' => Order::countByType($request->year, $index, 'mandiri_ecash'),
     					'indomaret' => Order::countByType($request->year, $index, 'indomaret'),
@@ -161,5 +163,20 @@ class DashboardController extends Controller
 
 		return response()->json(['data' => $data, 'colors' => $colors]);
     
+    }
+
+    public function getDataOrderStatus(Request $request)
+    {
+        $orders = Order::whereYear('payment_date', $request->year)
+                    ->get();
+
+        $data = [];
+        $data[] = ['y' => 'Complete', 'a' => Order::countOrderStatus('complete', $request->year)];
+        $data[] = ['y' => 'Process', 'a' => Order::countOrderStatus('process', $request->year)];
+        $data[] = ['y' => 'Pending', 'a' => Order::countOrderStatus('pending', $request->year)];
+        $data[] = ['y' => 'Challenge', 'a' => Order::countOrderStatus('challenge', $request->year)];
+        $data[] = ['y' => 'Deny', 'a' => Order::countOrderStatus('deny', $request->year)];
+
+        return response()->json(['data' => $data]);
     }
 }

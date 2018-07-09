@@ -112,7 +112,7 @@
                                         <li><i class="fa fa-circle" style="color: #00cec9"></i>Credit Card</li>
                                         <li><i class="fa fa-circle" style="color: #0984e3"></i>BCA Klik Pay</li>
                                         <li><i class="fa fa-circle" style="color: #6c5ce7"></i>Klik BCA</li>
-                                        <li><i class="fa fa-circle" style="color: #fdcb6e"></i>E-pay Mandiri</li>
+                                        <li><i class="fa fa-circle" style="color: #fdcb6e"></i>BRI E-Pay</li>
                                         <li><i class="fa fa-circle" style="color: #e17055"></i>CIMB Clicks</li>
                                         <li><i class="fa fa-circle" style="color: #d63031"></i>Mandiri Click Pay</li>
                                         <li><i class="fa fa-circle" style="color: #e84393"></i>Telkomsel Cash</li>
@@ -191,6 +191,85 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="header">
+                        <div class="col-md-8">
+                            <h4 class="title">Order status</h4>
+                            <p class="category">Display order status</p>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="year_order_status" class="select2">
+                                @for ($i = $years['sub']->format('Y'); $i <= $years['add']->format('Y'); $i++)
+                                <option value="{{ $i }}" {{ Carbon\Carbon::now()->format('Y') == $i ? 'selected=selected' : '' }}>{{ $i }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div id="chart-order-status" class="ct-chart ct-perfect-fourth"></div>
+
+                        <div class="footer">
+
+                            <hr>
+                            <div class="stats">
+                                <a href="#"><i class="fa fa-angle-right"></i> Go to order</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card ">
+                    <div class="header">
+                        <h4 class="title">New Review</h4>
+                        <p class="category">Review need approval</p>
+                    </div>
+                    <div class="content">
+                        <div class="ct-chart ct-perfect-fourth" style="overflow-y: scroll;">
+                            <table class="table table-primary" class="table-responsive table-review">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th>Rate</th>
+                                        <th>Review</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (count($reviews) > 0)
+
+                                        @foreach ($reviews as $review)
+                                            <tr>
+                                                <td><img src="{{ url('uploads/thumbs/'.$review->product->picture) }}" style="width: 50px" class="img img-circle"></td>
+                                                <td>{{ $review->user->name }}</td>
+                                                <th style="width: 100px !important">{!! Helper::getRate($review->rate) !!}</th>
+                                                <th>{{ substr($review->content, 0, 10) }} ...</th>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="4" class="text-center">No new review yet</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="footer">
+
+                            <hr>
+                            <div class="stats">
+                                <a href="#"><i class="fa fa-angle-right"></i> Go to review</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     
 @endsection

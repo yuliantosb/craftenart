@@ -20,7 +20,7 @@
                             <thead>
                                 <tr>
                                 	<th style="width: 150px">Name</th>
-    	                        	<th>Rate</th>
+    	                        	<th style="width: 150px">Rate</th>
                                     <th>Product</th>
                                     <th>Content</th>
                                     <th>Status</th>
