@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 use App\Menu;
 use App\Widget;
 use App\Category;
@@ -96,5 +97,22 @@ class MenuController extends Controller
             return response()->json($res);
 
         }
+    }
+
+    public function destroy($id)
+    {
+        DB::transaction(function() use ($id){
+            $menu = Menu::find($id);
+            $menu->child()->delete();
+            $menu->delete();
+        });
+
+         $res = [
+                'title' => 'Success',
+                'type' => 'success',
+                'message' => 'Data has been deleted successfuly!'
+            ];
+
+        return response()->json($res);
     }
 }
