@@ -9,7 +9,7 @@ $(document).ready(function(){
 			{ data: 'total', name: 'total', class: 'text-right' },
 			{ data: 'status', name: 'status', class: 'text-center' },
 		],
-		order: [1, 'asc']
+		order: [1, 'desc']
 	});
 
 	$('#btn-confirm').click(function(){

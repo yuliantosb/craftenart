@@ -17,7 +17,7 @@ class OrderController extends Controller
     {
     	if ($request->ajax()) {
 
-    		$order = Order::orderBy('payment_date', 'desc')->get();
+    		$order = Order::orderBy('id', 'desc')->get();
 
     		return DataTables::of($order)
 
