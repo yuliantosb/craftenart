@@ -3605,7 +3605,8 @@ a:hover {
 .mt-main-slider {
   padding: 0 20px;
   overflow: hidden;
-  background: #f6f6f6;
+  /*background: #f6f6f6;*/
+  background-color: #fff;
 }
 
 .mt-main-slider .slider .img {
@@ -3653,7 +3654,7 @@ a:hover {
 
 .mt-main-slider .text {
   float: left;
-  max-width: 600px;
+  max-width: 700px;
   padding: 162px 0 103px;
 }
 

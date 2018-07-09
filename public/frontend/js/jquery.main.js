@@ -68,7 +68,7 @@ function initSlickSlider() {
 		dots: true,
 		arrows: false,
 		infinite: true,
-		adaptiveHeight: false,
+		adaptiveHeight: true,
 		autoplay: true,
   		autoplaySpeed: 10000,
 	});
