@@ -55,9 +55,51 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
 
-      $json_result = file_get_contents('php://input');
-      $result = stripslashes(trim($json_result, '"'));
-      $data = json_decode($result, true);
+      DB::transaction(function() use ($request){
+
+          $vt = new Veritrans;
+          $json_result = file_get_contents('php://input');
+          $result = json_decode($json_result);
+
+          if($result){
+            $notif = $vt->status($result->order_id);
+          }
+
+          $transaction = $notif->transaction_status;
+          $order_id = $notif->order_id;
+          $fraud = $notif->fraud_status;
+
+          $order = Order::where('number', $order_id)->first();
+          $update_order = Order::find($order->id);
+          $order->transaction_status = $transaction;
+          $order->fraud_status = $fraud;
+          $order->save();
+
+          foreach ($order->details as $details) {
+
+            if ($transaction == 'settlement') {
+
+              $stock = Stock::where('product_id', $item->id)->first();
+
+              $stock_update = Stock::find($stock->id);
+              $stock_update->decrement('amount', $item->qty);
+              $stock_update->save();
+
+              $stock_details = new StockDetails;
+              $stock_details->amount = '-'.$item->qty;
+              $stock_details->description = 'Ordered by '.auth()->user()->name;
+              $stock_update->details()->save($stock_details);
+            }
+
+          }
+
+      });
+
+      error_log(print_r($result,TRUE));
+
+        
+        
+
 
       /*$order = new Order;
       $order->number = $data['order_id'];
@@ -68,7 +110,7 @@ class PaymentController extends Controller
       $order->fraud_status = $data['fraud_status'];
       $order->save();*/
 
-      return response()->json(true);
+      // return response()->json(true);
 
     }
 
