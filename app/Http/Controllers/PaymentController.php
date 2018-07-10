@@ -70,25 +70,30 @@ class PaymentController extends Controller
           $fraud = $notif->fraud_status;
 
           $order = Order::where('number', $order_id)->first();
-          $update_order = Order::find($order->id);
-          $order->transaction_status = $transaction;
-          $order->fraud_status = $fraud;
-          $order->save();
 
-          foreach ($order->details as $details) {
+          if (!empty($order) && ($order->transaction_status != 'settlement')) {
 
-            if ($transaction == 'settlement') {
+            $update_order = Order::find($order->id);
+            $order->transaction_status = $transaction;
+            $order->fraud_status = $fraud;
+            $order->save();
 
-              $stock = Stock::where('product_id', $item->id)->first();
+            foreach ($order->details as $details) {
 
-              $stock_update = Stock::find($stock->id);
-              $stock_update->decrement('amount', $item->qty);
-              $stock_update->save();
+              if ($transaction == 'settlement') {
 
-              $stock_details = new StockDetails;
-              $stock_details->amount = '-'.$item->qty;
-              $stock_details->description = 'Ordered by '.auth()->user()->name;
-              $stock_update->details()->save($stock_details);
+                $stock = Stock::where('product_id', $item->id)->first();
+
+                $stock_update = Stock::find($stock->id);
+                $stock_update->decrement('amount', $item->qty);
+                $stock_update->save();
+
+                $stock_details = new StockDetails;
+                $stock_details->amount = '-'.$item->qty;
+                $stock_details->description = 'Ordered by '.auth()->user()->name;
+                $stock_update->details()->save($stock_details);
+              }
+
             }
 
           }
@@ -180,7 +185,7 @@ class PaymentController extends Controller
             $order_details->qty = $item->qty;
             $order->details()->save($order_details);
 
-            if ($transaction == 'capture') {
+            /*if ($transaction == 'capture') {
               if ($type == 'credit_card'){
                 if($fraud == 'accept'){
 
@@ -196,7 +201,7 @@ class PaymentController extends Controller
                   $stock_update->details()->save($stock_details);
                 }
               }
-            }
+            }*/
 
             if ($transaction == 'settlement') {
 
