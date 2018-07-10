@@ -17,7 +17,7 @@
                             <div class="col-xs-9">
                                 <div class="numbers">
                                     <p>Total income this month</p>
-                                    {{ Helper::currency($order->sum('total')) }}
+                                    {{ Helper::currency($order->where('status', 1)->sum('total')) }}
                                 </div>
                             </div>
                         </div>
