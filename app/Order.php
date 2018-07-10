@@ -74,7 +74,7 @@ class Order extends Model
 			$label = 'warning';
 
 		} else {
-			$status = 'Deny';
+			$status = 'Failure';
 			$label = 'danger';
 		}
 
@@ -120,7 +120,10 @@ class Order extends Model
 					->count();
 		}
 		else {
-			$result = $query->where('transaction_status', 'deny')
+			$result = $query->where(function($where){
+						$where->where('transaction_status', 'deny')
+							->orWhere('transaction_status', 'expire');
+					})
 					->where('status', 0)
 					->whereYear('payment_date', $year)
 					->count();

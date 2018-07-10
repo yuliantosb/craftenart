@@ -175,7 +175,7 @@ class DashboardController extends Controller
         $data[] = ['y' => 'Process', 'a' => Order::countOrderStatus('process', $request->year)];
         $data[] = ['y' => 'Pending', 'a' => Order::countOrderStatus('pending', $request->year)];
         $data[] = ['y' => 'Challenge', 'a' => Order::countOrderStatus('challenge', $request->year)];
-        $data[] = ['y' => 'Deny', 'a' => Order::countOrderStatus('deny', $request->year)];
+        $data[] = ['y' => 'Failure', 'a' => Order::countOrderStatus('deny', $request->year)];
 
         return response()->json(['data' => $data]);
     }
