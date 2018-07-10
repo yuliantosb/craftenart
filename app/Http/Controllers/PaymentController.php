@@ -55,52 +55,54 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
 
-      DB::transaction(function() use ($request){
+      return response()->json($request->all());
 
-          $vt = new Veritrans;
-          $json_result = file_get_contents('php://input');
-          $result = json_decode($json_result);
+      // DB::transaction(function() use ($request){
 
-          if($result){
-            $notif = $vt->status($result->order_id);
-          }
+      //     $vt = new Veritrans;
+      //     $json_result = file_get_contents('php://input');
+      //     $result = json_decode($json_result);
 
-          $transaction = $notif->transaction_status;
-          $order_id = $notif->order_id;
-          $fraud = $notif->fraud_status;
+      //     if($result){
+      //       $notif = $vt->status($result->order_id);
+      //     }
 
-          $order = Order::where('number', $order_id)->first();
+      //     $transaction = $notif->transaction_status;
+      //     $order_id = $notif->order_id;
+      //     $fraud = $notif->fraud_status;
 
-          if (!empty($order) && ($order->transaction_status != 'settlement')) {
+      //     $order = Order::where('number', $order_id)->first();
 
-            $update_order = Order::find($order->id);
-            $order->transaction_status = $transaction;
-            $order->fraud_status = $fraud;
-            $order->save();
+      //     if (!empty($order) && ($order->transaction_status != 'settlement')) {
 
-            foreach ($order->details as $details) {
+      //       $update_order = Order::find($order->id);
+      //       $order->transaction_status = $transaction;
+      //       $order->fraud_status = $fraud;
+      //       $order->save();
 
-              if ($transaction == 'settlement') {
+      //       foreach ($order->details as $details) {
 
-                $stock = Stock::where('product_id', $item->id)->first();
+      //         if ($transaction == 'settlement') {
 
-                $stock_update = Stock::find($stock->id);
-                $stock_update->decrement('amount', $item->qty);
-                $stock_update->save();
+      //           $stock = Stock::where('product_id', $item->id)->first();
 
-                $stock_details = new StockDetails;
-                $stock_details->amount = '-'.$item->qty;
-                $stock_details->description = 'Ordered by '.auth()->user()->name;
-                $stock_update->details()->save($stock_details);
-              }
+      //           $stock_update = Stock::find($stock->id);
+      //           $stock_update->decrement('amount', $item->qty);
+      //           $stock_update->save();
 
-            }
+      //           $stock_details = new StockDetails;
+      //           $stock_details->amount = '-'.$item->qty;
+      //           $stock_details->description = 'Ordered by '.auth()->user()->name;
+      //           $stock_update->details()->save($stock_details);
+      //         }
 
-          }
+      //       }
 
-      });
+      //     }
 
-      error_log(print_r($result,TRUE));
+      // });
+
+      // error_log(print_r($result,TRUE));
 
         
         
