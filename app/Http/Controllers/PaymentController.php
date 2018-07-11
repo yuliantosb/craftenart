@@ -55,15 +55,15 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
 
+      \Log::info($request->all());
       return response()->json($request->all());
-
       // DB::transaction(function() use ($request){
 
       //     $vt = new Veritrans;
-      //     $json_result = file_get_contents('php://input');
-      //     $result = json_decode($json_result);
-
+      //     // $json_result = file_get_contents('php://input');
+      //     // $result = json_decode($json_result);
       //     if($result){
+      //       // $notif = $vt->status($result->order_id);
       //       $notif = $vt->status($result->order_id);
       //     }
 
@@ -100,7 +100,7 @@ class PaymentController extends Controller
 
       //     }
 
-      // });
+      });
 
       // error_log(print_r($result,TRUE));
 
