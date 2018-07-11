@@ -55,7 +55,7 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
 
-      \Log::info($request->all());
+      // \Log::info($request->all());
       return response()->json($request->all());
       // DB::transaction(function() use ($request){
 
@@ -100,7 +100,7 @@ class PaymentController extends Controller
 
       //     }
 
-      });
+      // });
 
       // error_log(print_r($result,TRUE));
 
