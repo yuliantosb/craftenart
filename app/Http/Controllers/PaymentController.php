@@ -55,8 +55,8 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
 
-      // \Log::info($request->all());
-      return response()->json($request->all());
+      \Log::info('percobaan');
+      // return response()->json($request->all());
       // DB::transaction(function() use ($request){
 
       //     $vt = new Veritrans;

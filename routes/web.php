@@ -70,6 +70,9 @@ Route::get('language', 'LanguageController@set')->name('language.set');
 Route::post('wishlist', 'WishlistController@store')->name('wishlist.store');
 Route::delete('wishlist/{id}', 'WishlistController@destroy')->name('wishlist.destroy');
 
+// tes notification
+Route::post('vt_notif', 'VtwebController@notification');
+
 // user
 
 Route::get('user', function(){
