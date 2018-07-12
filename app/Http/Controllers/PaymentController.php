@@ -36,7 +36,7 @@ class PaymentController extends Controller
     public function __construct()
     {
 
-      $this->middleware('auth', ['except' => ['store']]); 
+      $this->middleware('auth', ['except' => ['store', 'tes']]); 
 
       parent::__construct();
 
@@ -55,52 +55,54 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
       
-      DB::transaction(function() use ($request){
+      return response()->json($request->order_id);
 
-          $vt = new Veritrans;
+      // DB::transaction(function() use ($request){
+
+          // $vt = new Veritrans;
           // $json_result = file_get_contents('php://input');
           // $result = json_decode($json_result);
           // $notif = $vt->status($result->order_id);
-          $notif = $vt->status($request->order_id);
+      //     $notif = $vt->status($request->order_id);
           
 
-          $transaction = $notif->transaction_status;
-          $order_id = $notif->order_id;
-          if (!empty($notif->fraud_status)) {
-            $fraud = $notif->fraud_status;
-          } else {
-            $fraud = null;
-          }
+      //     $transaction = $notif->transaction_status;
+      //     $order_id = $notif->order_id;
+      //     if (!empty($notif->fraud_status)) {
+      //       $fraud = $notif->fraud_status;
+      //     } else {
+      //       $fraud = null;
+      //     }
 
-          $order = Order::where('number', $order_id)
-                      ->update([
-                          'transaction_status' => $transaction,
-                          'fraud_status' => $fraud
-                        ]);
+      //     $order = Order::where('number', $order_id)
+      //                 ->update([
+      //                     'transaction_status' => $transaction,
+      //                     'fraud_status' => $fraud
+      //                   ]);
 
-          if ($transaction == 'settlement') {
+      //     if ($transaction == 'settlement') {
 
-              foreach ($order->first()->details as $details) {
+      //         foreach ($order->first()->details as $details) {
 
-                $stock = Stock::where('product_id', $details->id)->first();
+      //           $stock = Stock::where('product_id', $details->id)->first();
 
-                $stock_update = Stock::find($stock->id);
-                $stock_update->decrement('amount', $details->qty);
-                $stock_update->save();
+      //           $stock_update = Stock::find($stock->id);
+      //           $stock_update->decrement('amount', $details->qty);
+      //           $stock_update->save();
 
-                $stock_details = new StockDetails;
-                $stock_details->amount = '-'.$details->qty;
-                $stock_details->description = 'Ordered by '.$order->first()->full_name;
-                $stock_update->details()->save($stock_details);
+      //           $stock_details = new StockDetails;
+      //           $stock_details->amount = '-'.$details->qty;
+      //           $stock_details->description = 'Ordered by '.$order->first()->full_name;
+      //           $stock_update->details()->save($stock_details);
 
-            }
+      //       }
 
-          }
+      //     }
 
 
-      });
+      // });
 
-      return response()->json(true);
+      // return response()->json(true);
 
 
     }
