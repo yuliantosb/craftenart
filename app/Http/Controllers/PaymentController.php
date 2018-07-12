@@ -94,29 +94,11 @@ class PaymentController extends Controller
 
           }
 
-            
-        }
 
       });
 
       return response()->json(true);
 
-      // error_log(print_r($result,TRUE));
-
-        
-        
-
-
-      /*$order = new Order;
-      $order->number = $data['order_id'];
-      $order->amount = Helper::setCurrency($data['gross_amount'], 'idr');
-      $order->payment_date = $data['transaction_time'];
-      $order->transaction_status = $data['transaction_status'];
-      $order->payment_type = $data['payment_type'];
-      $order->fraud_status = $data['fraud_status'];
-      $order->save();*/
-
-      // return response()->json(true);
 
     }
 
