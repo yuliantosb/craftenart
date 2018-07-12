@@ -62,6 +62,12 @@
 											<a href="{{ route('shop.show', $product->slug) }}"><img src="{{ url('uploads/thumbs/'.$product->picture) }}" alt="{{ $product->name }}" style="width: 215px; height: 215px; object-fit: cover"></a>
 
 											<span class="caption">
+
+												@if ($product->stock->amount <= 0)
+													<span class="stock">@lang('label.out_of_stock')</span>
+												@endif
+
+
 												@if (!empty($product->sale))
 												<span class="off">{{ round(( ($product->price - $product->sale) / $product->price) * 100) }}% Off</span>
 												@endif

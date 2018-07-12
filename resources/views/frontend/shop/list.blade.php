@@ -55,8 +55,20 @@
 
 							<div class="product-post">
 								<!-- img holder start here -->
-								<div class="img-holder">
+								<div class="img-holder mt-product1" style="position: relative;">
 									<img src="{{ url('uploads/thumbs/'.$product->picture) }}" alt="{{ $product->name }}">
+
+									<span class="caption">
+										@if ($product->stock->amount <= 0)
+											<span class="stock">@lang('label.out_of_stock')</span>
+										@endif
+
+
+										@if (!empty($product->sale))
+										<span class="off">{{ round(( ($product->price - $product->sale) / $product->price) * 100) }}% Off</span>
+										@endif
+									</span>
+
 								</div><!-- img holder end here -->
 								<!-- txt holder start here -->
 								<div class="txt-holder">

@@ -60,10 +60,9 @@ class PaymentController extends Controller
           $vt = new Veritrans;
           // $json_result = file_get_contents('php://input');
           // $result = json_decode($json_result);
-          if($result){
-            // $notif = $vt->status($result->order_id);
-            $notif = $vt->status($request->order_id);
-          }
+          // $notif = $vt->status($result->order_id);
+          $notif = $vt->status($request->order_id);
+          
 
           $transaction = $notif->transaction_status;
           $order_id = $notif->order_id;
