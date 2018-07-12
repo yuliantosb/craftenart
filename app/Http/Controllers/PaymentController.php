@@ -83,7 +83,7 @@ class PaymentController extends Controller
 
               foreach ($order->details as $details) {
 
-                $stock = Stock::where('product_id', $details->id)->first();
+                $stock = Stock::where('product_id', $details->product_id)->first();
 
                 $stock_update = Stock::find($stock->id);
                 $stock_update->decrement('amount', $details->qty);
