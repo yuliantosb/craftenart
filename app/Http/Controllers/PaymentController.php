@@ -75,21 +75,21 @@ class PaymentController extends Controller
           $order = Order::where('number', $order_id)
                       ->update([
                           'transaction_status' => $transaction,
-                          'fraud_status' => $fraud_status
+                          'fraud_status' => $fraud
                         ]);
 
           if ($transaction == 'settlement') {
 
               foreach ($order->first()->details as $details) {
 
-                $stock = Stock::where('product_id', $item->id)->first();
+                $stock = Stock::where('product_id', $details->id)->first();
 
                 $stock_update = Stock::find($stock->id);
-                $stock_update->decrement('amount', $item->qty);
+                $stock_update->decrement('amount', $details->qty);
                 $stock_update->save();
 
                 $stock_details = new StockDetails;
-                $stock_details->amount = '-'.$item->qty;
+                $stock_details->amount = '-'.$details->qty;
                 $stock_details->description = 'Ordered by '.$order->first()->full_name;
                 $stock_update->details()->save($stock_details);
 
