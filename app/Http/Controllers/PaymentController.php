@@ -36,7 +36,7 @@ class PaymentController extends Controller
     public function __construct()
     {
 
-      $this->middleware('auth'); 
+      $this->middleware('auth', ['except' => ['store']]); 
 
       parent::__construct();
 
@@ -54,53 +54,53 @@ class PaymentController extends Controller
 
     public function store(Request $request)
     {
+      
+      DB::transaction(function() use ($request){
 
-      \Log::info('percobaan');
-      // return response()->json($request->all());
-      // DB::transaction(function() use ($request){
+          $vt = new Veritrans;
+          // $json_result = file_get_contents('php://input');
+          // $result = json_decode($json_result);
+          if($result){
+            // $notif = $vt->status($result->order_id);
+            $notif = $vt->status($request->order_id);
+          }
 
-      //     $vt = new Veritrans;
-      //     // $json_result = file_get_contents('php://input');
-      //     // $result = json_decode($json_result);
-      //     if($result){
-      //       // $notif = $vt->status($result->order_id);
-      //       $notif = $vt->status($result->order_id);
-      //     }
+          $transaction = $notif->transaction_status;
+          $order_id = $notif->order_id;
+          $fraud = $notif->fraud_status;
 
-      //     $transaction = $notif->transaction_status;
-      //     $order_id = $notif->order_id;
-      //     $fraud = $notif->fraud_status;
+          $order = Order::where('number', $order_id)->first();
 
-      //     $order = Order::where('number', $order_id)->first();
+          if (!empty($order) && ($order->transaction_status != 'settlement')) {
 
-      //     if (!empty($order) && ($order->transaction_status != 'settlement')) {
+            $update_order = Order::find($order->id);
+            $order->transaction_status = $transaction;
+            $order->fraud_status = $fraud;
+            $order->save();
 
-      //       $update_order = Order::find($order->id);
-      //       $order->transaction_status = $transaction;
-      //       $order->fraud_status = $fraud;
-      //       $order->save();
+            foreach ($order->details as $details) {
 
-      //       foreach ($order->details as $details) {
+              if ($transaction == 'settlement') {
 
-      //         if ($transaction == 'settlement') {
+                $stock = Stock::where('product_id', $item->id)->first();
 
-      //           $stock = Stock::where('product_id', $item->id)->first();
+                $stock_update = Stock::find($stock->id);
+                $stock_update->decrement('amount', $item->qty);
+                $stock_update->save();
 
-      //           $stock_update = Stock::find($stock->id);
-      //           $stock_update->decrement('amount', $item->qty);
-      //           $stock_update->save();
+                $stock_details = new StockDetails;
+                $stock_details->amount = '-'.$item->qty;
+                $stock_details->description = 'Ordered by '.auth()->user()->name;
+                $stock_update->details()->save($stock_details);
+              }
 
-      //           $stock_details = new StockDetails;
-      //           $stock_details->amount = '-'.$item->qty;
-      //           $stock_details->description = 'Ordered by '.auth()->user()->name;
-      //           $stock_update->details()->save($stock_details);
-      //         }
+            }
 
-      //       }
+          }
 
-      //     }
+      });
 
-      // });
+      return response()->json(true);
 
       // error_log(print_r($result,TRUE));
 
@@ -436,6 +436,5 @@ class PaymentController extends Controller
 
       return redirect()->route('cart.index');
     }
-
 
 }

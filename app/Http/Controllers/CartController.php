@@ -18,24 +18,30 @@ class CartController extends Controller
         $provinces = RajaOngkir::getProvince();
         $weight = collect($carts)->pluck('weight')->sum();
 
-        if (session()->has('shipping') || !empty(auth()->user()->cust->province_id)) {
+        if (!empty($carts)) {
 
-            $province_id = !empty(auth()->user()->cust->province_id) ? auth()->user()->cust->province_id : session()->get('shipping.province_id');
+            if (session()->has('shipping') || !empty(auth()->user()->cust->province_id)) {
 
-            $cities = RajaOngkir::getCity($province_id);
-            $city_id = !empty(auth()->user()->cust->city_id) ? auth()->user()->cust->city_id : session()->get('shipping.city_id');
+                $province_id = !empty(auth()->user()->cust->province_id) ? auth()->user()->cust->province_id : session()->get('shipping.province_id');
 
-            $costs = [];
-            $couriers = ['jne', 'pos', 'tiki'];
+                $cities = RajaOngkir::getCity($province_id);
+                $city_id = !empty(auth()->user()->cust->city_id) ? auth()->user()->cust->city_id : session()->get('shipping.city_id');
 
-            foreach ($couriers as $courier) {
-                $costs[] = RajaOngkir::getCost($city_id, $weight, $courier);
+                $costs = [];
+                $couriers = ['jne', 'pos', 'tiki'];
+
+                foreach ($couriers as $courier) {
+                    $costs[] = RajaOngkir::getCost($city_id, $weight, $courier);
+                }
+
+            } else {
+                $cities = collect([]);
+                $costs = collect([]);
             }
-
-        } else {
-            $cities = collect([]);
-            $costs = collect([]);
         }
+
+        $cities = collect([]);
+        $costs = collect([]);
 
         $amount['subtotal'] = LaraCart::subTotal($format = false, $withDiscount = true);
         $amount['taxes'] = LaraCart::taxTotal($formatted = false);
