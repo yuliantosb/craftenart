@@ -55,8 +55,7 @@ class PaymentController extends Controller
     public function store()
     {
       
-
-      DB::transaction(function() use ($request){
+      DB::transaction(function(){
 
           $vt = new Veritrans;
           $json_result = file_get_contents('php://input');
@@ -68,7 +67,7 @@ class PaymentController extends Controller
           
           $transaction = $notif->transaction_status;
           $order_id = $notif->order_id;
-          
+
           if (!empty($notif->fraud_status)) {
             $fraud = $notif->fraud_status;
           } else {
