@@ -87,7 +87,7 @@ class PaymentController extends Controller
 
                 $stock_details = new StockDetails;
                 $stock_details->amount = '-'.$item->qty;
-                $stock_details->description = 'Ordered by '.auth()->user()->name;
+                $stock_details->description = 'Ordered by '.$order->first()->full_name;
                 $stock_update->details()->save($stock_details);
 
             }
