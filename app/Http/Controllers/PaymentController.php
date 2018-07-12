@@ -69,18 +69,15 @@ class PaymentController extends Controller
           $order_id = $notif->order_id;
           $fraud = $notif->fraud_status;
 
-          $order = Order::where('number', $order_id)->first();
+          $order = Order::where('number', $order_id)
+                      ->update([
+                          'transaction_status' => $transaction,
+                          'fraud_status' => $fraud_status
+                        ]);
 
-          if (!empty($order) && ($order->transaction_status != 'settlement')) {
+          if ($transaction == 'settlement') {
 
-            $update_order = Order::find($order->id);
-            $order->transaction_status = $transaction;
-            $order->fraud_status = $fraud;
-            $order->save();
-
-            foreach ($order->details as $details) {
-
-              if ($transaction == 'settlement') {
+              foreach ($order->first()->details as $details) {
 
                 $stock = Stock::where('product_id', $item->id)->first();
 
@@ -92,11 +89,13 @@ class PaymentController extends Controller
                 $stock_details->amount = '-'.$item->qty;
                 $stock_details->description = 'Ordered by '.auth()->user()->name;
                 $stock_update->details()->save($stock_details);
-              }
 
             }
 
           }
+
+            
+        }
 
       });
 
@@ -186,39 +185,6 @@ class PaymentController extends Controller
             $order_details->price = $item->price;
             $order_details->qty = $item->qty;
             $order->details()->save($order_details);
-
-            /*if ($transaction == 'capture') {
-              if ($type == 'credit_card'){
-                if($fraud == 'accept'){
-
-                  $stock = Stock::where('product_id', $item->id)->first();
-
-                  $stock_update = Stock::find($stock->id);
-                  $stock_update->decrement('amount', $item->qty);
-                  $stock_update->save();
-
-                  $stock_details = new StockDetails;
-                  $stock_details->amount = '-'.$item->qty;
-                  $stock_details->description = 'Ordered by '.auth()->user()->name;
-                  $stock_update->details()->save($stock_details);
-                }
-              }
-            }*/
-
-            if ($transaction == 'settlement') {
-
-              $stock = Stock::where('product_id', $item->id)->first();
-
-              $stock_update = Stock::find($stock->id);
-              $stock_update->decrement('amount', $item->qty);
-              $stock_update->save();
-
-              $stock_details = new StockDetails;
-              $stock_details->amount = '-'.$item->qty;
-              $stock_details->description = 'Ordered by '.auth()->user()->name;
-              $stock_update->details()->save($stock_details);
-            }
-
 
           }
             
