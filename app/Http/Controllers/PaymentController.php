@@ -54,7 +54,7 @@ class PaymentController extends Controller
 
     public function store()
     {
-      
+
       DB::transaction(function(){
 
           $vt = new Veritrans;
@@ -74,15 +74,14 @@ class PaymentController extends Controller
             $fraud = null;
           }
 
-          $order = Order::where('number', $order_id)
-                      ->update([
-                          'transaction_status' => $transaction,
-                          'fraud_status' => $fraud
-                        ]);
+          $order = Order::where('number', $order_id)->first();
+          $order->transaction_status = $transaction;
+          $order->fraud_status = $fraud;
+          $order->save();
 
           if ($transaction == 'settlement') {
 
-              foreach ($order->first()->details as $details) {
+              foreach ($order->details as $details) {
 
                 $stock = Stock::where('product_id', $details->id)->first();
 
@@ -92,7 +91,7 @@ class PaymentController extends Controller
 
                 $stock_details = new StockDetails;
                 $stock_details->amount = '-'.$details->qty;
-                $stock_details->description = 'Ordered by '.$order->first()->full_name;
+                $stock_details->description = 'Ordered by '.$order->full_name;
                 $stock_update->details()->save($stock_details);
 
             }
