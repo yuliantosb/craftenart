@@ -66,7 +66,11 @@ class PaymentController extends Controller
 
           $transaction = $notif->transaction_status;
           $order_id = $notif->order_id;
-          $fraud = $notif->fraud_status;
+          if (!empty($notif->fraud_status)) {
+            $fraud = $notif->fraud_status;
+          } else {
+            $fraud = null;
+          }
 
           $order = Order::where('number', $order_id)
                       ->update([
