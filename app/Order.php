@@ -83,6 +83,49 @@ class Order extends Model
 
 	}
 
+	public function getTransactionStatusDetailAttribute()
+	{
+		if ($this->transaction_status == 'capture') {
+
+			if ($this->fraud_status == 'challenge') {
+
+				$status = 'Challenged by FDS';
+
+			} else {
+
+				if ($this->status) {
+
+					$status = 'Order complete';
+
+				} else {
+					
+					$status = 'Processed by Craftenart';
+				}
+			}
+
+		} else if ($this->transaction_status == 'settlement') {
+
+			if ($this->status) {
+
+				$status = 'Order Complete';
+
+			} else {
+				$status = 'Processed by Craftenart';
+			}
+
+		} else if ($this->transaction_status == 'pending') {
+			$status = 'Waiting customer to pay';
+
+		} else if ($this->transaction_status == 'expire') {
+			$status = 'Order Failure because expire';
+		} else {
+			$status = 'Order denied';
+		}
+
+
+		return $status;
+	}
+
 	public function scopeCountByType($query, $year, $month, $type)
 	{
 		return $query->whereYear('payment_date', $year)

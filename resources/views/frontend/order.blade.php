@@ -32,6 +32,24 @@
                               </div>
                               <div id="{{ $order->id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="false" style="height: 0px;">
                                 <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <table class="table table-primary">
+                                            <thead>
+                                                <tr>
+                                                    <th>Payment Date</th>
+                                                    <th>Payment Type</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th>{{ Carbon\Carbon::parse($order->payment_date)->format('F jS, Y') }}</th>
+                                                    <th>{{ $order->payment_type }}</th>
+                                                    <th>{{ $order->transaction_status_detail }}</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <div class="col-md-6">
                                         <h2>Order Details</h2>
                                         <hr>
