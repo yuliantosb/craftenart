@@ -45,7 +45,7 @@
                 <span class="counter">02</span>
                 <strong class="title">@lang('label.check_out')</strong>
               </li>
-              <li>
+              <li class="active">
                 <span class="counter">03</span>
                 <strong class="title">@lang('label.order_complete')</strong>
               </li>
