@@ -98,23 +98,25 @@
 						<!-- producttabs end here -->
 						<div class="tab-content">
 							@foreach ($categories as $category)
+
+							@foreach ($category->products as $product)
+								<form style="display: none" action="{{ route('cart.store') }}" method="post" id="tab-{{ $product->id }}">
+								@csrf
+								<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
+								</form>
+
+								<form style="display: none" action="{{ route('wishlist.store') }}" method="post" id="tab-wishlist-{{ $product->id }}">
+									@csrf
+									<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
+								</form>
+							@endforeach
+
 							<div id="tab{{ $category->id }}">
 								<!-- tabs slider start here -->
 								<div class="tabs-sliderlg">
 									@foreach ($category->products as $product)
-
 									<!-- slide start here -->
 									<div class="slide">
-										<form style="display: none" action="{{ route('cart.store') }}" method="post" id="tab-{{ $product->id }}">
-											@csrf
-											<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
-										</form>
-
-										<form style="display: none" action="{{ route('wishlist.store') }}" method="post" id="tab-wishlist-{{ $product->id }}">
-											@csrf
-											<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
-										</form>
-
 										<!-- mt product1 large start here -->
 										<div class="mt-product1 large">
 											<div class="box">
@@ -172,6 +174,7 @@
 											</div>
 										</div><!-- mt product1 center end here -->
 									</div>
+
 									@endforeach
 								</div>
 								<!-- tabs slider end here -->
