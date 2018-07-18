@@ -65,7 +65,7 @@
                                     @else
                                     <tr>
                                         <td class="text-center">
-                                            You don't have favorite product yet!
+                                            @lang('label.no_wishlists_yet')
                                         </td>
                                     </tr>
                                     @endif

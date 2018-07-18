@@ -223,4 +223,6 @@ return [
 
 	'change_avatar' => 'Ubah Avatar',
 	'edit_profile' => 'Ubah Profil',
+
+	'no_wishlists_yet' => "Anda belum memiliki produk favorit!",
 ];

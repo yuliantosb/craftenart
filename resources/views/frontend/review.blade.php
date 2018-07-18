@@ -32,7 +32,7 @@
                             <hr>
                         </div>
                         <div class="col-md-12 product-comment">
-
+                        @if (count($reviews) > 0)
                             @foreach ($reviews as $review)
 
                             <div class="mt-box">
@@ -53,6 +53,9 @@
                                
 
                             @endforeach
+                            @else
+                            <p>@lang('label.no_reviews_yet')</p>
+                            @endif
                         </div>
                     </div>
                 </div>

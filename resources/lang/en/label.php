@@ -225,4 +225,6 @@ return [
 	'change_avatar' => 'Change Avatar',
 	'edit_profile' => 'Edit Profile',
 
+	'no_wishlists_yet' => "You don't have favorite product yet!",
+
 ];
