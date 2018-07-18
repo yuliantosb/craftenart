@@ -75,11 +75,13 @@ class PageController extends Controller
     	DB::transaction(function() use ($request){
 
     		$page = new Article;
-			$page->title = $request->title;
+			$page->title_en = $request->title_en;
+            $page->title_id = $request->title_id;
 			$page->user_id = auth()->user()->id;
 			$page->feature_image = $request->feature_image;
-			$page->slug = Helper::createSlug($request->title, 'article');
-			$page->content = $request->content;
+			$page->slug = Helper::createSlug($request->title_en, 'article');
+			$page->content_en = $request->content_en;
+            $page->content_id = $request->content_id;
 			$page->widget_id = $request->widget_id;
 			$page->type = 'page';
 			$page->save();
@@ -89,7 +91,7 @@ class PageController extends Controller
                 foreach ($request->tags as $tag) {
 
                     $tag = Tag::firstOrCreate([
-                                    'name' => $tag,
+                                    'name_en' => $tag,
                                     'slug' => str_slug($tag),
                                     'type' => 'page', ]);
                     if ($tag) {
@@ -105,7 +107,7 @@ class PageController extends Controller
                 foreach ($request->categories as $category) {
 
                     $category = Category::firstOrCreate([
-                                'name' => $category,
+                                'name_en' => $category,
                                 'slug' => str_slug($category),
                                 'type' => 'page', ]);
 
@@ -140,11 +142,13 @@ class PageController extends Controller
     	DB::transaction(function() use ($request, $id){
 
     		$page = Article::find($id);
-			$page->title = $request->title;
+			$page->title_en = $request->title_en;
+            $page->title_id = $request->title_id;
 			$page->user_id = auth()->user()->id;
 			$page->feature_image = $request->feature_image;
-			$page->slug = Helper::createSlug($request->title, 'article', $id);
-			$page->content = $request->content;
+			$page->slug = Helper::createSlug($request->title_en, 'article', $id);
+            $page->content_en = $request->content_en;
+			$page->content_id = $request->content_id;
 			$page->widget_id = $request->widget_id;
 			$page->type = 'page';
 			$page->save();
@@ -154,7 +158,7 @@ class PageController extends Controller
                 foreach ($request->tags as $tag) {
 
                     $tag = Tag::firstOrCreate([
-                                    'name' => $tag,
+                                    'name_en' => $tag,
                                     'slug' => str_slug($tag),
                                     'type' => 'page', ]);
                     if ($tag) {
@@ -170,7 +174,7 @@ class PageController extends Controller
                 foreach ($request->categories as $category) {
 
                     $category = Category::firstOrCreate([
-                                'name' => $category,
+                                'name_en' => $category,
                                 'slug' => str_slug($category),
                                 'type' => 'page', ]);
 

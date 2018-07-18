@@ -1,9 +1,9 @@
 <table class="table table-primary">
 	<thead>
 		<tr>
-			<th>Courier Name</th>
-			<th>Service Name</th>
-			<th>Cost</th>
+			<th>@lang('label.courier_name')</th>
+			<th>@lang('label.service_name')</th>
+			<th>@lang('label.cost')</th>
 			<th style="width: 50px"></th>
 		</tr>
 	</thead>
@@ -19,7 +19,7 @@
 					<td>
 						@foreach ($cost->cost as $details)
 							<strong>{{ Helper::currency(Helper::setCurrency($details->value, 'idr')) }}</strong> <br> 
-							<span class="text-muted"> {{ $details->etd }} Day(s) </span>
+							<span class="text-muted"> {{ $details->etd }} @lang('label.day')(s) </span>
 
 							<input type="text" name="courier_id[]" value="{{ $courier->code }}" hidden="hidden">
 							<input type="text" name="courier_name[]" value="{{ $courier->name }}" hidden="hidden">

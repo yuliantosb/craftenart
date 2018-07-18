@@ -14,7 +14,7 @@ $(document).ready(function(){
       	},
     messages: {
         email: {
-            remote: 'Email already subscribed'
+            remote: EMAIL_INVALID
         }
     },
     	onkeyup: function(element){$(element).valid()},

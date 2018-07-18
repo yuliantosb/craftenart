@@ -18,8 +18,10 @@ class CreateArticlesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->string('slug')->unique();
-            $table->string('title');
-            $table->text('content')->nullable();
+            $table->string('title_en');
+            $table->string('title_id');
+            $table->text('content_en')->nullable();
+            $table->text('content_id')->nullable();
             $table->string('feature_image')->nullable();
             $table->string('type');
             $table->integer('widget_id')->nullable();

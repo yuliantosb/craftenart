@@ -9,11 +9,11 @@
     <div class="row">
       <div class="col-xs-12 col-sm-6">
         <div class="error-holder pull-right">
-          <h1 class="text-uppercase montserrat">NOT FOUND!</h1>
+          <h1 class="text-uppercase montserrat">@lang('label.404')</h1>
           <div class="txt">
-            <p class="text-muted">The page you are looking for was moved, <br>removed, renamed or might never existed.</p>
+            <p class="text-muted">@lang('label.404_desc')</p>
           </div>
-          <a href="{{ route('home') }}" class="btn-back text-uppercase">BACK TO HOME</a>
+          <a href="{{ route('home') }}" class="btn-back text-uppercase">@lang('label.back_to_home')</a>
         </div>
       </div>
       <div class="col-xs-12 col-sm-6">

@@ -53,9 +53,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
     	$category = new Category;
-    	$category->name = $request->name;
-    	$category->description = $request->description;
-    	$category->slug = Helper::createSlug($request->name, 'category');
+        $category->name_en = $request->name_en;
+    	$category->name_id = $request->name_id;
+        $category->description_en = $request->description_en;
+    	$category->description_id = $request->description_id;
+    	$category->slug = Helper::createSlug($request->name_en, 'category');
     	$category->feature_image = $request->feature_image;
         $category->type = $request->type;
     	$category->save();
@@ -74,9 +76,11 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
     	$category = Category::find($id);
-    	$category->name = $request->name;
-    	$category->description = $request->description;
-    	$category->slug = Helper::createSlug($request->name, 'category', $id);
+        $category->name_en = $request->name_en;
+    	$category->name_id = $request->name_id;
+        $category->description_en = $request->description_en;
+    	$category->description_id = $request->description_id;
+    	$category->slug = Helper::createSlug($request->name_en, 'category', $id);
     	$category->feature_image = $request->feature_image;
         $category->type = $request->type;
     	$category->save();

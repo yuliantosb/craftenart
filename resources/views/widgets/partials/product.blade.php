@@ -12,8 +12,12 @@
 					<strong><a href="{{ route('shop.show', $product->slug) }}" style="text-transform: capitalize;">{{ $product->name }}</a></strong>
 					{!! Helper::getRate($product->reviews->avg('rate')) !!}
 				</div>
+				@if (!empty($product->sale))
 				<del class="off">{{ Helper::currency($product->price) }}</del>
 				<span class="price">{{ Helper::currency($product->sale) }}</span>
+				@else
+				<span class="price">{{ Helper::currency($product->price) }}</span>
+				@endif
 			</div>
 		</div><!-- mt product4 end here -->
 	@endforeach

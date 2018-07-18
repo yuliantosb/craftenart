@@ -40,9 +40,6 @@ class CartController extends Controller
             }
         }
 
-        $cities = collect([]);
-        $costs = collect([]);
-
         $amount['subtotal'] = LaraCart::subTotal($format = false, $withDiscount = true);
         $amount['taxes'] = LaraCart::taxTotal($formatted = false);
         $amount['shipping_fee'] = LaraCart::getFee('shippingFee')->amount;

@@ -31,9 +31,27 @@
                                         <span class="help-block"></span>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="control-label">Description</label>
-                                        <textarea class="form-control tinymce" name="description" placeholder="Product Description" rows="10"></textarea>
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li role="presentation" class="active"><a href="#en" aria-controls="en" role="tab" data-toggle="tab">EN</a></li>
+                                        <li role="presentation"><a href="#id" aria-controls="id" role="tab" data-toggle="tab">ID</a></li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        
+                                        <div role="tabpanel" class="tab-pane active" id="en">
+                                            <div class="form-group" style="margin-top: 20px">
+                                                <label class="control-label">Description</label>
+                                                <textarea class="form-control tinymce" name="description_en" placeholder="Product Description EN" rows="10"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div role="tabpanel" class="tab-pane" id="id">
+                                            <div class="form-group" style="margin-top: 20px">
+                                                <label class="control-label">Description</label>
+                                                <textarea class="form-control tinymce" name="description_id" placeholder="Product Description ID" rows="10"></textarea>
+                                            </div>
+                                        </div>
+
                                     </div>
 
 

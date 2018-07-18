@@ -76,11 +76,13 @@ class PostController extends Controller
     	DB::transaction(function() use ($request){
 
     		$post = new Article;
-			$post->title = $request->title;
+			$post->title_en = $request->title_en;
+            $post->title_id = $request->title_id;
 			$post->user_id = auth()->user()->id;
 			$post->feature_image = $request->feature_image;
-			$post->slug = Helper::createSlug($request->title, 'article');
-			$post->content = $request->content;
+			$post->slug = Helper::createSlug($request->title_en, 'article');
+			$post->content_en = $request->content_en;
+            $post->content_id = $request->content_id;
 			$post->widget_id = $request->widget_id;
 			$post->type = 'post';
 			$post->save();
@@ -90,7 +92,7 @@ class PostController extends Controller
                 foreach ($request->tags as $tag) {
 
                     $tag = Tag::firstOrCreate([
-                                    'name' => $tag,
+                                    'name_en' => $tag,
                                     'slug' => str_slug($tag),
                                     'type' => 'post', ]);
                     if ($tag) {
@@ -106,7 +108,7 @@ class PostController extends Controller
                 foreach ($request->categories as $category) {
 
                     $category = Category::firstOrCreate([
-                                'name' => $category,
+                                'name_en' => $category,
                                 'slug' => str_slug($category),
                                 'type' => 'post', ]);
 
@@ -141,11 +143,13 @@ class PostController extends Controller
     	DB::transaction(function() use ($request, $id){
 
     		$post = Article::find($id);
-			$post->title = $request->title;
+			$post->title_en = $request->title_en;
+            $post->title_id = $request->title_id;
 			$post->user_id = auth()->user()->id;
 			$post->feature_image = $request->feature_image;
-			$post->slug = Helper::createSlug($request->title, 'article', $id);
-			$post->content = $request->content;
+			$post->slug = Helper::createSlug($request->title_en, 'article', $id);
+			$post->content_en = $request->content_en;
+            $post->content_id = $request->content_id;
 			$post->widget_id = $request->widget_id;
 			$post->type = 'post';
 			$post->save();
@@ -155,7 +159,7 @@ class PostController extends Controller
                 foreach ($request->tags as $tag) {
 
                     $tag = Tag::firstOrCreate([
-                                    'name' => $tag,
+                                    'name_en' => $tag,
                                     'slug' => str_slug($tag),
                                     'type' => 'post', ]);
                     if ($tag) {
@@ -171,7 +175,7 @@ class PostController extends Controller
                 foreach ($request->categories as $category) {
 
                     $category = Category::firstOrCreate([
-                                'name' => $category,
+                                'name_en' => $category,
                                 'slug' => str_slug($category),
                                 'type' => 'post', ]);
 

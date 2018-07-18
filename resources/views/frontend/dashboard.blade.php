@@ -63,7 +63,7 @@
                         <div class="col-md-9">
                            <div class="row">
                                 <div class="col-md-6">
-                                    <h2>Recent Order</h2>
+                                    <h2>@lang('label.recent_order')</h2>
                                     <hr>
                                     <div class="recent-order">
 
@@ -77,13 +77,13 @@
                                             @endforeach
                                             
                                             <div class="text-right">
-                                                <a href="{{ route('user.order.index') }}"><strong><i class="fa fa-angle-right"></i>&nbsp;See all</strong></a>
+                                                <a href="{{ route('user.order.index') }}"><strong><i class="fa fa-angle-right"></i>&nbsp;@lang('label.see_all')</strong></a>
                                             </div>
 
                                         @else
                                             <p class="text-muted">
                                                 <i class="fa fa-times"></i>
-                                                No orders yet
+                                                @lang('label.no_orders_yet')
                                             </p>
                                         @endif
 
@@ -92,7 +92,7 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <h2>Latest Review</h2>
+                                    <h2>@lang('label.latest_review')</h2>
                                     <hr>
 
                                     @if (count($reviews) > 0)
@@ -113,13 +113,13 @@
                                     @endforeach
 
                                     <div class="text-right">
-                                      <a href="{{ route('user.review.index') }}"><strong><i class="fa fa-angle-right"></i>&nbsp;See all</strong></a>
+                                      <a href="{{ route('user.review.index') }}"><strong><i class="fa fa-angle-right"></i>&nbsp;@lang('label.see_all')</strong></a>
                                     </div>
 
                                     @else
                                     <p class="text-muted">
                                         <i class="fa fa-times"></i>
-                                        No reviews yet
+                                        @lang('label.no_reviews_yet')
                                     </p>
                                     @endif
                                 </div>

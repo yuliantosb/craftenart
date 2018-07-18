@@ -23,4 +23,26 @@ class Menu extends Model
     			->orderBy('order_number')
     			->get();
     }
+
+    public function getNameAttribute()
+    {
+        if (app()->isLocale('en')) {
+            
+            if (empty($this->name_en)) {
+                $name = $this->name_id;
+            } else {
+                $name = $this->name_en;
+            }
+
+        } else {
+
+            if (empty($this->name_id)) {
+                $name = $this->name_en;
+            } else {
+                $name = $this->name_id;
+            }
+        }
+
+        return $name;
+    }
 }

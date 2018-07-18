@@ -29,7 +29,7 @@
                 <div class="col-sm-9 col-md-10">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2>Wishlist</h2>
+                            <h2>@lang('label.wishlist')</h2>
                             <hr>
                             <table class="table table-wishlist">
                                 <tbody>
@@ -50,14 +50,14 @@
                                                 @csrf
                                                 <input type="text" name="id" value="{{ $wishlist->product_id }}" hidden="hidden">
                                                     
-                                                        <button class="btn btn-custom-primary" type="submit">Add to cart</button>
+                                                        <button class="btn btn-custom-primary" type="submit">@lang('label.add_to_cart')</button>
                                                     
                                                     </form>
                                                     
                                                 <form action="{{ route('wishlist.destroy', $wishlist->id) }}" method="post" style="display: inline">
                                                 @csrf
                                                 @method('delete')
-                                                <button class="btn btn-custom-secondary" type="submit">Remove</button>
+                                                <button class="btn btn-custom-secondary" type="submit">@lang('label.remove')</button>
                                                 </form>
                                             </td>
                                         </tr>

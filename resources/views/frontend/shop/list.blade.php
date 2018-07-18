@@ -83,7 +83,7 @@
 										
 										<ul class="list-unstyled rating-list">
 											{!! Helper::customRate($product->reviews->avg('rate')) !!}
-											<li>Reviews ({{ $product->reviews->count() }})</li>
+											<li>@lang('label.reviews') ({{ $product->reviews->count() }})</li>
 										</ul>
 
 										<a href="javascript:void(0)" onclick="document.getElementById('cart-{{ $product->id }}').submit()" class="btn-cart">@lang('label.add_to_cart')</a>
@@ -95,7 +95,7 @@
 
 													@if (in_array($product->id, auth()->user()->wishlist->pluck('product_id')->toArray()))
 
-													<a class="icon-active"><i class="fa fa-heart"></i>&nbsp; You like this</a>
+													<a class="icon-active"><i class="fa fa-heart"></i>&nbsp; @lang('label.you_like_this')</a>
 
 
 													@else

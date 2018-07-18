@@ -9,11 +9,11 @@
     <div class="row">
       <div class="col-xs-12 col-sm-6">
         <div class="error-holder pull-right">
-          <h1 class="text-uppercase montserrat">UNAUTHORIZE!</h1>
+          <h1 class="text-uppercase montserrat">@lang('label.403')</h1>
           <div class="txt">
-            <p>Whoops..!! Hold on dude, you are not supposed to here, are you trying to explore beyond your limit, give it up now!</p>
+            <p>@lang('label.403_desc')</p>
           </div>
-          <a href="{{ route('home') }}" class="btn-back text-uppercase">BACK TO HOME</a>
+          <a href="{{ route('home') }}" class="btn-back text-uppercase">@lang('label.back_to_home')</a>
         </div>
       </div>
       <div class="col-xs-12 col-sm-6">

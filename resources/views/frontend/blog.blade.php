@@ -10,12 +10,12 @@
       <div class="container">
         <div class="row">
           <div class="col-xs-12 text-center">
-            <h1>BLOG</h1>
+            <h1>@lang('label.blog')</h1>
             <!-- Breadcrumbs of the Page -->
             <nav class="breadcrumbs">
               <ul class="list-unstyled">
-                <li><a href="{{ url('/') }}">Home <i class="fa fa-angle-right"></i></a></li>
-                <li>Blog</li>
+                <li><a href="{{ url('/') }}">@lang('label.home') <i class="fa fa-angle-right"></i></a></li>
+                <li>@lang('label.blog')</li>
               </ul>
             </nav>
             <!-- Breadcrumbs of the Page end -->
@@ -53,10 +53,10 @@
                         @endif
                       @endforeach
                     </a></li>
-                    <li> <a href="{{ url('blog/'.$post->slug.'#comment') }}"><i class="fa fa-comment"></i>{{ $post->comments->count() }} {{ str_plural('Comment', $post->comments->count()) }}</a></li>
+                    <li> <a href="{{ url('blog/'.$post->slug.'#comment') }}"><i class="fa fa-comment"></i>{{ $post->comments->count() }} {{ str_plural(trans('label.comment'), $post->comments->count()) }}</a></li>
                   </ul>
                   <p>{{ substr(strip_tags($post->content), 0, 120) }}</p>
-                  <a href="{{ route('blog.show', $post->slug) }}" class="btn-more">Read More</a>
+                  <a href="{{ route('blog.show', $post->slug) }}" class="btn-more">@lang('label.read_more')</a>
                 </div>
               </article>
               <!-- Blog Post of the Page end -->
@@ -71,7 +71,7 @@
               <!-- Btn Holder of the Page end -->
             @else
 
-            <center><h1 class="text-muted text-uppercase">Oopps...! <br>No posts found</h1></center>
+            <center><h1 class="text-muted text-uppercase">@lang('label.oops_no_post_found')</h1></center>
 
             @endif
           </div>

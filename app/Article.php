@@ -30,4 +30,48 @@ class Article extends Model
     {
         return $this->belongsTo('App\Widget', 'widget_id');
     }
+
+    public function getTitleAttribute()
+    {
+        if (app()->isLocale('en')) {
+            
+            if (empty($this->title_en)) {
+                $title = $this->title_id;
+            } else {
+                $title = $this->title_en;
+            }
+
+        } else {
+
+            if (empty($this->title_id)) {
+                $title = $this->title_en;
+            } else {
+                $title = $this->title_id;
+            }
+        }
+
+        return $title;
+    }
+
+    public function getContentAttribute()
+    {
+        if (app()->isLocale('en')) {
+            
+            if (empty($this->content_en)) {
+                $content = $this->content_id;
+            } else {
+                $content = $this->content_en;
+            }
+
+        } else {
+
+            if (empty($this->content_id)) {
+                $content = $this->content_en;
+            } else {
+                $content = $this->content_id;
+            }
+        }
+
+        return $content;
+    }
 }

@@ -146,7 +146,7 @@
 
 																	@if (in_array($product->id, auth()->user()->wishlist->pluck('product_id')->toArray()))
 
-																	<a class="icon-active" data-toggle="tooltip" title="You like this">
+																	<a class="icon-active" data-toggle="tooltip" title="@lang('label.you_like_this')">
 																		<i class="fa fa-heart"></i>
 																	</a>
 
@@ -218,7 +218,7 @@
 
 												<span class="caption">
 													@if ($best->stock->amount <= 0)
-														<span class="stock">Out of stock</span>
+														<span class="stock">@lang('label.out_of_stock')</span>
 													@endif
 
 													@if (!empty($best->sale))
@@ -239,7 +239,7 @@
 
 														@if (in_array($best->id, auth()->user()->wishlist->pluck('product_id')->toArray()))
 
-														<a class="icon-active" data-toggle="tooltip" title="You like this">
+														<a class="icon-active" data-toggle="tooltip" title="@lang('label.you_like_this')">
 															<i class="fa fa-heart"></i>
 														</a>
 
@@ -289,19 +289,19 @@
 		<div id="popup2" class="lightbox" style="background-color: #fff;">
 			<!-- Mt Newsletter Popup of the Page -->
 			<section class="mt-newsletter-popup">
-				<span class="title">NEWSLETTER</span>
+				<span class="title">@lang('label.newsletter')</span>
 				<div class="holder">
 					<div class="txt-holder">
-						<h1>JOIN OUR NEWSLETTER</h1>
-						<span class="txt">Subscribe now to get <b>15%</b> off on any product!</span>
+						<h1>@lang('label.join_our_newsletter')</h1>
+						<span class="txt">@lang('label.subscribe_now')</span>
 						<!-- Newsletter Form of the Page -->
 						<form class="newsletter-form" action="{{ route('subscribe.save') }}" method="post" id="form-subscribe-popup">
 						@csrf
 							<div class="form-group">
 								<fieldset>
-									<input type="email" class="form-control" placeholder="Enter your e-mail" name="email">
+									<input type="email" class="form-control" placeholder="@lang('label.enter_your_email')" name="email">
 									<span class="help-block"></span>
-									<button type="submit">SUBSCRIBE</button>
+									<button type="submit">@lang('label.subscribe')</button>
 								</fieldset>
 							</div>
 						</form><!-- Newsletter Form of the Page -->

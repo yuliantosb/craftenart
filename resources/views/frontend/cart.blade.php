@@ -9,11 +9,11 @@
       'placeholder_title' => 'shopping cart',
       'placeholder_breadcumbs' => [
         [
-          'name' => 'Home',
+          'name' => trans('label.home'),
           'url' => '/'
         ],
         [
-          'name' => 'Shopping Cart',
+          'name' => trans('label.shopping_cart'),
           'url' => '/cart'
         ],
       ]])
@@ -25,15 +25,15 @@
             <ul class="list-unstyled process-list">
               <li class="active">
                 <span class="counter">01</span>
-                <strong class="title">Shopping Cart</strong>
+                <strong class="title">@lang('label.shopping_cart')</strong>
               </li>
               <li>
                 <span class="counter">02</span>
-                <strong class="title">Check Out</strong>
+                <strong class="title">@lang('label.check_out')</strong>
               </li>
               <li>
                 <span class="counter">03</span>
-                <strong class="title">Order Complete</strong>
+                <strong class="title">@lang('label.order_complete')</strong>
               </li>
             </ul>
           </div>
@@ -45,16 +45,16 @@
       <div class="container">
         <div class="row border">
           <div class="col-xs-12 col-sm-6">
-            <strong class="title">PRODUCT</strong>
+            <strong class="title">@lang('label.product')</strong>
           </div>
           <div class="col-xs-12 col-sm-2">
-            <strong class="title">PRICE</strong>
+            <strong class="title">@lang('label.price')</strong>
           </div>
           <div class="col-xs-12 col-sm-2">
-            <strong class="title">QUANTITY</strong>
+            <strong class="title">@lang('label.quantity')</strong>
           </div>
           <div class="col-xs-12 col-sm-2">
-            <strong class="title">TOTAL</strong>
+            <strong class="title">@lang('label.total')</strong>
           </div>
         </div>
 
@@ -107,13 +107,14 @@
             <div class="row" style="margin-top: 30px">
               <div class="col-xs-12 col-md-6 col-md-offset-3">
                 <div class="mt-holder">
-                   <center><h3 class="text-primary">Coupon applied</h3></center>
+                   <center><h3 class="text-primary text-uppercase">@lang('label.coupon_applied')</h3></center>
+                   <br>
                    <table class="table">
                      <thead>
                        <tr>
-                         <th>Coupon Value</th>
-                         <th>Coupon Code</th>
-                         <th>Coupon Description</th>
+                         <th>@lang('label.coupon_value')</th>
+                         <th>@lang('label.coupon_code')</th>
+                         <th>@lang('label.coupon_description')</th>
                          <th style="width: 10px"></th>
                        </tr>
                      </thead>
@@ -122,7 +123,7 @@
                          <td>{{ strpos($coupon->displayValue(), '%') ? $coupon->displayValue() : Helper::currency($coupon->displayValue(false, false, false)) }}</td>
                          <td>{{ $coupon->code }}</td>
                          <td>{{ $coupon->description }}</td>
-                         <td class="text-center"><button class="mt-link text-danger" data-toggle="tooltip" title="Remove Coupon" onclick="document.getElementById('coupon-{{ $coupon->code }}').submit()"><i class="fa fa-times"></i></button></td>
+                         <td class="text-center"><button class="mt-link text-danger" data-toggle="tooltip" title="@lang('label.remove_coupon')" onclick="document.getElementById('coupon-{{ $coupon->code }}').submit()"><i class="fa fa-times"></i></button></td>
                        </tr>
                      </tbody>
                     </table>
@@ -140,8 +141,8 @@
                 @csrf
                 <fieldset>
                   <div class="mt-holder form-group {{ session()->get('data')['type'] == 'error' ? 'has-error' : '' }}">
-                    <input type="text" class="form-control" placeholder="Your Coupon Code" name="coupon_code">
-                    <button type="submit" class="mt-button">APPLY</button>
+                    <input type="text" class="form-control" placeholder="@lang('label.your_coupon_code')" name="coupon_code">
+                    <button type="submit" class="mt-button">@lang('label.apply')</button>
                     @if (session()->has('data'))
                     <span class="help-block text-danger">{{ session()->get('data')['message'] }}</span>
                     @endif
@@ -163,7 +164,7 @@
             <div class="row">
               <div class="col-xs-12 col-sm-7">
               	<div id="loading" style="display: none;"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i></div>
-                <h2>CALCULATE SHIPPING</h2>
+                <h2>@lang('label.calculate_shipping')</h2>
                 <br>
 
                 <p>
@@ -174,13 +175,13 @@
                 	@csrf
                   <fieldset>
                     <div class="form-group">
-                      <select class="form-control select2" data-placeholder="Country" name="country_id">
+                      <select class="form-control select2" data-placeholder="@lang('label.country')" name="country_id">
                         <option value="id">Indonesia</option>
                       </select>
                     </div>
 
                     <div class="form-group">
-                      <select class="form-control select2" data-placeholder="State or Province" name="province_id">
+                      <select class="form-control select2" data-placeholder="@lang('label.state_or_province')" name="province_id">
                         <option></option>
 
                         @php ($province_id = !empty(auth()->user()->cust->province_id) ? auth()->user()->cust->province_id : session()->get('shipping.province_id'))
@@ -192,8 +193,9 @@
                     </div>
                     
                     <div class="form-group">
-                      <select class="form-control select2" data-placeholder="City" name="city_id">
+                      <select class="form-control select2" data-placeholder="@lang('label.city')" name="city_id">
                         @php ($city_id = !empty(auth()->user()->cust->city_id) ? auth()->user()->cust->city_id : session()->get('shipping.city_id'))
+
                         @foreach ($cities as $city)
                           <option value="{{ $city->city_id }}" {{ $city_id == $city->city_id ? 'selected=selected' : '' }}>{{ $city->type.' '.$city->city_name }}</option>
                         @endforeach
@@ -209,18 +211,18 @@
                     </div>
 
                     <div class="form-group">
-                      <button class="mt-button mt-secondary-button" id="btn-shipping" type="submit" {{ !session()->has('shipping') ? 'disabled=disabled' : '' }}>UPDATE TOTAL <i class="fa fa-refresh"></i></button>
+                      <button class="mt-button mt-secondary-button" id="btn-shipping" type="submit" {{ !session()->has('shipping') ? 'disabled=disabled' : '' }}>@lang('label.update_total') <i class="fa fa-refresh"></i></button>
                     </div>
 
                   </fieldset>
                 </form>
               </div>
               <div class="col-xs-12 col-sm-5">
-                <h2>CART TOTAL</h2>
+                <h2>@lang('label.cart_total')</h2>
                 <ul class="list-unstyled block cart">
                   <li>
                     <div class="txt-holder">
-                      <strong class="title sub-title pull-left">SUBTOTAL</strong>
+                      <strong class="title sub-title pull-left">@lang('label.subtotal')</strong>
                       <div class="txt pull-right">
                         <span>{{ Helper::currency($amount['subtotal']) }}</span>
                       </div>
@@ -228,7 +230,7 @@
                   </li>
                   <li>
                     <div class="txt-holder">
-                      <strong class="title sub-title pull-left">DISCOUNT</strong>
+                      <strong class="title sub-title pull-left">@lang('label.discount')</strong>
                       <div class="txt pull-right">
                         <span>({{ Helper::currency($amount['discount']) }})</span>
                       </div>
@@ -236,7 +238,7 @@
                   </li>
                   <li>
                     <div class="txt-holder">
-                      <strong class="title sub-title pull-left">TAX</strong>
+                      <strong class="title sub-title pull-left">@lang('label.tax')</strong>
                       <div class="txt pull-right">
                         <span>{{ Helper::currency($amount['taxes']) }}</span>
                       </div>
@@ -244,7 +246,7 @@
                   </li>
                   <li>
                     <div class="txt-holder">
-                      <strong class="title sub-title pull-left">SHIPPING FEE</strong>
+                      <strong class="title sub-title pull-left">@lang('label.shipping_fee')</strong>
                       <div class="txt pull-right">
                         <span>{{ Helper::currency($amount['shipping_fee']) }}</span>
                       </div>
@@ -252,7 +254,7 @@
                   </li>
                   <li style="border-bottom: none;">
                     <div class="txt-holder">
-                      <strong class="title sub-title pull-left">CART TOTAL</strong>
+                      <strong class="title sub-title pull-left">@lang('label.cart_total')</strong>
                       <div class="txt pull-right">
                         <span>{{ Helper::currency($amount['total']) }}</span>
                       </div>
@@ -260,8 +262,8 @@
                   </li>
                 </ul>
                 <div class="text-right">
-	              <button type="button" class="mt-button mt-primary-button" onclick="document.getElementById('form-cart').submit()">UPDATE CART</button>
-					      <a href="{{ route('checkout.index') }}" class="mt-button mt-secondary-button">CHECKOUT</a>
+	              <button type="button" class="mt-button mt-primary-button" onclick="document.getElementById('form-cart').submit()">@lang('label.update_cart')</button>
+					      <a href="{{ route('checkout.index') }}" class="mt-button mt-secondary-button">@lang('label.checkout')</a>
 				</div>
               </div>
             </div>
@@ -273,7 +275,7 @@
 
         <div class="row border">
           <div class="col-xs-12 col-sm-12 text-center">
-          	<strong class="product-name">Your cart is currently empty</strong>
+          	<strong class="product-name">@lang('label.your_cart_is_currently_empty')</strong>
           	<br>
           	<br>
           	<br>
@@ -285,7 +287,7 @@
       <div class="container">
         <div class="row text-right">
         	<div class="col-xs-12">
-				<a href="{{ url('/') }}" class="mt-button mt-primary-button">BACK TO HOME</a>
+				<a href="{{ url('/') }}" class="mt-button mt-primary-button">@lang('label.back_to_home')</a>
 			</div>
         </div>
       </div>

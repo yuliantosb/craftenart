@@ -36,26 +36,26 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="cotrol-label">Name</label>
+                                    <label class="cotrol-label">@lang('label.name')</label>
                                     <input type="text" class="form-control" name="name" value="{{ $user->name }}" placeholder="eg: John Doe">
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="cotrol-label">Identity Number</label>
+                                    <label class="cotrol-label">@lang('label.identity_number')</label>
                                     <input type="text" class="form-control" name="identity_number" value="{{ $user->cust->identity_number }}" placeholder="ID Number / Passport / etc">
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="cotrol-label">Gender</label>
+                                            <label class="cotrol-label">@lang('label.gender')</label>
                                             <input type="text" class="form-control" name="sex" value="{{ $user->cust->sex }}" placeholder="Gender">
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="cotrol-label">Phone Number</label>
+                                            <label class="cotrol-label">@lang('label.phone_number')</label>
                                             <input type="text" class="form-control number" name="phone_number" value="{{ $user->cust->phone_number }}" placeholder="Phone Number">
                                         </div>
                                     </div>
@@ -63,26 +63,26 @@
 
 
                                 <div class="form-group">
-                                    <label class="cotrol-label">Place of Birth</label>
+                                    <label class="cotrol-label">@lang('label.place_of_birth')</label>
                                     <input type="text" class="form-control" name="place_of_birth" value="{{ $user->cust->place_of_birth }}" placeholder="eg: Jakarta">
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="cotrol-label">Date of Birth</label>
+                                    <label class="cotrol-label">@lang('label.date_of_birth')</label>
                                     <input type="text" class="form-control datepicker" name="date_of_birth" value="{{ $user->cust->date_of_birth }}" placeholder="yyyy-mm-dd">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="cotrol-label">Country</label>
+                                    <label class="cotrol-label">@lang('label.country')</label>
                                     <select name="country_id" class="form-control select2">
                                         <option value="id">Indonesia</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="cotrol-label">Province / State</label>
+                                    <label class="cotrol-label">@lang('label.state_or_province')</label>
                                     <select class="form-control select2" data-placeholder="State or Province *" name="province_id">
                                       <option></option>
                                       @foreach ($provinces as $province)
@@ -92,7 +92,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="cotrol-label">City</label>
+                                    <label class="cotrol-label">@lang('label.city')</label>
                                     <select class="form-control select2" data-placeholder="City *" name="city_id">
                                         @if (!empty($user->cust->city_id))
                                           @foreach ($cities as $city)
@@ -103,12 +103,12 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="cotrol-label">Address</label>
+                                    <label class="cotrol-label">@lang('label.address')</label>
                                     <textarea class="form-control" placeholder="Address" name="address" rows="3">{{ $user->cust->address }}</textarea>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="cotrol-label">Zip / Postal Code</label>
+                                    <label class="cotrol-label">@lang('label.postcode_or_zip')</label>
                                     <input type="text" class="form-control" name="zip" value="{{ $user->cust->zip }}" placeholder="Zip / Postal Code">
                                 </div>
 
@@ -117,8 +117,8 @@
                             <div class="text-right col-md-12">
                                 <hr>
 
-                                <button class="btn btn-custom-secondary" type="reset">Reset</button>
-                                <button class="btn btn-custom-primary" type="submit">Save Changes</button>
+                                <button class="btn btn-custom-secondary" type="reset">@lang('label.reset')</button>
+                                <button class="btn btn-custom-primary" type="submit">@lang('label.save_changes')</button>
                             </div>
 
                         </form>

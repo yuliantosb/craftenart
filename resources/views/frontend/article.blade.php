@@ -58,6 +58,17 @@
                     </ul>
 
                     <div class="article-wrapper" 
+
+                      @if (app()->isLocale('en') && empty($post->content_en))
+
+                      <p class="text-muted"><small><em>*) @lang('label.content_not_available_in') English</em></small></p>
+
+                      @elseif (app()->isLocale('id') && empty($post->content_id))
+
+                      <p class="text-muted"><small><em>*) @lang('label.content_not_available_in') Bahasa Indonesia</em></small></p>
+
+                      @endif
+
                     	{!! $post->content !!}
                     </div>
 
@@ -102,7 +113,7 @@
 @if (session()->has('message'))
 
 <script type="text/javascript">
-    show_notification('<b>Success</b>','success', "{{ session()->get('message') }}");
+    show_notification("<b>@lang('label.success')</b>",'success', "{{ session()->get('message') }}");
 </script>
 
 @endif

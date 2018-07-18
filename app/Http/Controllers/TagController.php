@@ -50,9 +50,11 @@ class TagController extends Controller
     public function store(Request $request)
     {
     	$tag = new Tag;
-    	$tag->name = $request->name;
-    	$tag->description = $request->description;
-    	$tag->slug = Helper::createSlug($request->name, 'tag');
+        $tag->name_en = $request->name_en;
+    	$tag->name_id = $request->name_id;
+        $tag->description_en = $request->description_en;
+    	$tag->description_id = $request->description_id;
+    	$tag->slug = Helper::createSlug($request->name_en, 'tag');
     	$tag->feature_image = $request->feature_image;
         $tag->type = $request->type;
     	$tag->save();
@@ -71,9 +73,10 @@ class TagController extends Controller
     public function update(Request $request, $id)
     {
     	$tag = Tag::find($id);
-    	$tag->name = $request->name;
-    	$tag->description = $request->description;
-    	$tag->slug = Helper::createSlug($request->name, 'tag', $id);
+    	$tag->name_en = $request->name_en;
+        $tag->description_en = $request->description_en;
+    	$tag->description_id = $request->description_id;
+    	$tag->slug = Helper::createSlug($request->name_en, 'tag', $id);
     	$tag->feature_image = $request->feature_image;
         $tag->type = $request->type;
     	$tag->save();

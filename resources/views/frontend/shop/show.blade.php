@@ -44,25 +44,37 @@
 					<div class="detial-holder">
 						<!-- Breadcrumbs of the Page -->
 						<ul class="list-unstyled breadcrumbs">
-							<li><a href="{{ url('shop') }}">Shop <i class="fa fa-angle-right"></i></a></li>
+							<li><a href="{{ url('shop') }}">@lang('label.shop') <i class="fa fa-angle-right"></i></a></li>
 							<li>{{ $product->name }}</li>
 						</ul>
 						<!-- Breadcrumbs of the Page end -->
 						<h2>{{ $product->name }}</h2>
 						<!-- Rank Rating of the Page -->
 						<div class="rank-rating">
-							<span class="total-price">Reviews ({{ $product->reviews->count() }})</span>
+							<span class="total-price">@lang('label.reviews') ({{ $product->reviews->count() }})</span>
 							{!! Helper::getRate($product->reviews->avg('rate'), ['class' => 'list-unstyled rating-list']) !!} 
 						</div>
 
 						<div class="txt-wrap">
 							@if ($product->stock->amount <= 0)
-							<p class="text-danger">This product has been out of stock</p>
+							<p class="text-danger">@lang('label.this_product_out_of_stock')</p>
 							@endif
 
-							<p class="text-primary">Available Stock : {{ $product->stock->amount }}</p>
+							<p class="text-primary">@lang('label.available_stock') : {{ $product->stock->amount }}</p>
 
 							{!! $product->description !!}
+
+							@if (app()->isLocale('en') && empty($product->description_en))
+
+							<p class="text-muted"><small><em>*) @lang('label.description_not_available_in') English</em></small></p>
+
+							@elseif (app()->isLocale('id') && empty($product->description_id))
+
+							<p class="text-muted"><small><em>*) @lang('label.description_not_available_in') Bahasa Indonesia</em></small></p>
+
+							@endif
+
+
 						</div>
 						<div class="text-holder">
 							@if (!empty($product->sale))
@@ -82,7 +94,7 @@
 									<input type="number" id="qty" placeholder="1" name="qty" value="1" min="1" max="{{ $product->stock->amount }}">
 								</div>
 								<div class="row-val">
-									<button type="submit">ADD TO CART</button>
+									<button type="submit">@lang('label.add_to_cart')</button>
 								</div>
 							</fieldset>
 						</form>
@@ -113,8 +125,8 @@
 			<div class="row">
 				<div class="col-xs-12">
 					<ul class="mt-tabs text-center text-uppercase">
-						<li><a href="#tab1" class="active">DESCRIPTION</a></li>
-						<li><a href="#tab2">REVIEWS ({{ count($product->reviews) }})</a></li>
+						<li><a href="#tab1" class="active">@lang('label.description')</a></li>
+						<li><a href="#tab2">@lang('label.reviews') ({{ count($product->reviews) }})</a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="tab1">
@@ -145,27 +157,27 @@
 								<form action="{{ route('review.store') }}" class="p-commentform" method="post">
 									@csrf
 									<fieldset>
-										<h2>Add  Review</h2>
+										<h2>@lang('label.add_review')</h2>
 										<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
 										<div class="mt-row">
-											<label>Rate</label>
+											<label>@lang('label.rate')</label>
 											<fieldset class="rating text-left">
-											    <input type="radio" id="star5" name="rate" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-											    <input type="radio" id="star4" name="rate" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-											    <input type="radio" id="star3" name="rate" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-											    <input type="radio" id="star2" name="rate" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-											    <input type="radio" id="star1" name="rate" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+											    <input type="radio" id="star5" name="rate" value="5" /><label class = "full" for="star5" title="@lang('label.awesome') - 5 stars"></label>
+											    <input type="radio" id="star4" name="rate" value="4" /><label class = "full" for="star4" title="@lang('label.pretty_good') - 4 stars"></label>
+											    <input type="radio" id="star3" name="rate" value="3" /><label class = "full" for="star3" title="@lang('label.meh') - 3 stars"></label>
+											    <input type="radio" id="star2" name="rate" value="2" /><label class = "full" for="star2" title="@lang('label.kinda_bad') - 2 stars"></label>
+											    <input type="radio" id="star1" name="rate" value="1" /><label class = "full" for="star1" title="@lang('label.big_suck_time') - 1 star"></label>
 											</fieldset>
 										</div>
 										<div class="mt-row">
-											<label>Review</label>
+											<label>@lang('label.review')</label>
 											<textarea class="form-control" name="content"></textarea>
 										</div>
-										<button type="submit" class="btn-type4">ADD REVIEW</button>
+										<button type="submit" class="btn-type4">@lang('label.add_review')</button>
 									</fieldset>
 								</form>
 								@else
-								<h3>You must sign in to give a review</h3>
+								<h3>@lang('label.you_must_sign_in_review')</h3>
 								@endif
 							</div>
 						</div>
@@ -179,7 +191,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12">
-				<h2>RELATED PRODUCTS</h2>
+				<h2>@lang('label.related_product')</h2>
 					<div class="row">
 						<div class="col-xs-12">
 							@foreach ($relateds as $related)
@@ -204,7 +216,7 @@
 													</form>
 													<a href="javascript:void(0)" onclick="document.getElementById('cart-{{ $related->id }}').submit()">
 														<i class="icon-handbag"></i>
-														<span>Add to Cart</span>
+														<span>@lang('label.add_to_cart')</span>
 													</a>
 												</li>
 												<li><a href="#"><i class="icomoon icon-heart-empty"></i></a></li>

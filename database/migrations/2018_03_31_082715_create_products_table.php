@@ -24,7 +24,8 @@ class CreateProductsTable extends Migration
             $table->double('sale', 20, 2)->nullable();
             $table->string('sku')->nullable();
             $table->bigInteger('weight');
-            $table->text('description')->nullable();
+            $table->text('description_en')->nullable();
+            $table->text('description_id')->nullable();
             $table->timestamps();
         });
     }

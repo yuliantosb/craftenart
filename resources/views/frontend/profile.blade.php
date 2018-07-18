@@ -38,7 +38,7 @@
                                 </div>
 
                                 <div class="pull-right">
-                                    <a href="{{ route('user.profile.edit') }}" class="btn btn-link text-success" data-toggle="tooltip" title="Edit Profile"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('user.profile.edit') }}" class="btn btn-link text-success" data-toggle="tooltip" title="@lang('label.edit_profile')"><i class="fa fa-pencil"></i></a>
                                 </div>
                             </div>
 
@@ -46,22 +46,22 @@
                         		<div class="col-md-6">
                         			<table class="table">
                         				<tr>
-                        					<td><strong>Idendity Number</strong></td>
+                        					<td><strong>@lang('label.identity_number')</strong></td>
                         					<td>{{ $user->cust->identity_number }}</td>
                         				</tr>
 
                         				<tr>
-                        					<td><strong>Phone Number</strong></td>
+                        					<td><strong>@lang('label.phone_number')</strong></td>
                         					<td>{{ $user->cust->phone_number }}</td>
                         				</tr>
 
                         				<tr>
-                        					<td><strong>Place of Birth</strong></td>
+                        					<td><strong>@lang('label.place_of_birth')</strong></td>
                         					<td>{{ $user->cust->place_of_birth }}</td>
                         				</tr>
 
                         				<tr>
-                        					<td><strong>Date of Birth</strong></td>
+                        					<td><strong>@lang('label.date_of_birth')</strong></td>
                         					<td>{{ $user->cust->date_of_birth }}</td>
                         				</tr>
 
@@ -71,22 +71,22 @@
                         		<div class="col-md-6">
                         			<table class="table">
                         				<tr>
-                        					<td><strong>Country</strong></td>
+                        					<td><strong>@lang('label.country')</strong></td>
                         					<td>{{ RajaOngkir::getCountryAttr($user->cust->country_id) }}</td>
                         				</tr>
 
                         				<tr>
-                        					<td><strong>Province</strong></td>
+                        					<td><strong>@lang('label.state_or_province')</strong></td>
                         					<td>{{ !empty($user->cust->province_id) ? RajaOngkir::getProvinceAttr($user->cust->province_id) : '' }}</td >
                         				</tr>
 
                         				<tr>
-                        					<td><strong>City</strong></td>
+                        					<td><strong>@lang('label.city')</strong></td>
                         					<td>{{ !empty($user->cust->city_id) ? RajaOngkir::getCityAttr($user->cust->city_id, $user->cust->province_id) : '' }}</td>
                         				</tr>
 
                         				<tr>
-                        					<td><strong>Address</strong></td>
+                        					<td><strong>@lang('label.address')</strong></td>
                         					<td>
                         					{!! nl2br($user->cust->address) !!}
                         					<br>
@@ -103,7 +103,7 @@
                         <div class="col-md-2 text-center">
                             <input type="text" name="old_pic" value="{{ parse_url($user->cust->picture)['path'] }}" hidden="hidden">
                             <div class="change-btn-wrapper">
-                                <button class="btn btn-primary btn-circle btn-xs" data-toggle="tooltip" title="Change Avatar" id="btn-browse">
+                                <button class="btn btn-primary btn-circle btn-xs" data-toggle="tooltip" title="@lang('label.change_avatar')" id="btn-browse">
                                     <i class="fa fa-pencil"></i>
                                 </button>
 

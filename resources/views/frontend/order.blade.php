@@ -36,9 +36,9 @@
                                         <table class="table table-primary">
                                             <thead>
                                                 <tr>
-                                                    <th>Payment Date</th>
-                                                    <th>Payment Type</th>
-                                                    <th>Status</th>
+                                                    <th>@lang('label.payment_date')</th>
+                                                    <th>@lang('label.payment_type')</th>
+                                                    <th>@lang('label.status')</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -51,15 +51,15 @@
                                         </table>
                                     </div>
                                     <div class="col-md-6">
-                                        <h2>Order Details</h2>
+                                        <h2>@lang('label.order_details')</h2>
                                         <hr>
                                         <table class="table table-primary">
                                             <thead>
                                                 <tr>
-                                                    <th>Product Name</th>
-                                                    <th class="text-right">Price</th>
-                                                    <th class="text-center">Qty</th>
-                                                    <th class="text-right">Subtotal</th>
+                                                    <th>@lang('label.product_name')</th>
+                                                    <th class="text-right">@lang('label.price')</th>
+                                                    <th class="text-center">@lang('label.qty')</th>
+                                                    <th class="text-right">@lang('label.subtotal')</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -74,23 +74,23 @@
                                             </tbody>
                                             <tbody>
                                                 <tr>
-                                                    <th colspan="3" class="text-right">Sub Total</th>
+                                                    <th colspan="3" class="text-right">@lang('label.subtotal')</th>
                                                     <th class="text-right">{{ Helper::currency($order->subtotal) }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th colspan="3" class="text-right">Tax</th>
+                                                    <th colspan="3" class="text-right">@lang('label.tax')</th>
                                                     <th class="text-right">{{ Helper::currency($order->tax) }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th colspan="3" class="text-right">Discount</th>
+                                                    <th colspan="3" class="text-right">@lang('label.discount')</th>
                                                     <th class="text-right">({{ Helper::currency($order->discount) }})</th>
                                                 </tr>
                                                 <tr>
-                                                    <th colspan="3" class="text-right">Shipping Fee</th>
+                                                    <th colspan="3" class="text-right">@lang('label.shipping_fee')</th>
                                                     <th class="text-right">{{ Helper::currency($order->ship->cost) }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th colspan="3" class="text-right">Total</th>
+                                                    <th colspan="3" class="text-right">@lang('label.total')</th>
                                                     <th class="text-right">
                                                         {{-- Helper::currency($order->total) --}}
                                                         {{ Helper::currency(($order->subtotal + $order->tax + $order->ship->cost ) - $order->discount ) }}
@@ -101,29 +101,29 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <h2>Shipping Details</h2>
+                                        <h2>@lang('label.shipping_details')</h2>
                                         <hr>
 
-                                        <table class="table table-primary">
+                                        <table class="table table-primary table-top">
                                             <thead>
                                                 @if (!empty($order->ship->receipt_number))
                                                 <tr>
-                                                    <th><strong>Receipt Number</strong></th>
+                                                    <th><strong>@lang('label.receipt_number')</strong></th>
                                                     <th>{{ $order->ship->receipt_number }}</th>
                                                 </tr>
                                                 @endif
                                                 <tr>
-                                                    <th><strong>Shipping To</strong></th>
+                                                    <th><strong>@lang('label.shipping_to')</strong></th>
                                                     <th>{{ $order->ship->first_name.' '.$order->ship->last_name }}</th>
                                                 </tr>
                                                 <tr>
-                                                    <th><strong>Shipping Phone Number</strong></th>
+                                                    <th><strong>@lang('label.shipping_phone_number')</strong></th>
                                                     <th>
                                                         {{ $order->ship->phone_number }}
                                                     </th>
                                                 </tr>
                                                 <tr>
-                                                    <th><strong>Shipping Address</strong></th>
+                                                    <th><strong>@lang('label.shipping_address')</strong></th>
                                                     <th>
                                                         {!! nl2br($order->ship->address) !!}
                                                         <br>
@@ -134,13 +134,13 @@
                                                     </th>
                                                 </tr>
                                                 <tr>
-                                                    <th><strong>Courier Details</strong></th>
+                                                    <th><strong>@lang('label.courier_details')</strong></th>
                                                     <th>
                                                         {{ strtoupper($order->ship->courier_id) }}
                                                         <br>
                                                         {{ $order->ship->service_name }} ({{ $order->ship->service_description }})
                                                         <br>
-                                                        {{ $order->ship->estimate_delivery }} (Days)
+                                                        {{ $order->ship->estimate_delivery }} (@lang('label.days'))
                                                     </th>
                                                 </tr>
                                             </thead>

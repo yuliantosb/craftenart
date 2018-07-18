@@ -117,4 +117,26 @@ class Product extends Model
         return $this->hasMany('App\Wishlist', 'product_id');
     }
 
+    public function getDescriptionAttribute()
+    {
+        if (app()->isLocale('en')) {
+            
+            if (empty($this->description_en)) {
+                $description = $this->description_id;
+            } else {
+                $description = $this->description_en;
+            }
+
+        } else {
+
+            if (empty($this->description_id)) {
+                $description = $this->description_en;
+            } else {
+                $description = $this->description_id;
+            }
+        }
+
+        return $description;
+    }
+
 }

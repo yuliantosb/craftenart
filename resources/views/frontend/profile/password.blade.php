@@ -33,23 +33,23 @@
                     @csrf
 
                         <div class="form-group">
-                            <input type="Password" name="old_password" placeholder="Old Password *" class="form-control" required="required">
+                            <input type="Password" name="old_password" placeholder="@lang('label.old_password') *" class="form-control" required="required">
                             <span class="help-block"></span>
                         </div>
 
                         <div class="form-group">
-                            <input type="Password" name="new_password" placeholder="New Password *" class="form-control" required="required" minlength="6">
+                            <input type="Password" name="new_password" placeholder="@lang('label.new_password') *" class="form-control" required="required" minlength="6">
                             <span class="help-block"></span>
                         </div>
 
                         <div class="form-group">
-                            <input type="Password" name="retype_password" placeholder="Re-type Password *" class="form-control" required="required" minlength="6">
+                            <input type="Password" name="retype_password" placeholder="@lang('label.retype_password') *" class="form-control" required="required" minlength="6">
                             <span class="help-block"></span>
                         </div>
 
                         <div class="form-group text-right">
-                            <button class="btn btn-custom-primary" type="submit">Change Password</button>
-                            <button class="btn btn-custom-secondary" type="reset">Reset</button>
+                            <button class="btn btn-custom-primary" type="submit">@lang('label.change_password')</button>
+                            <button class="btn btn-custom-secondary" type="reset">@lang('label.reset')</button>
                         </div>
 
                     </form>

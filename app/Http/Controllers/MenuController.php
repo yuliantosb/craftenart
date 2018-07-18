@@ -43,7 +43,8 @@ class MenuController extends Controller
             if ($request->type == 'url') {
 
                 $menu = New Menu;
-                $menu->name = $request->name;
+                $menu->name_en = $request->name_en;
+                $menu->name_id = $request->name_id;
                 $menu->url = $request->url;
                 $menu->order_number = Menu::count() + 1;
                 $menu->is_mega = $request->is_mega;
@@ -67,6 +68,52 @@ class MenuController extends Controller
                         'title' => 'Success',
                         'type' => 'success',
                         'message' => 'Data has been saved successfuly!'
+                    ];
+
+            return response()->json($res);
+
+        }
+    }
+
+    public function edit($id)
+    {
+        $menu = Menu::find($id);
+        return response()->json($menu);
+    }
+
+    public function update(Request $request, $id)
+    {
+        if ($request->ajax()) {
+
+            if ($request->type == 'url') {
+
+                $menu = Menu::find($id);
+                $menu->name_en = $request->name_en;
+                $menu->name_id = $request->name_id;
+                $menu->url = $request->url;
+                $menu->order_number = Menu::count() + 1;
+                $menu->is_mega = $request->is_mega;
+                $menu->save();
+
+            }
+
+            if ($request->type == 'widget') {
+
+                $widget_id = $request->widget_id;
+
+                $menu = Menu::find($id);
+                $menu->widget_id = $widget_id;
+                $menu->name_en = $request->widget_name_en;
+                $menu->name_id = $request->widget_name_id;
+                $menu->is_mega = 0;
+                $menu->order_number = Menu::count() + 1;
+                $menu->save();
+            }
+
+            $res = [
+                        'title' => 'Success',
+                        'type' => 'success',
+                        'message' => 'Data has been updated successfuly!'
                     ];
 
             return response()->json($res);

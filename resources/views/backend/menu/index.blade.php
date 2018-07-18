@@ -27,7 +27,9 @@ Menu
                                     </div>
                                     <div class="panel-body">
                                         <div class="form-group">
-                                            <input type="text" name="name" placeholder="Menu Name" class="form-control">
+                                            <input type="text" name="name_en" placeholder="Menu Name EN" class="form-control">
+                                            <br>
+                                            <input type="text" name="name_id" placeholder="Menu Name ID" class="form-control">
                                             <br>
                                             <input type="text" name="url" placeholder="http://..." class="form-control">
                                             <br>
@@ -39,7 +41,8 @@ Menu
                                             </div>
                                             <hr>
                                             <div class="pull-right">
-                                                <button type="button" class="btn btn-primary btn-add" data-type="url">Add to menu</button>
+                                                <button type="button" class="btn btn-primary btn-add" data-type="url" id="btn-add-url">Add to menu</button>
+                                                <button type="button" class="btn btn-default btn-cancel" id="btn-cancel-url" style="display: none">Cancel</button>
                                             </div>
                                         </div>
                                     </div>
@@ -51,7 +54,9 @@ Menu
                                         <span class="pull-right clickable"><i class="fa fa-angle-up"></i></span>
                                     </div>
                                     <div class="panel-body">
-                                        <input type="text" name="widget_name" placeholder="Widget Name" class="form-control">
+                                        <input type="text" name="widget_name_en" placeholder="Widget Name EN" class="form-control">
+                                        <br>
+                                        <input type="text" name="widget_name_id" placeholder="Widget Name ID" class="form-control">
                                         <br>
                                         <select name="widget_id" class="select2" data-placeholder="Select Widget">
                                             <option></option>
@@ -61,7 +66,8 @@ Menu
                                         </select>
                                         <hr>
                                         <div class="pull-right">
-                                            <button type="button" class="btn btn-primary btn-add" data-type="widget">Add to menu</button>
+                                            <button type="button" class="btn btn-primary btn-add" data-type="widget" id="btn-add-widget">Add to menu</button>
+                                            <button type="button" class="btn btn-default btn-cancel" id="btn-cancel-widget" style="display: none">Cancel</button>
                                         </div>
                                     </div>
                                 </div>

@@ -12,19 +12,19 @@
       'placeholder_title' => 'Payment',
       'placeholder_breadcumbs' => [
         [
-          'name' => 'Home',
+          'name' => trans('label.home'),
           'url' => '/'
         ],
         [
-          'name' => 'Shopping Cart',
+          'name' => trans('label.shopping_cart'),
           'url' => '/cart'
         ],
         [
-          'name' => 'Checkout',
+          'name' => trans('label.checkout'),
           'url' => '/checkout'
         ],
         [
-          'name' => 'Payment',
+          'name' => trans('label.payment'),
           'url' => '/payment'
         ]
       ]])
@@ -39,15 +39,15 @@
             <ul class="list-unstyled process-list">
               <li class="active">
                 <span class="counter">01</span>
-                <strong class="title">Shopping Cart</strong>
+                <strong class="title">@lang('label.shopping_cart')</strong>
               </li>
               <li class="active">
                 <span class="counter">02</span>
-                <strong class="title">Check Out</strong>
+                <strong class="title">@lang('label.check_out')</strong>
               </li>
-              <li class="active">
+              <li>
                 <span class="counter">03</span>
-                <strong class="title">Order Complete</strong>
+                <strong class="title">@lang('label.order_complete')</strong>
               </li>
             </ul>
             <!-- Process List of the Page end -->

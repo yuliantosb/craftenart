@@ -88,7 +88,8 @@ class ProductController extends Controller
 			$product->sale = $request->sale;
 			$product->sku = $request->sku;
 			$product->weight = $request->weight;
-			$product->description = $request->description;
+			$product->description_en = $request->description_en;
+            $product->description_id = $request->description_id;
 			$product->save();
 
 			$stock = new Stock;
@@ -105,7 +106,7 @@ class ProductController extends Controller
                 foreach ($request->tags as $tag) {
 
                     $tag = Tag::firstOrCreate([
-                                    'name' => $tag,
+                                    'name_en' => $tag,
                                     'slug' => str_slug($tag),
                                     'type' => 'product', ]);
                     if ($tag) {
@@ -121,7 +122,7 @@ class ProductController extends Controller
                 foreach ($request->categories as $category) {
 
                     $category = Category::firstOrCreate([
-                                'name' => $category,
+                                'name_en' => $category,
                                 'slug' => str_slug($category),
                                 'type' => 'product', ]);
 
@@ -183,7 +184,8 @@ class ProductController extends Controller
 			$product->sale = $request->sale;
 			$product->sku = $request->sku;
 			$product->weight = $request->weight;
-			$product->description = $request->description;
+			$product->description_en = $request->description_en;
+            $product->description_id = $request->description_id;
 			$product->save();
 
 			$product->stock()->delete();
@@ -204,7 +206,7 @@ class ProductController extends Controller
                 foreach ($request->tags as $tag) {
 
                     $tag = Tag::firstOrCreate([
-                                    'name' => $tag,
+                                    'name_en' => $tag,
                                     'slug' => str_slug($tag),
                                     'type' => 'product', ]);
                     if ($tag) {
@@ -220,7 +222,7 @@ class ProductController extends Controller
                 foreach ($request->categories as $category) {
 
                     $category = Category::firstOrCreate([
-                                'name' => $category,
+                                'name_en' => $category,
                                 'slug' => str_slug($category),
                                 'type' => 'product', ]);
 

@@ -23,15 +23,44 @@
                       
                         <div class="col-md-8">
 
-                            <div class="form-group">
-                                <label class="control-label">Name</label>
-                                <input type="text" name="name" class="form-control" placeholder="Category Name" value="{{ $category->name }}">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#en" aria-controls="en" role="tab" data-toggle="tab">EN</a></li>
+                                <li role="presentation"><a href="#id" aria-controls="id" role="tab" data-toggle="tab">ID</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="en">
+                                    <div style="margin-top: 20px">
+                                        <div class="form-group">
+                                            <label class="control-label">Name <span class="text-danger">*</span></label>
+                                            <input type="text" name="name_en" value="{{ $category->name_en }}" class="form-control" placeholder="Category Name" required="required">
+                                            <span class="help-block"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label">Description</label>
+                                            <textarea class="form-control tinymce" name="description_en" placeholder="Category Description" rows="10">{{ $category->description_en }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="id">
+                                    <div style="margin-top: 20px">
+                                        <div class="form-group">
+                                            <label class="control-label">Name <span class="text-danger">*</span></label>
+                                            <input type="text" name="name_id" class="form-control" placeholder="Category Name" required="required" value="{{ $category->name_id }}">
+                                            <span class="help-block"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label">Description</label>
+                                            <textarea class="form-control tinymce" name="description_id" placeholder="Category Description" rows="10">{{ $category->description_id }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
 
-                            <div class="form-group">
-                                <label class="control-label">Description</label>
-                                <textarea class="form-control tinymce" name="description" placeholder="Category Description" rows="10">{{ $category->description }}</textarea>
-                            </div>
                         </div>
 
 

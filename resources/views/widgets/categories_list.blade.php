@@ -4,7 +4,7 @@
 <ul class="list-unstyled category-list">
 	<li>
 		<a href="{{ url('shop') }}">
-			<span class="name">All Categories</span>
+			<span class="name">@lang('label.all_categories')</span>
 			<span class="num">{{ App\Product::count() }}</span>
 		</a>
 	</li>

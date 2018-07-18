@@ -21,14 +21,18 @@
 
         <div class="container">
             <div class="row">
-
                 <div class="col-sm-3 col-md-2 sidebar">
                   @include('frontend.layouts.user_sidebar', ['active' => 'review'])
                 </div>
 
                 <div class="col-sm-9 col-md-10">
                     <div class="row">
+                        <div class="col-md-12">
+                            <h2>@lang('label.review')</h2>
+                            <hr>
+                        </div>
                         <div class="col-md-12 product-comment">
+
                             @foreach ($reviews as $review)
 
                             <div class="mt-box">

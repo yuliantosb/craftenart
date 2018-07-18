@@ -26,15 +26,43 @@
                             <div class="col-md-8">
                                 <div class="col-md-12">
 
-                                    <div class="form-group">
-                                        <label class="control-label">Title <span class="text-danger">*</span></label>
-                                        <input type="text" name="title" value="{{ $article->title }}" class="form-control" placeholder="Title" required="required">
-                                        <span class="help-block"></span>
-                                    </div>
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li role="presentation" class="active"><a href="#en" aria-controls="en" role="tab" data-toggle="tab">EN</a></li>
+                                        <li role="presentation"><a href="#id" aria-controls="id" role="tab" data-toggle="tab">ID</a></li>
+                                    </ul>
 
-                                    <div class="form-group">
-                                        <label class="control-label">Content</label>
-                                        <textarea class="form-control tinymce" name="content" placeholder="Content" rows="10">{!! $article->content !!}</textarea>
+                                    <div class="tab-content">
+                                        
+                                        <div role="tabpanel" class="tab-pane active" id="en">
+                                            <div style="margin-top: 20px">
+                                                <div class="form-group">
+                                                    <label class="control-label">Title <span class="text-danger">*</span></label>
+                                                    <input type="text" name="title_en" value="{{ $article->title_en }}" class="form-control" placeholder="Title" required="required">
+                                                    <span class="help-block"></span>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label">Content</label>
+                                                    <textarea class="form-control tinymce" name="content_en" placeholder="Content" rows="10">{{ $article->content_en }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div role="tabpanel" class="tab-pane" id="id">
+                                            <div style="margin-top: 20px">
+                                                <div class="form-group">
+                                                    <label class="control-label">Title <span class="text-danger">*</span></label>
+                                                    <input type="text" name="title_id" value="{{ $article->title_id }}" class="form-control" placeholder="Title" required="required">
+                                                    <span class="help-block"></span>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label">Content</label>
+                                                    <textarea class="form-control tinymce" name="content_id" placeholder="Content" rows="10">{{ $article->content_id }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                 </div>

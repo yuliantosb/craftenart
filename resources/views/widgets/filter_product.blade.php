@@ -27,7 +27,7 @@
 			<input type="text" class="span2 slider" value="" data-slider-min="{{ $min }}" data-slider-max="{{ $max }}" data-slider-step="{{ session()->get('currency') == 'idr' ? 10000 : 1 }}" data-slider-value="[{{ !empty(request()->price_range) ? explode(',', request()->price_range)[0] : $min }},{{ !empty(request()->price_range) ? explode(',', request()->price_range)[1] : $max }}]" name="price_range" data-slider-tooltip="show">
 		</div>
 		
-		<span class="price">Price &nbsp;   {{ Helper::takeCurrency()->symbol }} 
+		<span class="price">@lang('label.price') &nbsp;   {{ Helper::takeCurrency()->symbol }} 
 			<span id="range-from">
 				{{ number_format(!empty(request()->price_range) ? explode(',', request()->price_range)[0] : $min, 0, Helper::takeCurrency()->decimal_separator, Helper::takeCurrency()->thousand_separator) }}
 			</span>  &nbsp;  -  &nbsp;   {{ Helper::takeCurrency()->symbol }} 
@@ -36,7 +36,7 @@
 				{{ number_format(!empty(request()->price_range) ? explode(',', request()->price_range)[1] : $max, 0, Helper::takeCurrency()->decimal_separator, Helper::takeCurrency()->thousand_separator) }}
 			</span>
 		</span>
-		<button type="submit" class="filter-btn" style="border: none; margin-top: 20px">Filter</button>
+		<button type="submit" class="filter-btn" style="border: none; margin-top: 20px">@lang('label.filter')</button>
 	</div>
 </form>
 

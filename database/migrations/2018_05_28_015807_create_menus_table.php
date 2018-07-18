@@ -18,7 +18,8 @@ class CreateMenusTable extends Migration
             $table->increments('id');
             $table->integer('parent_id')->default(0);
             $table->integer('widget_id')->nullable();
-            $table->string('name');
+            $table->string('name_en');
+            $table->string('name_id')->nullable();
             $table->string('url')->nullable();
             $table->boolean('is_mega');
             $table->integer('order_number');
