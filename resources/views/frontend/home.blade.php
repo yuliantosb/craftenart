@@ -105,6 +105,16 @@
 
 									<!-- slide start here -->
 									<div class="slide">
+										<form style="display: none" action="{{ route('cart.store') }}" method="post" id="tab-{{ $product->id }}">
+											@csrf
+											<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
+										</form>
+
+										<form style="display: none" action="{{ route('wishlist.store') }}" method="post" id="tab-wishlist-{{ $product->id }}">
+											@csrf
+											<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
+										</form>
+
 										<!-- mt product1 large start here -->
 										<div class="mt-product1 large">
 											<div class="box">
@@ -124,23 +134,13 @@
 
 														{!! Helper::getRate($product->reviews->avg('rate')) !!} 
 														<ul class="links">
-															<li>												
-																<form style="display: none" action="{{ route('cart.store') }}" method="post" id="tab-{{ $product->id }}">
-																	{{ csrf_field() }}
-																	<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
-																</form>
-
+															<li>											
 																<a href="javascript:void(0)" onclick="document.getElementById('tab-{{ $product->id }}').submit()">
 																	<i class="icon-handbag"></i>
 																	<span>@lang('label.add_to_cart')</span>
 																</a>
 															</li>
 															<li>
-
-																<form style="display: none" action="{{ route('wishlist.store') }}" method="post" id="tab-wishlist-{{ $product->id }}">
-																	{{ csrf_field() }}
-																	<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
-																</form>	
 
 																@if (auth()->check())
 
