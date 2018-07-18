@@ -103,16 +103,6 @@
 								<div class="tabs-sliderlg">
 									@foreach ($category->products as $product)
 
-									<form style="display: none" action="{{ route('cart.store') }}" method="post" id="tab-{{ $product->id }}">
-										{{ csrf_field() }}
-										<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
-									</form>
-
-									<form style="display: none" action="{{ route('wishlist.store') }}" method="post" id="tab-wishlist-{{ $product->id }}">
-										{{ csrf_field() }}
-										<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
-									</form>
-
 									<!-- slide start here -->
 									<div class="slide">
 										<!-- mt product1 large start here -->
@@ -141,6 +131,16 @@
 																</a>
 															</li>
 															<li>
+
+																<form style="display: none" action="{{ route('cart.store') }}" method="post" id="tab-{{ $product->id }}">
+																	{{ csrf_field() }}
+																	<input type="text" name="id" value="{{ $product->id }}" hidden="hidden">
+																</form>
+
+																<form style="display: none" action="{{ route('wishlist.store') }}" method="post" id="tab-wishlist-{{ $product->id }}">
+																	{{ csrf_field() }}
+																	<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
+																</form>
 
 																@if (auth()->check())
 
