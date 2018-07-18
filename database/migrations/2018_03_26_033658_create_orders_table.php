@@ -35,6 +35,9 @@ class CreateOrdersTable extends Migration
             $table->string('fraud_status')->nullable();
             $table->string('coupon_code')->nullable();
             $table->string('status')->default(0);
+            $table->string('is_viewed')->default(0);
+            $table->string('bank_name')->nullable();
+            $table->string('store_name')->nullable();
             $table->timestamps();
         });
     }

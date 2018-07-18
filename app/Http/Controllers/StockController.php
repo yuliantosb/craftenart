@@ -29,7 +29,7 @@ class StockController extends Controller
 
     		->addColumn('last_record', function($data){
 
-    			return $data->details->first()->description;
+    			return !empty($data->details->first()) ? $data->details->first()->description : '';
     		})
 
 			->toJson();
