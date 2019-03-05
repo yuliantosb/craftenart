@@ -37,6 +37,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\GenerateMenus::class,
             \App\Http\Middleware\Language::class,
+            \App\Http\Middleware\HttpsProtocol::class
         ],
 
         'api' => [
@@ -64,6 +65,6 @@ class Kernel extends HttpKernel
         'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
         'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
         'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
-        'checkauth' => \App\Http\Middleware\CheckAuth::class
+        'checkauth' => \App\Http\Middleware\CheckAuth::class        
     ];
 }

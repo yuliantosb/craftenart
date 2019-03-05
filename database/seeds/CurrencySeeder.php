@@ -13,7 +13,7 @@ class CurrencySeeder extends Seeder
     {
         $currency = new App\Currency;
         $currency->name = 'US Dollar';
-        $currency->alias = 'USD';
+        $currency->alias = 'usd';
         $currency->code = 840;
         $currency->symbol = '$';
         $currency->convertion = 1;
