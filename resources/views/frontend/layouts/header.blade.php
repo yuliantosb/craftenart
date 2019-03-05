@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<!-- mt logo start here -->
-				<div class="mt-logo" style="margin: 0px"><a href="#"><img src="{{ url('uploads/'.App\Setting::getSetting('logo')->img) }}" alt="craftenart" style="width: 180px"></a></div>
+				<div class="mt-logo" style="margin: 0px"><a href="#"><img src="{{ !empty(App\Setting::getSetting('logo')->img) ? url('uploads/'.App\Setting::getSetting('logo')->img) : '' }}" alt="craftenart" style="width: 180px"></a></div>
 				<!-- mt icon list start here -->
 				<ul class="mt-icon-list">
 					<li class="hidden-lg hidden-md">

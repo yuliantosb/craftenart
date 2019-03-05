@@ -2,7 +2,7 @@
 <div class="footer-holder dark">
 	<div class="container">
 		<div class="row">
-
+			
 			@foreach (App\Setting::getSetting('footer') as $footer)
 			<div class="col-xs-12 col-sm-6 col-md-3 mt-paddingbottomsm">
 				@php($widget = App\Widget::find($footer->widget_id))
@@ -24,10 +24,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-sm-6">
-				{!! App\Setting::getSetting('left_footer')->text !!}
+				{!! !empty(App\Setting::getSetting('left_footer')->text) ? App\Setting::getSetting('left_footer')->text : '' !!}
 			</div>
 			<div class="col-xs-12 col-sm-6 text-right">
-				{!! App\Setting::getSetting('right_footer')->text !!}
+				{!! !empty(App\Setting::getSetting('right_footer')->text) ? App\Setting::getSetting('right_footer')->text : '' !!}
 			</div>
 		</div>
 	</div>

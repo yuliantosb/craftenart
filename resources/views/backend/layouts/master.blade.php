@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="{{ url('uploads/'.App\Setting::getSetting('favicon')->img) }}" />
+	<link rel="icon" type="image/png" href="{{ !empty(App\Setting::getSetting('favicon')->img) ? url('uploads/'.App\Setting::getSetting('favicon')->img) : '' }}" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

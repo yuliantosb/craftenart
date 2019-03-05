@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<!-- <link rel="icon" href="{{ url('frontend/images/favicon.ico') }}"> -->
 
-	<link rel="icon" type="image/png" href="{{ url('uploads/'.App\Setting::getSetting('favicon')->img) }}" />
+	<link rel="icon" type="image/png" href="{{ !empty(App\Setting::getSetting('favicon')->img) ? url('uploads/'.App\Setting::getSetting('favicon')->img) : '' }}" />
 
 	<!-- set the viewport width and initial-scale on mobile devices -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -157,7 +157,7 @@
 		<!-- Page Loader -->
     <div id="pre-loader" class="loader-container">
       <div class="loader">
-        <img src="{{ url('uploads/'.App\Setting::getSetting('loading')->img) }}" alt="loader">
+        <img src="{{ !empty(App\Setting::getSetting('loading')->img) ? url('uploads/'.App\Setting::getSetting('loading')->img) : '' }}" alt="loader">
       </div>
     </div>
 		<!-- W1 start here -->
@@ -168,8 +168,8 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 hidden-xs">
-								<span class="tel"> <i class="fa fa-phone" aria-hidden="true"></i>{{ App\Setting::getSetting('phone')->text }}</span>
-								<a href="#" class="tel"> <i class="fa fa-envelope-o" aria-hidden="true"></i>  {{ App\Setting::getSetting('email')->text }}</a>
+								<span class="tel"> <i class="fa fa-phone" aria-hidden="true"></i>{{ !empty(App\Setting::getSetting('phone')->text) ? App\Setting::getSetting('phone')->text : '' }}</span>
+								<a href="#" class="tel"> <i class="fa fa-envelope-o" aria-hidden="true"></i>  {{ !empty(App\Setting::getSetting('email')->text) ? App\Setting::getSetting('email')->text : '' }}</a>
 							</div>
 							<div class="col-xs-12 col-sm-6 text-right">
 

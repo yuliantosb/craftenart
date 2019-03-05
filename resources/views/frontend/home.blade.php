@@ -192,8 +192,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-12 mt-heading text-uppercase">
-						<h2 class="heading">{{ App\Setting::getSetting('mid')->heading }}</h2>
-						<p>{{ App\Setting::getSetting('mid')->text }}</p>
+						<h2 class="heading">{{ !empty(App\Setting::getSetting('mid')->heading) ? App\Setting::getSetting('mid')->heading : '' }}</h2>
+						<p>{{ !empty(App\Setting::getSetting('mid')->text) ? App\Setting::getSetting('mid')->text : '' }}</p>
 					</div>
 				</div>
 				<div class="row">
