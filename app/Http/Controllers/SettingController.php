@@ -35,16 +35,17 @@ class SettingController extends Controller
     public function store(Request $request)
     {
     	
-    	if ($request->has('id')) {
-            $this->store_id($request);
-        } else {
+    	if ($request->submit == 'en') {
             $this->store_en($request);
+        } else {
+            $this->store_id($request);
         }
-    	
 
      	return redirect()
                 ->back()
                 ->with('message', 'Setting saved successfully!');
+
+        // dd($request->footer);
 
 
     }
@@ -79,15 +80,15 @@ class SettingController extends Controller
                                 ];
                 }
 
-                Setting::where('name', 'banner')
-                        ->update(['content_en' => json_encode($banner)]);
+                Setting::updateOrCreate(['name' => 'banner'],[
+                        'content_en' => json_encode($banner)]);
 
             } else if ($index == 'footer') {
 
                 $footer = [];
-                $footer_title = $request->footer['title'];
-                $footer_align = $request->footer['align'];
-                $footer_widget_id = $request->footer['widget_id'];
+                $footer_title = $request['footer']['title'];
+                $footer_align = $request['footer']['align'];
+                $footer_widget_id = $request['footer']['widget_id'];
 
                 foreach($footer_title as $key => $v){
 
@@ -98,13 +99,13 @@ class SettingController extends Controller
                                 ];
                 }
 
-                Setting::where('name', 'footer')
-                        ->update(['content_en' => json_encode($footer)]);
+                Setting::updateOrCreate(['name' => 'footer'],
+                                        ['content_en' => json_encode($footer)]);
 
             } else {
 
-                Setting::where('name', $index)
-                    ->update(['content_en' => json_encode($datas)]);
+                Setting::updateOrCreate(['name' => $index],
+                                        ['content_en' => json_encode($datas)]);
             }
         
         }
@@ -140,8 +141,8 @@ class SettingController extends Controller
                                 ];
                 }
 
-                Setting::where('name', 'banner')
-                        ->update(['content_id' => json_encode($banner)]);
+                Setting::updateOrCreate(['name' => 'banner'],[
+                        'content_id' => json_encode($banner)]);
 
             } else if ($index == 'footer') {
 
@@ -159,13 +160,13 @@ class SettingController extends Controller
                                 ];
                 }
 
-                Setting::where('name', 'footer')
-                        ->update(['content_id' => json_encode($footer)]);
+                Setting::updateOrCreate(['name' => 'footer'],
+                                        ['content_id' => json_encode($footer)]);
 
             } else {
 
-                Setting::where('name', $index)
-                    ->update(['content_id' => json_encode($datas)]);
+                Setting::updateOrCreate(['name' => $index],
+                                        ['content_id' => json_encode($datas)]);
             }
         
         }

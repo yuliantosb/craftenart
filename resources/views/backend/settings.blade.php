@@ -33,7 +33,7 @@
                                             <label for="inputEmail3" class="col-sm-2 control-label">Logo</label>
                                             <div class="col-sm-10">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Logo" readonly="readonly" name="logo[img]" value="{{ $results_en['logo']->img }}" id="input-logo-img">
+                                                    <input type="text" class="form-control" placeholder="Logo" readonly="readonly" name="logo[img]" value="{{ !empty($results_en['logo']->img) ? $results_en['logo']->img : '' }}" id="input-logo-img">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default btn-open-media" type="button" data-type="logo-img">Browse</button>
                                                     </span>
@@ -47,7 +47,7 @@
                                             <label for="inputEmail3" class="col-sm-2 control-label">Favicon</label>
                                             <div class="col-sm-10">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Favicon" readonly="readonly" name="favicon[img]" value="{{ $results_en['favicon']->img }}" id="input-favicon-img">
+                                                    <input type="text" class="form-control" placeholder="Favicon" readonly="readonly" name="favicon[img]" value="{{ !empty($results_en['favicon']->img) ? $results_en['favicon']->img : '' }}" id="input-favicon-img">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default btn-open-media" type="button" data-type="favicon-img">Browse</button>
                                                     </span>
@@ -61,7 +61,7 @@
                                             <label for="inputEmail3" class="col-sm-2 control-label">Loading Placeholder</label>
                                             <div class="col-sm-10">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Loading Placeholder" readonly="readonly" name="loading[img]" value="{{ $results_en['loading']->img }}" id="input-loading-img">
+                                                    <input type="text" class="form-control" placeholder="Loading Placeholder" readonly="readonly" name="loading[img]" value="{{ !empty($results_en['loading']->img) ?  $results_en['loading']->img : '' }}" id="input-loading-img">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default btn-open-media" type="button" data-type="loading-img">Browse</button>
                                                     </span>
@@ -74,7 +74,7 @@
                                             <label for="inputEmail3" class="col-sm-2 control-label">Default Banner Placeholder</label>
                                             <div class="col-sm-10">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Logo" readonly="readonly" name="default_placeholder[img]" value="{{ $results_en['default_placeholder']->img }}" id="input-default-placeholder-img">
+                                                    <input type="text" class="form-control" placeholder="Logo" readonly="readonly" name="default_placeholder[img]" value="{{ !empty($results_en['default_placeholder']->img) ? $results_en['default_placeholder']->img : '' }}" id="input-default-placeholder-img">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default btn-open-media" type="button" data-type="default-placeholder-img">Browse</button>
                                                     </span>
@@ -86,28 +86,28 @@
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Middle Heading</label>
                                             <div class="col-sm-10">
-                                              <input name="mid[heading]" class="form-control" placeholder="Phone" value="{{ $results_en['mid']->heading }}">
+                                              <input name="mid[heading]" class="form-control" placeholder="Phone" value="{{ !empty($results_en['mid']->heading) ? $results_en['mid']->heading : '' }}">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Middle Text</label>
                                             <div class="col-sm-10">
-                                              <input name="mid[text]" class="form-control" placeholder="Phone" value="{{ $results_en['mid']->text }}">
+                                              <input name="mid[text]" class="form-control" placeholder="Phone" value="{{ !empty($results_en['mid']->text) ? $results_en['mid']->text : '' }}">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Phone</label>
                                             <div class="col-sm-10">
-                                              <input name="phone[text]" class="form-control" placeholder="Phone" value="{{ $results_en['phone']->text }}">
+                                              <input name="phone[text]" class="form-control" placeholder="Phone" value="{{ !empty($results_en['phone']->text) ? $results_en['phone']->text : '' }}">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
                                             <div class="col-sm-10">
-                                              <input name="email[text]" class="form-control" placeholder="Email" value="{{ $results_en['email']->text }}">
+                                              <input name="email[text]" class="form-control" placeholder="Email" value="{{ !empty($results_en['email']->text) ? $results_en['email']->text : '' }}">
                                             </div>
                                         </div>
 
@@ -131,7 +131,7 @@
                                                        </tr>
                                                    </thead>
                                                    <tbody>
-                                                    @if (count($results_en['footer']) > 0)
+                                                    @if (!empty($results_en['footer']))
                                                     @foreach ($results_en['footer'] as $footer)
 
                                                     <tr>
@@ -156,7 +156,7 @@
                                                     @endforeach
                                                     @else
                                                        <tr id="no-data-footer-widget">
-                                                           <td colspan="2" class="text-center">No Data</td>
+                                                           <td colspan="3" class="text-center">No Data</td>
                                                        </tr>
                                                     @endif
                                                    </tbody>
@@ -167,14 +167,14 @@
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Left Footer</label>
                                             <div class="col-sm-10">
-                                              <textarea name="left_footer[text]" class="form-control" placeholder="Left Footer" rows="3">{{ $results_en['left_footer']->text }}</textarea>
+                                              <textarea name="left_footer[text]" class="form-control" placeholder="Left Footer" rows="3">{{ !empty($results_en['left_footer']->text) ? $results_en['left_footer']->text : '' }}</textarea>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Right Footer</label>
                                             <div class="col-sm-10">
-                                              <textarea name="right_footer[text]" class="form-control" placeholder="Left Footer" rows="3">{{ $results_en['right_footer']->text }}</textarea>
+                                              <textarea name="right_footer[text]" class="form-control" placeholder="Left Footer" rows="3">{{ !empty($results_en['right_footer']->text) ? $results_en['right_footer']->text : '' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +200,7 @@
                                                 </thead>
                                                 <tbody>
                                                     
-                                                    @if (count($results_en['banner']) > 0)
+                                                    @if (!empty($results_en['banner']))
                                                     @php($i = 0)
                                                     @foreach ($results_en['banner'] as $banner)
 
@@ -264,14 +264,14 @@
 
                                     <div class="col-md-12 text-right">
                                         <hr>
-                                        <button class="btn btn-primary" type="submit" name="en">
+                                        <button class="btn btn-primary" type="submit" name="submit" value="en">
                                             Save Setting
                                         </button>
                                     </div>
                                 </form>
 
                             </div>
-
+                            
                             <div role="tabpanel" class="tab-pane" id="id">
 
                                 <form action="{{ route('admin.settings.store') }}" method="post" id="form-add-edit" class="form-horizontal">
@@ -281,7 +281,7 @@
                                             <label for="inputEmail3" class="col-sm-2 control-label">Logo</label>
                                             <div class="col-sm-10">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Logo" readonly="readonly" name="logo[img]" value="{{ $results_id['logo']->img }}" id="input-logo-img">
+                                                    <input type="text" class="form-control" placeholder="Logo" readonly="readonly" name="logo[img]" value="{{ !empty($results_id['logo']->img) ? $results_id['logo']->img : '' }}" id="input-logo-img">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default btn-open-media" type="button" data-type="logo-img">Browse</button>
                                                     </span>
@@ -295,7 +295,7 @@
                                             <label for="inputEmail3" class="col-sm-2 control-label">Favicon</label>
                                             <div class="col-sm-10">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Favicon" readonly="readonly" name="favicon[img]" value="{{ $results_id['favicon']->img }}" id="input-favicon-img">
+                                                    <input type="text" class="form-control" placeholder="Favicon" readonly="readonly" name="favicon[img]" value="{{ !empty($results_id['favicon']->img) ? $results_id['favicon']->img : '' }}" id="input-favicon-img">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default btn-open-media" type="button" data-type="favicon-img">Browse</button>
                                                     </span>
@@ -309,7 +309,7 @@
                                             <label for="inputEmail3" class="col-sm-2 control-label">Loading Placeholder</label>
                                             <div class="col-sm-10">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Loading Placeholder" readonly="readonly" name="loading[img]" value="{{ $results_id['loading']->img }}" id="input-loading-img">
+                                                    <input type="text" class="form-control" placeholder="Loading Placeholder" readonly="readonly" name="loading[img]" value="{{ !empty($results_id['loading']->img) ? $results_id['loading']->img : '' }}" id="input-loading-img">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default btn-open-media" type="button" data-type="loading-img">Browse</button>
                                                     </span>
@@ -322,7 +322,7 @@
                                             <label for="inputEmail3" class="col-sm-2 control-label">Default Banner Placeholder</label>
                                             <div class="col-sm-10">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Logo" readonly="readonly" name="default_placeholder[img]" value="{{ $results_id['default_placeholder']->img }}" id="input-default-placeholder-img">
+                                                    <input type="text" class="form-control" placeholder="Logo" readonly="readonly" name="default_placeholder[img]" value="{{ !empty($results_id['default_placeholder']->img) ? $results_id['default_placeholder']->img : '' }}" id="input-default-placeholder-img">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default btn-open-media" type="button" data-type="default-placeholder-img">Browse</button>
                                                     </span>
@@ -334,28 +334,28 @@
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Middle Heading</label>
                                             <div class="col-sm-10">
-                                              <input name="mid[heading]" class="form-control" placeholder="Phone" value="{{ $results_id['mid']->heading }}">
+                                              <input name="mid[heading]" class="form-control" placeholder="Phone" value="{{ !empty($results_id['mid']->heading) ? $results_id['mid']->heading : '' }}">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Middle Text</label>
                                             <div class="col-sm-10">
-                                              <input name="mid[text]" class="form-control" placeholder="Phone" value="{{ $results_id['mid']->text }}">
+                                              <input name="mid[text]" class="form-control" placeholder="Phone" value="{{ !empty($results_id['mid']->text) ? $results_id['mid']->text : '' }}">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Phone</label>
                                             <div class="col-sm-10">
-                                              <input name="phone[text]" class="form-control" placeholder="Phone" value="{{ $results_id['phone']->text }}">
+                                              <input name="phone[text]" class="form-control" placeholder="Phone" value="{{ !empty($results_id['phone']->text) ? $results_id['phone']->text : '' }}">
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
                                             <div class="col-sm-10">
-                                              <input name="email[text]" class="form-control" placeholder="Email" value="{{ $results_id['email']->text }}">
+                                              <input name="email[text]" class="form-control" placeholder="Email" value="{{ !empty($results_id['email']->text) ? $results_id['email']->text : '' }}">
                                             </div>
                                         </div>
 
@@ -379,7 +379,7 @@
                                                        </tr>
                                                    </thead>
                                                    <tbody>
-                                                    @if (count($results_id['footer']) > 0)
+                                                    @if (!empty($results_id['footer']))
                                                     @foreach ($results_id['footer'] as $footer)
 
                                                     <tr>
@@ -404,7 +404,7 @@
                                                     @endforeach
                                                     @else
                                                        <tr id="no-data-footer-widget">
-                                                           <td colspan="2" class="text-center">No Data</td>
+                                                           <td colspan="3" class="text-center">No Data</td>
                                                        </tr>
                                                     @endif
                                                    </tbody>
@@ -415,14 +415,14 @@
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Left Footer</label>
                                             <div class="col-sm-10">
-                                              <textarea name="left_footer[text]" class="form-control" placeholder="Left Footer" rows="3">{{ $results_id['left_footer']->text }}</textarea>
+                                              <textarea name="left_footer[text]" class="form-control" placeholder="Left Footer" rows="3">{{ !empty($results_id['left_footer']->text) ? $results_id['left_footer']->text : '' }}</textarea>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="inputEmail3" class="col-sm-2 control-label">Right Footer</label>
                                             <div class="col-sm-10">
-                                              <textarea name="right_footer[text]" class="form-control" placeholder="Left Footer" rows="3">{{ $results_id['right_footer']->text }}</textarea>
+                                              <textarea name="right_footer[text]" class="form-control" placeholder="Left Footer" rows="3">{{ !empty($results_id['right_footer']->text) ? $results_id['right_footer']->text : '' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -448,7 +448,7 @@
                                                 </thead>
                                                 <tbody>
                                                     
-                                                    @if (count($results_id['banner']) > 0)
+                                                    @if (!empty($results_id['banner']))
                                                     @php($i = 0)
                                                     @foreach ($results_id['banner'] as $banner)
 
@@ -512,7 +512,7 @@
 
                                     <div class="col-md-12 text-right">
                                         <hr>
-                                        <button class="btn btn-primary" type="submit" name="id">
+                                        <button class="btn btn-primary" type="submit" name="submit" value="id">
                                             Save Setting
                                         </button>
                                     </div>
@@ -520,6 +520,7 @@
 
 
                             </div>
+                            
 
                         </div>
 

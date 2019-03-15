@@ -13535,3 +13535,15 @@ a:hover {
 .table-top > thead > tr > th {
   vertical-align: top !important;
 }
+
+.news-column .fa {
+  float: left;
+  font-size: 18px;
+  line-height: 20px;
+  margin: 4px 10px 0 0;
+}
+
+.txt-box {
+  overflow: hidden;
+  line-height: 23px;
+}

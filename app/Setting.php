@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
+	protected $fillable = ['name', 'content_en', 'content_id'];
     public function scopeGetSetting($query, $name) {
 
     	$return = $query->where('name', $name)

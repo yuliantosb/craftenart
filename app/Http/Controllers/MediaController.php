@@ -23,17 +23,24 @@ class MediaController extends Controller
 
 	            $dir = public_path('uploads/');
 	            $filename = time() .'_'. rand() .'.' . $extension;
-	            $file->move($dir, $filename);
+				$file->move($dir, $filename);
+				
+				if ($extension == 'svg') {
 
-	            $thumb1 = Image::make($dir.'/'.$filename);
-	            $thumb1->fit(215, 215);
-	            $thumb1->save($dir.'thumbs/'.$filename);
+					copy($dir.'/'.$filename, $dir.'thumbs/'.$filename);
 
-		        $media = new Media;
-		        $media->name = $filename;
-		        $media->alt = pathinfo($realfilename, PATHINFO_FILENAME);
-		        $media->size = $filesize;
-		        $media->save();
+				} else {
+					$thumb1 = Image::make($dir.'/'.$filename);
+					$thumb1->fit(215, 215);
+					$thumb1->save($dir.'thumbs/'.$filename);
+
+					$media = new Media;
+					$media->name = $filename;
+					$media->alt = pathinfo($realfilename, PATHINFO_FILENAME);
+					$media->size = $filesize;
+					$media->save();
+				}
+	            
 		    }
 
     	});
