@@ -101,14 +101,14 @@ class ProductController extends Controller
 			$stock_details->description = 'Init new product';
 			$product->stock->details()->save($stock_details);
 
-			if (count($request->tags) > 0){
+			if (!empty($request->tags)) {
 
                 foreach ($request->tags as $tag) {
 
                     $tag = Tag::firstOrCreate([
                                     'name_en' => $tag,
                                     'slug' => str_slug($tag),
-                                    'type' => 'product', ]);
+                                    'type' => 'product']);
                     if ($tag) {
                         $tagIds[] = $tag->id;
                     }
@@ -117,14 +117,14 @@ class ProductController extends Controller
                 $product->tags()->sync($tagIds);
             }
 
-            if (count($request->categories) > 0){
+            if (!empty($request->categories)){
 
                 foreach ($request->categories as $category) {
 
                     $category = Category::firstOrCreate([
                                 'name_en' => $category,
                                 'slug' => str_slug($category),
-                                'type' => 'product', ]);
+                                'type' => 'product']);
 
                     if ($category) {
                         $categoryIds[] = $category->id;
@@ -134,7 +134,7 @@ class ProductController extends Controller
                 $product->categories()->sync($categoryIds);
             }
 
-            if (count($request->galleries) > 0) {
+            if (!empty($request->galleries)) {
             	foreach ($request->galleries as $gallery) {
 
             		$product_gallery = new ProductGalleries;
@@ -144,7 +144,7 @@ class ProductController extends Controller
             	}            	
             }
 
-            if (count($request->attribute_name) > 0) {
+            if (!empty($request->attribute_name)) {
             	foreach ($request->attribute_name as $index => $attribute) {
 
             		$attribute = new ProductAttributes;
@@ -201,7 +201,7 @@ class ProductController extends Controller
 			$stock_details->description = 'Init new product';
 			$product->stock->details()->save($stock_details);
 
-			if (count($request->tags) > 0){
+			if (!empty($request->tags)){
 
                 foreach ($request->tags as $tag) {
 
@@ -217,7 +217,7 @@ class ProductController extends Controller
                 $product->tags()->sync($tagIds);
             }
 
-            if (count($request->categories) > 0){
+            if (!empty($request->categories)) {
 
                 foreach ($request->categories as $category) {
 
@@ -234,7 +234,7 @@ class ProductController extends Controller
                 $product->categories()->sync($categoryIds);
             }
 
-            if (count($request->galleries) > 0) {
+            if (!empty($request->galleries)) {
 
             	$product->galleries()->delete();
 
@@ -247,7 +247,7 @@ class ProductController extends Controller
             	}            	
             }
 
-            if (count($request->attribute_name) > 0) {
+            if (!empty($request->attribute_name)) {
 
             	$product->attributes()->delete();
 

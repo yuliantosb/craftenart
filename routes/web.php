@@ -27,7 +27,8 @@ Auth::routes();
 
 // cart
 Route::post('cart/shipping', 'CartController@addFee')->name('cart.shipping');
-Route::put('cart/update', 'CartController@bulkUpdate')->name('cart.bulk_update');
+Route::put('cart/update', 'CartController@updateCart')->name('cart.update');
+Route::delete('cart/remove/{id}', 'CartController@removeCart')->name('cart.remove');
 Route::resource('cart', 'CartController');
 
 // checkout

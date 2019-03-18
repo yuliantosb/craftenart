@@ -58,7 +58,8 @@ class MenuController extends Controller
 
                 $menu = New Menu;
                 $menu->widget_id = $widget_id;
-                $menu->name = $request->widget_name;
+                $menu->name_en = $request->widget_name_en;
+                $menu->name_id = $request->widget_name_id;
                 $menu->is_mega = 0;
                 $menu->order_number = Menu::count() + 1;
                 $menu->save();

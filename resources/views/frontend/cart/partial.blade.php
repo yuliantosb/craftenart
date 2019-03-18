@@ -21,12 +21,12 @@
 							<strong>{{ Helper::currency(Helper::setCurrency($details->value, 'idr')) }}</strong> <br> 
 							<span class="text-muted"> {{ $details->etd }} @lang('label.day')(s) </span>
 
-							<input type="text" name="courier_id[]" value="{{ $courier->code }}" hidden="hidden">
-							<input type="text" name="courier_name[]" value="{{ $courier->name }}" hidden="hidden">
-							<input type="text" name="cost[]" value="{{ Helper::setCurrency($details->value, 'idr') }}" hidden="hidden">
-							<input type="text" name="service_name[]" value="{{ $cost->service }}" hidden="hidden">
-							<input type="text" name="service_description[]" value="{{ $cost->description }}" hidden="hidden">
-							<input type="text" name="estimate_delivery[]" value="{{ $details->etd }}" hidden="hidden">
+							<input type="text" name="courier_id[{{ $i }}]" value="{{ $courier->code }}" hidden="hidden">
+							<input type="text" name="courier_name[{{ $i }}]" value="{{ $courier->name }}" hidden="hidden">
+							<input type="text" name="cost[{{ $i }}]" value="{{ Helper::setCurrency($details->value, 'idr') }}" hidden="hidden">
+							<input type="text" name="service_name[{{ $i }}]" value="{{ $cost->service }}" hidden="hidden">
+							<input type="text" name="service_description[{{ $i }}]" value="{{ $cost->description }}" hidden="hidden">
+							<input type="text" name="estimate_delivery[{{ $i }}]" value="{{ $details->etd }}" hidden="hidden">
 
 						@endforeach
 

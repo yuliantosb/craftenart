@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <form action="{{ route('admin.tag.update', $tag->id) }}" method="post">
+                    <form action="{{ route('admin.tag.update', $tag->id) }}" method="post" id="form-add-edit">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                         <hr>

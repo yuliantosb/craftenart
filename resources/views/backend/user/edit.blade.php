@@ -162,7 +162,7 @@
 
 									<div class="form-group">
 										<label>Date of Birth</label>
-										<input type="text" name="date_of_birth" value="{{ $user->cust->date_of_birth }}" class="form-control" placeholder="yyyy-mm-dd">
+										<input type="text" name="date_of_birth" value="{{ $user->cust->date_of_birth }}" class="form-control datepicker" placeholder="yyyy-mm-dd">
 									</div>
 
 									<div class="form-group">

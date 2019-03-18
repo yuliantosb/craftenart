@@ -225,4 +225,10 @@ return [
 	'edit_profile' => 'Ubah Profil',
 
 	'no_wishlists_yet' => "Anda belum memiliki produk favorit!",
+	'credit_card_details' => 'Details Kartu Kredit / Debit',
+	'card_number' => 'Nomor Kartu',
+	'month_expired' => 'Bulan Kadalwarsa',
+	'year_expired' => 'Tahun Kadalwarsa',
+	'cvv' => 'CVV',
+	'pay' => 'Bayar dengan kartu kredit'
 ];

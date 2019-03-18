@@ -38,6 +38,11 @@ class CartController extends Controller
                 $cities = collect([]);
                 $costs = collect([]);
             }
+        } else {
+            
+                $cities = collect([]);
+                $costs = collect([]);
+            
         }
 
         $amount['subtotal'] = LaraCart::subTotal($format = false, $withDiscount = true);
@@ -106,8 +111,6 @@ class CartController extends Controller
             session()->forget('shipping');
         }
 
-        $index = $request->fee;
-
         $data = [
 
             'first_name' => $request->first_name,
@@ -120,19 +123,43 @@ class CartController extends Controller
             'zip' => $request->zip,
             'address' => $request->address,
             'total_weight' => $request->total_weight,
-            'courier_id' => $request->courier_id[$index],
-            'courier_name' => $request->courier_name[$index],
-            'cost' => $request->cost[$index],
-            'service_name' => $request->service_name[$index],
-            'service_description' => $request->service_description[$index],
-            'estimate_delivery' => $request->estimate_delivery[$index],
+            'courier_id' => $request->courier_id,
+            'courier_name' => $request->courier_name,
+            'cost' => $request->cost,
+            'service_name' => $request->service_name,
+            'service_description' => $request->service_description,
+            'estimate_delivery' => $request->estimate_delivery,
             'order_total' => LaraCart::total($formatted = false, $withDiscount = true)
 
         ];
 
         $shipping = session()->put('shipping', $data);
 
-        LaraCart::addFee('shippingFee', $request->cost[$index], $taxable =  false, $options = []);
+        LaraCart::addFee('shippingFee', $request->cost, $taxable =  false, $options = []);
+
+        if ($request->wantsJson()) {
+
+            $subtotal = LaraCart::subTotal($format = false, $withDiscount = true);
+            $taxes = LaraCart::taxTotal($formatted = false);
+            $shipping_fee = LaraCart::getFee('shippingFee')->amount;
+
+            if (!empty(LaraCart::getCoupons())) {
+                $discount = LaraCart::totalDiscount($formatted = false);
+            } else {
+                $discount = 0;
+            }
+
+            $total = ($subtotal + $taxes + $shipping_fee) - $discount;
+
+            $cost['subtotal'] = Helper::currency($subtotal);
+            $cost['taxes'] = Helper::currency($taxes);
+            $cost['shipping_fee'] = Helper::currency($shipping_fee);
+            $cost['discount'] = Helper::currency($discount);
+            $cost['total'] = Helper::currency($total);
+
+            return response()->json(['data' => $cost, 'type' => 'success'], 201);
+        }
+
         return redirect()->back();
     }
 
@@ -153,5 +180,60 @@ class CartController extends Controller
         }
         
         return redirect()->back();
+    }
+
+    public function updateCart(Request $request)
+    {
+        LaraCart::updateItem($request->id, 'qty', $request->qty);
+        $price = LaraCart::getItems()[$request->id]->options['price'];
+        $qty = LaraCart::getItems()[$request->id]->options['qty'];
+
+        $total_cart = $price * $qty;
+        $subtotal = LaraCart::subTotal($format = false, $withDiscount = true);
+        $taxes = LaraCart::taxTotal($formatted = false);
+        $shipping_fee = LaraCart::getFee('shippingFee')->amount;
+
+        if (!empty(LaraCart::getCoupons())) {
+            $discount = LaraCart::totalDiscount($formatted = false);
+        } else {
+            $discount = 0;
+        }
+
+        $total = ($subtotal + $taxes + $shipping_fee) - $discount;
+
+        $cost['total_cart'] = Helper::currency($total_cart);
+        $cost['subtotal'] = Helper::currency($subtotal);
+        $cost['taxes'] = Helper::currency($taxes);
+        $cost['shipping_fee'] = Helper::currency($shipping_fee);
+        $cost['discount'] = Helper::currency($discount);
+        $cost['total'] = Helper::currency($total);
+
+        return response()->json(['data' => $cost, 'type' => 'success'], 201);
+    }
+
+    public function removeCart($id)
+    {
+        LaraCart::removeItem($id);
+        $subtotal = LaraCart::subTotal($format = false, $withDiscount = true);
+        $taxes = LaraCart::taxTotal($formatted = false);
+        $shipping_fee = LaraCart::getFee('shippingFee')->amount;
+
+        if (!empty(LaraCart::getCoupons())) {
+            $discount = LaraCart::totalDiscount($formatted = false);
+        } else {
+            $discount = 0;
+        }
+
+        $total = ($subtotal + $taxes + $shipping_fee) - $discount;
+
+        $cost['subtotal'] = Helper::currency($subtotal);
+        $cost['taxes'] = Helper::currency($taxes);
+        $cost['shipping_fee'] = Helper::currency($shipping_fee);
+        $cost['discount'] = Helper::currency($discount);
+        $cost['total'] = Helper::currency($total);
+
+        $count = count(LaraCart::getItems());
+
+        return response()->json(['data' => $cost, 'count' => $count, 'type' => 'success'], 201);
     }
 }

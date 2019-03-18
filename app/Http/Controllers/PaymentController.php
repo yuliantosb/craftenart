@@ -74,7 +74,14 @@ class PaymentController extends Controller
             $fraud = null;
           }
 
-          $order = Order::where('number', $order_id)->first();
+          $order = Order::FirstOrNew(['number' => $order_id]);
+          $order->number = $order_id;
+          $order->subtotal = $result->gross_amount;
+          $order->tax = 0;
+          $order->discount = 0;
+          $order->shipping_fee = 0;
+          $order->total = $result->gross_amount;
+          $order->user_id = 3;
           $order->transaction_status = $transaction;
           $order->fraud_status = $fraud;
           $order->save();

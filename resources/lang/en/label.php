@@ -227,4 +227,11 @@ return [
 
 	'no_wishlists_yet' => "You don't have favorite product yet!",
 
+	'credit_card_details' => 'Credit / Debit Card Details',
+	'card_number' => 'Card Number',
+	'month_expired' => 'Month Expired',
+	'year_expired' => 'Year Expired',
+	'cvv' => 'CVV',
+	'pay' => 'Pay with credit card',
+
 ];

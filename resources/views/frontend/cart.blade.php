@@ -41,7 +41,7 @@
       </div>
     </div><!-- Mt Process Section of the Page end -->
     <!-- Mt Product Table of the Page -->
-    <div class="mt-product-table wow fadeInUp" data-wow-delay="0.4s">
+    <div class="mt-product-table wow fadeInUp" data-wow-delay="0.4s" id="not-empty-cart">
       <div class="container">
         <div class="row border">
           <div class="col-xs-12 col-sm-6">
@@ -60,13 +60,13 @@
 
         @if (count($carts) > 0)
 
-        <form id="form-cart" method="post" action="{{ route('cart.bulk_update') }}">
+        <form id="form-cart" method="post" action="">
         @csrf
         @method('PUT')
 
         @foreach ($carts as $cart)
 
-        <div class="row border">
+        <div class="row border" id="row-{{ $cart->getHash() }}">
           <div class="col-xs-12 col-sm-2">
             <div class="img-holder">
               <img src="{{ url('uploads/thumbs/'.$cart->thumbnail) }}" alt="{{ $cart->name }}">
@@ -80,11 +80,11 @@
           </div>
           <div class="col-xs-12 col-sm-2">
             <input type="text" name="id[]" value="{{ $cart->getHash() }}" hidden="hidden">
-            <input type="number" placeholder="1" name="qty[]" value="{{ $cart->qty }}" class="mt-number mt-cart" min="1">
+            <input type="number" data-id="{{ $cart->getHash() }}" placeholder="1" name="qty[]" value="{{ $cart->qty }}" class="mt-number mt-cart" min="1">
           </div>
           <div class="col-xs-12 col-sm-2">
-            <strong class="price">{{ Helper::currency($cart->price * $cart->qty) }}</strong>
-            <button class="mt-link" name="delete" value="{{ $cart->getHash() }}"><i class="fa fa-close"></i></button></a>
+            <strong class="price" id="total-{{ $cart->getHash() }}">{{ Helper::currency($cart->price * $cart->qty) }}</strong>
+            <button type="button" class="mt-link" name="delete" value="{{ $cart->getHash() }}"><i class="fa fa-close"></i></button></a>
           </div>
         </div>
 
@@ -210,9 +210,11 @@
                       </div>
                     </div>
 
+                    {{---
                     <div class="form-group">
                       <button class="mt-button mt-secondary-button" id="btn-shipping" type="submit" {{ !session()->has('shipping') ? 'disabled=disabled' : '' }}>@lang('label.update_total') <i class="fa fa-refresh"></i></button>
                     </div>
+                    ---}}
 
                   </fieldset>
                 </form>
@@ -224,7 +226,7 @@
                     <div class="txt-holder">
                       <strong class="title sub-title pull-left">@lang('label.subtotal')</strong>
                       <div class="txt pull-right">
-                        <span>{{ Helper::currency($amount['subtotal']) }}</span>
+                        <span id="subtotal">{{ Helper::currency($amount['subtotal']) }}</span>
                       </div>
                     </div>
                   </li>
@@ -232,7 +234,7 @@
                     <div class="txt-holder">
                       <strong class="title sub-title pull-left">@lang('label.discount')</strong>
                       <div class="txt pull-right">
-                        <span>({{ Helper::currency($amount['discount']) }})</span>
+                        <span id="discount">({{ Helper::currency($amount['discount']) }})</span>
                       </div>
                     </div>
                   </li>
@@ -240,7 +242,7 @@
                     <div class="txt-holder">
                       <strong class="title sub-title pull-left">@lang('label.tax')</strong>
                       <div class="txt pull-right">
-                        <span>{{ Helper::currency($amount['taxes']) }}</span>
+                        <span id="taxes">{{ Helper::currency($amount['taxes']) }}</span>
                       </div>
                     </div>
                   </li>
@@ -248,7 +250,7 @@
                     <div class="txt-holder">
                       <strong class="title sub-title pull-left">@lang('label.shipping_fee')</strong>
                       <div class="txt pull-right">
-                        <span>{{ Helper::currency($amount['shipping_fee']) }}</span>
+                        <span id="shipping_fee">{{ Helper::currency($amount['shipping_fee']) }}</span>
                       </div>
                     </div>
                   </li>
@@ -256,21 +258,20 @@
                     <div class="txt-holder">
                       <strong class="title sub-title pull-left">@lang('label.cart_total')</strong>
                       <div class="txt pull-right">
-                        <span>{{ Helper::currency($amount['total']) }}</span>
+                        <span id="total">{{ Helper::currency($amount['total']) }}</span>
                       </div>
                     </div>
                   </li>
                 </ul>
                 <div class="text-right">
-	              <button type="button" class="mt-button mt-primary-button" onclick="document.getElementById('form-cart').submit()">@lang('label.update_cart')</button>
-					      <a href="{{ route('checkout.index') }}" class="mt-button mt-secondary-button">@lang('label.checkout')</a>
+	              {{--- <button type="button" class="mt-button mt-primary-button" onclick="document.getElementById('form-cart').submit()">@lang('label.update_cart')</button> ---}}
+					      <a href="{{ route('checkout.index') }}" id="btn-checkout" class="mt-button mt-secondary-button {{ !session()->has('shipping') ? 'disabled' : '' }}">@lang('label.checkout')</a>
 				</div>
               </div>
             </div>
           </div>
     </section>
-
-
+                    
         @else
 
         <div class="row border">

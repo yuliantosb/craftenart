@@ -96,35 +96,6 @@
   		        </div>
 
                   <div class="form-group">
-                    <select class="form-control select2" data-placeholder="@lang('label.country') *" name="country_id" required="required">
-                    	<option value="id">Indonesia</option>
-                    </select>
-                    <label class="help-block"></label>
-                  </div>
-
-                  <div class="form-group">
-                    <select class="form-control select2" data-placeholder="@lang('label.state_or_province') *" name="province_id" required="required">
-                      @php ($province_id = !empty(auth()->user()->cust->province_id) ? auth()->user()->cust->province_id : session()->get('shipping.province_id'))
-                      <option></option>
-                      @foreach ($provinces as $province)
-                      	<option value="{{ $province->province_id }}" {{ $province_id == $province->province_id ? 'selected=selected' : '' }}>{{ $province->province }}</option>
-                      @endforeach
-                    </select>
-                    <label class="help-block"></label>
-                  </div>
-
-                  <div class="form-group">
-                     <select class="form-control select2" data-placeholder="@lang('label.city') *" name="city_id" required="required">
-                      @php ($city_id = !empty(auth()->user()->cust->city_id) ? auth()->user()->cust->city_id : session()->get('shipping.city_id'))
-
-                      @foreach ($cities as $city)
-                        <option value="{{ $city->city_id }}" {{ $city_id == $city->city_id ? 'selected=selected' : '' }}>{{ $city->type.' '.$city->city_name }}</option>
-                      @endforeach
-                    </select>
-                    <label class="help-block"></label>
-                  </div>
-
-                  <div class="form-group">
                     <input type="text" class="form-control" placeholder="@lang('label.postcode_or_zip') *" name="zip" value="{{ !is_null(session()->get('shipping.zip')) ? session()->get('shipping.zip') : auth()->user()->cust->zip }}" required="required">
                     <label class="help-block"></label>
                   </div>
@@ -135,15 +106,34 @@
                     <label class="help-block"></label>
                   </div>
 
-                  <div class="form-group">
-                  	<div id="shipping">
-                      @if (!empty($costs))
-                        @include('frontend.cart.partial', ['costs' => collect($costs), 'total_weight' => $weight])
-                      @endif
-                    </div>
-                  </div>
 
                 </fieldset>
+                <hr>
+                <h2>@lang('label.credit_card_details')</h2>
+
+                <fieldset>
+                  <div class="form-group">
+                      <input type="text" class="form-control" placeholder="@lang('label.card_number') *" name="card_number" value="" required="required">
+                      <label class="help-block"></label>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                          <input type="text" class="form-control" placeholder="@lang('label.month_expired') *" name="month_expired" value="" required="required">
+                          <label class="help-block"></label>
+                        </div>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control" placeholder="@lang('label.year_expired') *" name="year_expired" value="" required="required">
+                          <label class="help-block"></label>
+                        </div>
+                        <div class="col-md-6">
+                          <input type="password" class="form-control" placeholder="@lang('label.cvv') *" name="cvv" value="" required="required">
+                          <label class="help-block"></label>
+                        </div>
+                    </div>
+                  </div>
+                 </fieldset>
              
               <!-- Bill Detail of the Page end -->
             </div>
@@ -208,77 +198,9 @@
                     </div>
                   </li>
                 </ul>
-                <h2>@lang('label.payment_methods')</h2>
-                <!-- Panel Group of the Page -->
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                  <!-- Panel Panel Default of the Page -->
-                  <div class="panel panel-default">
-                    <div class="panel-heading" style="padding-bottom: 20px;" role="tab" id="headingOne">
-                      <h4 class="panel-title">
-<!--                         <a role="button" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> -->
-                          MIDRTANS
-                          <!-- <span class="check"><i class="fa fa-check"></i></span> -->
-                          <div class="wrapper-payment" style="float: right;">
-                            <label class="container-radio" for="midtrans">
-                              <input type="radio" name="payment_method" value="midtrans" checked="checked" id="midtrans" data-toggle="collapse" data-target="#collapseOne" style="display: none;">
-                              <span class="checkmark"></span>
-                            </label>
-                          </div>
-                        <!-- </a> -->
-                      </h4>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                      <div class="panel-body">
-                        <p>@lang('label.midtrans_desc')
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Panel Panel Default of the Page end -->
-                  <!-- Panel Panel Default of the Page -->
-                  <div class="panel panel-default">
-                    <div class="panel-heading" style="padding-bottom: 20px;" role="tab" id="headingTwo">
-                      <h4 class="panel-title">
-                        <!-- <a class="collapsed" role="button" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> -->
-                          Paypal
-                          <div class="wrapper-payment" style="float: right;">
-                            <label class="container-radio" for="paypal">
-                              <input type="radio" name="payment_method" value="paypal" id="paypal" data-toggle="collapse" data-target="#collapseTwo" style="display: none;">
-                              <span class="checkmark"></span>
-                            </label>
-                          </div>
-                        <!-- </a> -->
-                      </h4>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                      <div class="panel-body">
-                        <p>@lang('label.paypal_desc')</p>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Panel Panel Default of the Page end -->
-                  <!-- Panel Panel Default of the Page -->
-                  <!-- <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingThree">
-                      <h4 class="panel-title">
-                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                          Others
-                          <span class="check"><i class="fa fa-check"></i></span>
-                        </a>
-                      </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                      <div class="panel-body">
-                        <p>Others payment included Debit/Credit Payment, Internet Banking, Virtual Account, and pay using local store</p>
-                      </div>
-                    </div>
-                  </div> -->
-                  <!-- Panel Panel Default of the Page end -->
+                <div class="text-right" style="margin-top: 20px">
+                  <button id="btn-shipping" class="mt-button mt-primary-button">@lang('label.pay') <i class="fa fa-check"></i></button>
                 </div>
-                <!-- Panel Group of the Page end -->
-              </div>
-              <div class="text-right" style="margin-top: 20px">
-              	<button id="btn-shipping" class="mt-button mt-primary-button" {{ !session()->has('shipping') ? 'disabled=disabled' : '' }} >@lang('label.proceed_to_checkout') <i class="fa fa-check"></i></button>
               </div>
             </div>
           </div>

@@ -22,6 +22,7 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\ExecutePayment;
 use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
+use GuzzleHttp;
 
 class CheckoutController extends Controller
 {
@@ -93,44 +94,26 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
 
-        if (session()->has('shipping')) {
-            session()->forget('shipping');
-        }
+        $subtotal = round(Helper::getCurrency(LaraCart::subTotal($format = false, $withDiscount = true), 'idr'));
+        $taxes = round(Helper::getCurrency(LaraCart::taxTotal($formatted = false), 'idr'));
+        $shipping_fee = round(Helper::getCurrency(LaraCart::getFee('shippingFee')->amount, 'idr'));
+        $discount = round(Helper::getCurrency(LaraCart::totalDiscount($formatted = false), 'idr'));
+        $total = ($subtotal + $taxes + $shipping_fee) - $discount;
 
-        $index = $request->fee;
+        $gross_amount = $total;
+        $card_number = $request->card_number;
+        $card_exp_month = $request->month_expired;
+        $card_exp_year = $request->year_expired;
+        $cvv = $request->cvv;
 
-        $data = [
+        $client = new GuzzleHttp\Client;
+		$res = $client->request('GET', config('midtrans.api_url').'/v2/token?client_key='.config('midtrans.client_key').'&gross_amount='.$gross_amount.'&card_number='.$card_number.'&card_exp_month='.$card_exp_month.'&card_exp_year='.$card_exp_year.'&card_cvv='.$cvv.'&secure=false');
 
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'phone_number' => $request->phone_number,
-            'country_id' => $request->country_id,
-            'province_id' => $request->province_id,
-            'city_id' => $request->city_id,
-            'zip' => $request->zip,
-            'address' => $request->address,
-            'total_weight' => $request->total_weight,
-            'courier_id' => $request->courier_id[$index],
-            'courier_name' => $request->courier_name[$index],
-            'cost' => $request->cost[$index],
-            'service_name' => $request->service_name[$index],
-            'service_description' => $request->service_description[$index],
-            'estimate_delivery' => $request->estimate_delivery[$index]
+		$results = $res->getBody()->getContents();        
+        $token_id = json_decode($results)->token_id;
+        $pay = $this->payCreditCard($request, $token_id);
 
-        ];
-
-        $shipping = session()->put('shipping', $data);
-
-        LaraCart::addFee('shippingFee', $request->cost[$index], $taxable =  false, $options = []);
-
-        if ($request->payment_method == 'midtrans') {
-
-            return $this->payWithMidtrans($request);
-
-        }
-
-        return $this->payWithPayPal($request);
+        return redirect('payment/complete/success');
 
     }
 
@@ -373,6 +356,105 @@ class CheckoutController extends Controller
         return redirect()->route('payment.paypal')
                         ->with('message', ['status' => 'failed', 'content' => 'Unknown error occurred']);
 
+    }
+
+    public function payCreditCard($request, $token_id)
+    {
+       
+        $subtotal = round(Helper::getCurrency(LaraCart::subTotal($format = false, $withDiscount = true), 'idr'));
+        $taxes = round(Helper::getCurrency(LaraCart::taxTotal($formatted = false), 'idr'));
+        $shipping_fee = round(Helper::getCurrency(LaraCart::getFee('shippingFee')->amount, 'idr'));
+        $discount = round(Helper::getCurrency(LaraCart::totalDiscount($formatted = false), 'idr'));
+        $total = ($subtotal + $taxes + $shipping_fee) - $discount;
+
+        $user_id = auth()->user()->id;
+        $count_order = Order::where('user_id', $user_id)
+                            ->count();
+
+        $pad = str_pad($count_order, 5, "0", STR_PAD_LEFT);
+
+        $transaction_details = array(
+            'order_id' => time().'-'.$user_id.'-'.$pad,
+            'gross_amount' => $total
+        );
+
+        // Populate items
+
+        $items = [];
+
+        foreach (LaraCart::getItems() as $item) {
+            $items[] = [
+                            'id' => $item->id,
+                            'price' => round(Helper::getCurrency($item->price, 'idr')),
+                            'quantity' => $item->qty,
+                            'name' => $item->name
+                        ];
+        }
+
+        if ($discount > 0) {
+
+            $items[] = [
+                        'id' => 'discount',
+                        'price' => -$discount,
+                        'quantity' => 1,
+                        'name' => 'Discount'
+                    ];
+        }
+
+        $items[] = [
+                        'id' => 'shipping_fee',
+                        'price' => $shipping_fee,
+                        'quantity' => 1,
+                        'name' => 'Shipping Fee'
+                    ];
+
+
+        $items[] = [
+                        'id' => 'tax',
+                        'price' => $taxes,
+                        'quantity' => 1,
+                        'name' => 'Tax'
+                    ];
+        
+        $address = array(
+
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => auth()->user()->email,
+            'address' => $request->address,
+            'city' => RajaOngkir::getCityAttr(
+                        session()->get('shipping.city_id'),
+                        session()->get('shipping.province_id')),
+            'postal_code' => $request->zip,
+            'phone' => $request->phone_number,
+            'country_code'  => 'IDN'
+
+        );
+
+        $json = [
+            'payment_type' => 'credit_card',
+            'credit_card' => [
+                'token_id' => $token_id
+            ],
+            'transaction_details' => $transaction_details,
+            'item_details' => $items,
+            'customer_details' => $address,
+            'shipping_address' => $address
+        ];
+
+        $client = new GuzzleHttp\Client;
+        
+		$res = $client->request('POST', config('midtrans.api_url').'/v2/charge', [
+		    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Basic '. base64_encode(config('midtrans.server_key').':')
+            ],
+            'json' => $json
+        ]);
+        
+        $results = $res->getBody()->getContents();
+        return $results;
     }
         
 

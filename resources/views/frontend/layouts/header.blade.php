@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<!-- mt logo start here -->
-				<div class="mt-logo" style="margin: 0px"><a href="#"><img src="{{ !empty(App\Setting::getSetting('logo')->img) ? url('uploads/'.App\Setting::getSetting('logo')->img) : '' }}" alt="craftenart"></a></div>
+				<div class="mt-logo" style="margin: 0px"><a href="{{ url('/') }}"><img src="{{ !empty(App\Setting::getSetting('logo')->img) ? url('uploads/'.App\Setting::getSetting('logo')->img) : '' }}" alt="craftenart"></a></div>
 				<!-- mt icon list start here -->
 				<ul class="mt-icon-list">
 					<li class="hidden-lg hidden-md">
@@ -80,9 +80,8 @@
 										<span class="mt-total-txt">{{ Helper::currency(LaraCart::total($formatted = false, $withDiscount = true)) }}</span>
 									</div>
 									<!-- cart row total end here -->
-									<div class="cart-btn-row">
-										<a href="{{ route('cart.index') }}" class="btn-type2">@lang('label.view_cart')</a>
-										<a href="{{ route('checkout.index') }}" class="btn-type3">@lang('label.checkout')</a>
+									<div class="cart-btn-row text-right">
+										<a href="{{ route('cart.index') }}" class="btn-type3">@lang('label.view_cart')</a>
 									</div>
 									@else
 									<div class="cart-row text-center">
