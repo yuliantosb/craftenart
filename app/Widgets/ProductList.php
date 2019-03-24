@@ -32,7 +32,7 @@ class ProductList extends AbstractWidget
                         ->orderby('id', 'desc')
                         ->get();
 
-        return view('widgets.product_list', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.product_list', [
             'config' => $this->config,
             'products' => $products
         ]);

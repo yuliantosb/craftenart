@@ -33,7 +33,7 @@ class BestSeller extends AbstractWidget
                         ->take($this->config['count'])
                         ->get();
 
-        return view('widgets.best_seller', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.best_seller', [
             'config' => $this->config,
             'products' => $products
         ]);

@@ -25,7 +25,7 @@ class CategoriesList extends AbstractWidget
     {
         $categories = Category::where('type', 'product')->get();
 
-        return view('widgets.categories_list', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.categories_list', [
             'config' => $this->config,
             'categories' => $categories
         ]);

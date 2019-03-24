@@ -12,7 +12,7 @@ class ArticleController extends Controller
     	$post = Article::where('type', 'page')->where('slug', $slug)->first();
     	
     	if (!empty($post)) {
-    		return view('frontend.article', compact(['post']));
+    		return view('frontend.themes.'.config('app.themes').'.article', compact(['post']));
     	}
     	abort(404);
     	

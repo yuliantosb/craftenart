@@ -31,7 +31,7 @@ class HotSale extends AbstractWidget
                         ->orderby('id', 'desc')
                         ->get();
 
-        return view('widgets.hot_sale', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.hot_sale', [
             'config' => $this->config,
             'products' => $products
         ]);

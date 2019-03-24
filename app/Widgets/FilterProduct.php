@@ -45,7 +45,7 @@ class FilterProduct extends AbstractWidget
             $tags = Tag::where('type', 'product')->get();
         }
 
-        return view('widgets.filter_product', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.filter_product', [
             'tags' => $tags,
             'min' => Helper::getCurrency($min),
             'max' => Helper::getCurrency($max),

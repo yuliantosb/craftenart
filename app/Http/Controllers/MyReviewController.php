@@ -12,6 +12,6 @@ class MyReviewController extends Controller
     	$reviews = Review::where('user_id', auth()->user()->id)
     				->get();
 
-    	return view('frontend.review', compact(['reviews']));
+    	return view('frontend.themes.'.config('app.themes').'.review', compact(['reviews']));
     }
 }

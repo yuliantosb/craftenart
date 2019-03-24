@@ -28,7 +28,7 @@ class Newsletter extends AbstractWidget
     {
         //
 
-        return view('widgets.newsletter', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.newsletter', [
             'config' => $this->config,
         ]);
     }

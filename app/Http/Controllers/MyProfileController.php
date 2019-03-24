@@ -16,7 +16,7 @@ class MyProfileController extends Controller
     public function index()
     {
     	$user = User::find(auth()->user()->id);
-    	return view('frontend.profile', compact(['user']));
+    	return view('frontend.themes.'.config('app.themes').'.profile', compact(['user']));
     }
 
     public function edit()
@@ -26,7 +26,7 @@ class MyProfileController extends Controller
     	$provinces = RajaOngkir::getProvince();
 		$cities = RajaOngkir::getCity($user->cust->province_id);
 
-    	return view('frontend.profile.edit', compact(['user', 'provinces', 'cities']));
+    	return view('frontend.themes.'.config('app.themes').'.profile.edit', compact(['user', 'provinces', 'cities']));
     }
 
     public function update(Request $request)
@@ -115,7 +115,7 @@ class MyProfileController extends Controller
 
     public function password()
     {
-    	return view('frontend.profile.password');
+    	return view('frontend.themes.'.config('app.themes').'.profile.password');
     }
 
     public function checkPassword(Request $request)

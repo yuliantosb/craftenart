@@ -40,14 +40,14 @@ class BlogController extends Controller
 
     	$banner = Setting::getSetting('default_placeholder');
 
-    	return view('frontend.blog', compact(['posts', 'banner']));
+    	return view('frontend.themes.'.config('app.themes').'.blog', compact(['posts', 'banner']));
     }
 
     public function show($slug)
     {
     	$post = Article::where('type', 'post')->where('slug', $slug)->first();
         if (!empty($post)) {
-            return view('frontend.blog.show', compact(['post']));    
+            return view('frontend.themes.'.config('app.themes').'.blog.show', compact(['post']));    
         }
     	abort(404);
     }

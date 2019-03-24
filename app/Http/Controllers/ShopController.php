@@ -51,10 +51,10 @@ class ShopController extends Controller
 
         if (session()->get('view') == 'list') {
 
-            return view('frontend.shop.list', compact(['products', 'placeholder', 'category', 'sort_type']));    
+            return view('frontend.themes.'.config('app.themes').'.shop.list', compact(['products', 'placeholder', 'category', 'sort_type']));    
         }
 
-        return view('frontend.shop.grid', compact(['products', 'placeholder', 'category', 'sort_type']));
+        return view('frontend.themes.'.config('app.themes').'.shop.grid', compact(['products', 'placeholder', 'category', 'sort_type']));
 
 
     }
@@ -74,7 +74,7 @@ class ShopController extends Controller
                     ->take(5)
                     ->get();
 
-    		return view('frontend.shop.show', compact(['product', 'relateds']));
+    		return view('frontend.themes.'.config('app.themes').'.shop.show', compact(['product', 'relateds']));
     	}
     }
 }

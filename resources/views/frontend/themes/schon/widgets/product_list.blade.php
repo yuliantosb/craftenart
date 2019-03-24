@@ -1,0 +1,1 @@
+@include('frontend.themes.'.config('app.themes').'.widgets.partials.product', ['name' => $config['name'], 'products' => $products])

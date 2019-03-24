@@ -29,7 +29,7 @@ class ProductTags extends AbstractWidget
         $tags = Tag::where('type', 'product')->take($this->config['count'])
                         ->get();
 
-        return view('widgets.product_tags', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.product_tags', [
             'config' => $this->config,
             'tags' => $tags
         ]);

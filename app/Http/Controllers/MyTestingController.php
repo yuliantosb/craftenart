@@ -9,6 +9,6 @@ class MyTestingController extends Controller
 
 	public function index()
 	{
-    	return view('frontend.testing');
+    	return view('frontend.themes.'.config('app.themes').'.testing');
 	}
 }

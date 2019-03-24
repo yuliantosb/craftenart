@@ -27,7 +27,7 @@ class HyperText extends AbstractWidget
     {
         //
 
-        return view('widgets.hyper_text', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.hyper_text', [
             'config' => $this->config,
         ]);
     }

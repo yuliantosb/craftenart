@@ -389,7 +389,7 @@ class PaymentController extends Controller
           $order_details = [];
         }
 
-        return view('frontend.payment', compact(['order', 'order_details']));
+        return view('frontend.themes.'.config('app.themes').'.payment', compact(['order', 'order_details']));
 
       }
 

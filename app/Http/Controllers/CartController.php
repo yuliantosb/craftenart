@@ -57,7 +57,7 @@ class CartController extends Controller
 
         $amount['total'] = ($amount['subtotal'] + $amount['taxes'] + $amount['shipping_fee']) - $amount['discount'];
 
-        return view('frontend.cart', compact(['carts', 'provinces', 'cities', 'costs', 'weight', 'amount']));
+        return view('frontend.themes.'.config('app.themes').'.cart', compact(['carts', 'provinces', 'cities', 'costs', 'weight', 'amount']));
     }
     
     public function store(Request $request)

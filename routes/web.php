@@ -14,7 +14,6 @@
 // home
 Route::get('/', 'HomeController@index')->name('home');
 
-
 // currency
 Route::get('currency/{type}', 'CurrencyController@set')->name('currency.set');
 

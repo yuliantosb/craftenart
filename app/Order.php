@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use LaraTables;
 
 class Order extends Model
 {
@@ -26,6 +27,11 @@ class Order extends Model
 	public function user()
 	{
 		return $this->belongsTo('App\User', 'user_id');
+	}
+
+	public function ScopeGetTables()
+	{
+		return LaraTables::recordsOf(Order::class);
 	}
 
 	public function scopeCountOrder($query)
@@ -173,6 +179,12 @@ class Order extends Model
 		}
 
 		return $result;
+	}
+
+
+	public function laratablesFirstName()
+	{
+		return "{$this->first_name} {$this->last_name}";
 	}
 
 }

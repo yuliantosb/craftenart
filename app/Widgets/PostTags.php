@@ -27,7 +27,7 @@ class PostTags extends AbstractWidget
                     ->take($this->config['count'])
                     ->get();
 
-        return view('widgets.post_tags', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.post_tags', [
             'config' => $this->config,
             'tags' => $tags
         ]);

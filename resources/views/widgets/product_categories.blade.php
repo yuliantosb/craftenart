@@ -1,1 +1,0 @@
-@include('widgets.partials.categories', ['name' => $config['name'], 'categories' => $categories])

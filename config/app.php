@@ -108,6 +108,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'themes' => 'schon',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -227,6 +229,7 @@ return [
         'RajaOngkir' => App\RajaOngkir\RajaOngkir::class,
         'Widget'       => Arrilot\Widgets\Facade::class,
         'AsyncWidget'  => Arrilot\Widgets\AsyncFacade::class,
+        'LaraTables' => Freshbitsweb\Laratables\Laratables::class,
         
     ],
 

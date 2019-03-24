@@ -28,7 +28,7 @@ class PostCategories extends AbstractWidget
                         ->take($this->config['count'])
                         ->get();
 
-        return view('widgets.post_categories', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.post_categories', [
             'config' => $this->config,
             'categories' => $categories
         ]);

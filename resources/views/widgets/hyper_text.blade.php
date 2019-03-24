@@ -1,1 +1,0 @@
-@include('widgets.partials.hyper_text', ['name' => $config['name'], 'widget' => $config['widget']])

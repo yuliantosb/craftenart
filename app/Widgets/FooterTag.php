@@ -30,7 +30,7 @@ class FooterTag extends AbstractWidget
         $tags = Tag::where('type', 'product')->take($this->config['count'])
                         ->get();
 
-        return view('widgets.footer_tag', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.footer_tag', [
             'config' => $this->config,
             'tags' => $tags
         ]);

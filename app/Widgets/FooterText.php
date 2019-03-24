@@ -28,7 +28,7 @@ class FooterText extends AbstractWidget
      */
     public function run()
     {
-        return view('widgets.footer_text', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.footer_text', [
             'config' => $this->config,
         ]);
     }

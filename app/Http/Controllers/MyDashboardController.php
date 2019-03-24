@@ -22,6 +22,6 @@ class MyDashboardController extends Controller
 
     	$user = User::find(auth()->user()->id);
 
-    	return view('frontend.dashboard', compact(['orders', 'reviews', 'user']));
+    	return view('frontend.themes.'.config('app.themes').'.dashboard', compact(['orders', 'reviews', 'user']));
     }
 }

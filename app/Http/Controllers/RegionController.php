@@ -32,6 +32,6 @@ class RegionController extends Controller
             $costs[] = RajaOngkir::getCost($request->destination, $weight, $courier);
         }
 
-        return view('frontend.cart.partial', ['costs' => collect($costs), 'total_weight' => $weight])->render();
+        return view('frontend.themes.'.config('app.themes').'.cart.partial', ['costs' => collect($costs), 'total_weight' => $weight])->render();
     }
 }

@@ -36,7 +36,7 @@ class HomeController extends Controller
         $products = new Product;
         $categories = Category::take(3)->get();
 
-        return view('frontend.home', compact(['products', 'categories']));
+        return view('frontend.themes.'.config('app.themes').'.home', compact(['products', 'categories']));
 
 
         

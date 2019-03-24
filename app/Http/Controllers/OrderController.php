@@ -17,42 +17,43 @@ class OrderController extends Controller
     {
     	if ($request->ajax()) {
 
-    		$order = Order::orderBy('id', 'desc')->get();
+			return Order::getTables();
+    		// $order = Order::orderBy('id', 'desc')->get();
 
-    		return DataTables::of($order)
+    		// return DataTables::of($order)
 
-    		->rawColumns(['fullname', 'status', 'number'])
+    		// ->rawColumns(['fullname', 'status', 'number'])
 
-    		->addColumn('fullname', function($data){
+    		// ->addColumn('fullname', function($data){
 
-    			return '<p class="text-primary"><a href="'.route('admin.order.show', $data->id).'">'.$data->fullname.'</a></p>
-    			<p>
-    			<a href="'.route('admin.order.show', $data->id).'" class="btn btn-primary btn-xs">View</a>
-    			<button class="btn btn-danger btn-xs" onClick="on_delete('.$data->id.')">Delete</button>
+    		// 	return '<p class="text-primary"><a href="'.route('admin.order.show', $data->id).'">'.$data->fullname.'</a></p>
+    		// 	<p>
+    		// 	<a href="'.route('admin.order.show', $data->id).'" class="btn btn-primary btn-xs">View</a>
+    		// 	<button class="btn btn-danger btn-xs" onClick="on_delete('.$data->id.')">Delete</button>
                     
-                <form action="'. route('admin.order.destroy', $data->id) .'" method="POST" id="form-delete-'.$data->id.'" style="display:none">
-                    '. method_field('DELETE') .'
-                    '. csrf_field() .'
-                </form>
+            //     <form action="'. route('admin.order.destroy', $data->id) .'" method="POST" id="form-delete-'.$data->id.'" style="display:none">
+            //         '. method_field('DELETE') .'
+            //         '. csrf_field() .'
+            //     </form>
 
-    			</p>
-    			';
-    		})
+    		// 	</p>
+    		// 	';
+    		// })
 
-    		->addColumn('number', function($data){
-    			return '<p>'.$data->number.'<br><small class="text-primary">'.Carbon::parse($data->created_at)->format('m/d/Y').'</small></p>';
-    		})
+    		// ->addColumn('number', function($data){
+    		// 	return '<p>'.$data->number.'<br><small class="text-primary">'.Carbon::parse($data->created_at)->format('m/d/Y').'</small></p>';
+    		// })
 
-			->addColumn('status', function($data){
-				return '<label class="label label-'.$data->status_transaction['label'].'" style="color:#fff">
-                        '.$data->status_transaction['status'].'</label>';
-			})
+			// ->addColumn('status', function($data){
+			// 	return '<label class="label label-'.$data->status_transaction['label'].'" style="color:#fff">
+            //             '.$data->status_transaction['status'].'</label>';
+			// })
 
-			->addColumn('total', function($data){
-				return Helper::currency(($data->subtotal + $data->tax + $data->ship->cost ) - $data->discount);
-			})
+			// ->addColumn('total', function($data){
+			// 	return Helper::currency(($data->subtotal + $data->tax + $data->ship->cost ) - $data->discount);
+			// })
 
-			->toJson();
+			// ->toJson();
     	}
 
     	return view('backend.order.index');

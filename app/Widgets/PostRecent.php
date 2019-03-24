@@ -28,7 +28,7 @@ class PostRecent extends AbstractWidget
                     ->take($this->config['count'])
                     ->get();
 
-        return view('widgets.post_recent', [
+        return view('frontend.themes.'.config('app.themes').'.widgets.post_recent', [
             'config' => $this->config,
             'posts' => $posts
         ]);

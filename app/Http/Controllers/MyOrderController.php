@@ -13,6 +13,6 @@ class MyOrderController extends Controller
     				->orderBy('id', 'desc')
     				->paginate(5);
 
-    	return view('frontend.order', compact(['orders']));
+    	return view('frontend.themes.'.config('app.themes').'.order', compact(['orders']));
     }
 }

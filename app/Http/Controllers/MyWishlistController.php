@@ -12,6 +12,6 @@ class MyWishlistController extends Controller
     	$wishlists = Wishlist::where('user_id', auth()->user()->id)
     					->get();
 
-    	return view('frontend.wishlist', compact(['wishlists']));
+    	return view('frontend.themes.'.config('app.themes').'.wishlist', compact(['wishlists']));
     }
 }
