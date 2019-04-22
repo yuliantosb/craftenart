@@ -34,9 +34,10 @@ class HomeController extends Controller
     {
 
         $products = new Product;
-        $categories = Category::take(3)->get();
+        $categories = new Category;
+        $category_chunks = $categories->whereHas('products')->take(4)->get()->chunk(2);
 
-        return view('frontend.themes.'.config('app.themes').'.home', compact(['products', 'categories']));
+        return view('frontend.themes.'.config('app.themes').'.home', compact(['products', 'categories', 'category_chunks']));
 
 
         

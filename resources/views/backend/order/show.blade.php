@@ -101,7 +101,7 @@
                                         <br>
                                         {{ RajaOngkir::getCityAttr($order->ship->city_id, $order->ship->province_id) }}
                                         <br>
-                                        {{ RajaOngkir::getProvinceAttr($order->ship->province_id) }}
+                                        {{ RajaOngkir::getProvinceAttr($order->ship->province_id) }}, {{ $order->ship->zip }}
                                         <br>
                                     </td>
                                     <td><strong>Courier Details</strong></td>
@@ -132,7 +132,16 @@
                             <tbody>
                                 @foreach ($order->details as $data_details)
                                 <tr>
-                                    <td>{{ $data_details->product->name }}</td>
+                                    <td>
+                                        {{ $data_details->product->name }}
+                                        @if (!empty($data_details->attributes))
+                                            <ul>
+                                                @foreach ($data_details->attributes as $attribute)
+                                                <li>{{ $attribute->name }} : {{ $attribute->value }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </td>
                                     <td class="text-right">{{ Helper::currency($data_details->price) }}</td>
                                     <td class="text-center">{{ $data_details->qty }}</td>
                                     <td class="text-right">{{ Helper::currency($data_details->price * $data_details->qty) }}</td>

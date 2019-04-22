@@ -143,9 +143,13 @@ class CouponController extends Controller
 
             if (!empty($coupon->min_amount)) {
 
-                if ($coupon->min_amount > LaraCart::total($formatted = false, $withDiscount = true)) {
+                if ($coupon->min_amount > LaraCart::subTotal($formatted = false, $withDiscount = true)) {
 
-                    $data = ['type' => 'error', 'message' => 'Your cart total must be more than '. Helper::currency($coupon->min_amount)];
+                    $data = [
+                                'type' => 'error',
+                                'message' => 'Your cart subtotal must be more than '. Helper::currency($coupon->min_amount),
+                                'code' => '500'
+                            ];
 
                 }
 
@@ -153,9 +157,13 @@ class CouponController extends Controller
 
             if (!empty($coupon->max_amount)) {
 
-                if ($coupon->max_amount < LaraCart::total($formatted = false, $withDiscount = true)) {
+                if ($coupon->max_amount < LaraCart::subTotal($formatted = false, $withDiscount = true)) {
 
-                    $data = ['type' => 'error', 'message' => 'Your cart total must be less than '. Helper::currency($coupon->max_amount)];
+                    $data = [
+                                'type' => 'error',
+                                'message' => 'Your cart subtotal must be less than '. Helper::currency($coupon->max_amount),
+                                'code' => '500'
+                            ];
 
                 }
 
@@ -164,7 +172,11 @@ class CouponController extends Controller
 
             if (strtotime($coupon->valid_thru) < strtotime(Carbon::now()) ) {
 
-                $data = ['type' => 'error', 'message' => 'Coupon expired'];
+                $data = [
+                            'type' => 'error',
+                            'message' => 'Coupon expired',
+                            'code' => '500'
+                        ];
 
             }
 
@@ -176,11 +188,19 @@ class CouponController extends Controller
                                     ->where('coupon_code', $coupon->code)->count();
 
                     if ($check_order > 0) {
-                        $data = ['type' => 'error', 'message' => 'This coupon is limited'];
+                        $data = [
+                                    'type' => 'error',
+                                    'message' => 'This coupon is limited',
+                                    'code' => '500'
+                                ];
                     }
 
                 } else {
-                    $data = ['type' => 'error', 'message' => 'This coupon is for specific user only'];
+                    $data = [
+                                'type' => 'error',
+                                'message' => 'This coupon is for specific user only',
+                                'code' => '500'
+                            ];
                 }
             }
 
@@ -190,19 +210,40 @@ class CouponController extends Controller
 
                     if (auth()->check()) {
                         if (in_array(auth()->user()->id, json_decode($coupon->include_user, true))) {
-                            $data = ['type' => 'error', 'message' => 'this coupon is for specific user only!'];
+                            $data = [
+                                        'type' => 'error',
+                                        'message' => 'this coupon is for specific user only!',
+                                        'code' => '500'
+                                    ];
                         }
                     } else {
-                        $data = ['type' => 'error', 'message' => 'this coupon is for specific user only!'];
+                        $data = [
+                                    'type' => 'error',
+                                    'message' => 'this coupon is for specific user only!',
+                                    'code' => '500'
+                                ];
                     }
                 }
 
-                $data = ['type' => 'error', 'message' => 'this coupon is for specific user only!'];
+                $data = [
+                            'type' => 'error',
+                            'message' => 'this coupon is for specific user only!',
+                            'code' => '500'
+                        ];
             }
 
             if (empty($data)) {
+                $coupon_value = $coupon->type == '1' ? $coupon->amount.'%' : Helper::currency($coupon->amount);
+                $datas['coupon_applied'] = '<div class="coupon-fee" id="coupon">
+                                    <span class="coupon-badge">'.$coupon->code.'
+                                    <br><small class="text-center">('.$coupon_value.')</small>
+                                    </span>
+                                    <p class="text-primary text-center">'.$coupon->description.'</p>
+                                    <button class="btn btn-fixed btn-sm btn-circle btn-danger" type="button" data-id="'.$coupon->code .'" id="btn-remove-coupon">
+                                    <i class="fa fa-times"></i>
+                                    </button>
+                                </div>';
 
-                $data = ['type' => 'success', 'message' => 'Coupon applied '];
 
                 if ($coupon->type) {
 
@@ -216,23 +257,61 @@ class CouponController extends Controller
 
                 $add_coupon = LaraCart::addCoupon($coupon);
 
+                $subtotal = LaraCart::subTotal($format = false, $withDiscount = true);
+                $taxes = LaraCart::taxTotal($formatted = false);
+                $shipping_fee = LaraCart::getFee('shippingFee')->amount;
+                $discount = LaraCart::totalDiscount($formatted = false);
+
+                $datas['discount'] = Helper::currency($discount);
+                $datas['total'] = Helper::currency(($subtotal + $taxes + $shipping_fee) - $discount);
+
+                $data = [
+                    'type' => 'success',
+                    'message' => 'Coupon applied ',
+                    'data' => $datas,
+                    'code' => '200'
+                ];
+
             }
 
         } else {
 
-            $data = ['type' => 'error', 'message' => 'Coupon not found!'];    
+            $data = [
+                        'type' => 'error',
+                        'message' => 'Coupon not found!',
+                        'code' => '500'
+                    ];
         }
         
 
-        return redirect()
+        if ($request->wantsJson()) {
+
+            return response()->json($data, $data['code']);
+
+        } else {
+            return redirect()
                 ->back()
                 ->with('data', $data);
+        }
+        
 
     }
 
-    public function remove($code)
+    public function remove(Request $request, $code)
     {
         LaraCart::removeCoupon($code);
+        if ($request->wantsJson()) {
+
+            $subtotal = LaraCart::subTotal($format = false, $withDiscount = true);
+            $taxes = LaraCart::taxTotal($formatted = false);
+            $shipping_fee = LaraCart::getFee('shippingFee')->amount;
+            $discount = LaraCart::totalDiscount($formatted = false);
+
+            $datas['discount'] = Helper::currency($discount);
+            $datas['total'] = Helper::currency(($subtotal + $taxes + $shipping_fee) - $discount);
+
+            return response()->json(['message' => 'Coupon removed', 'data' => $datas], 200);
+        }
         return redirect()->back();
     }
 }

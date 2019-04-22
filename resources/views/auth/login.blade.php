@@ -1,1 +1,1 @@
-@extends('frontend.themes.'.config('app.themes').'auth.login')
+@extends('frontend.themes.'.config('app.themes').'.auth.login')

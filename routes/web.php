@@ -22,17 +22,28 @@ Route::get('currency/{type}', 'CurrencyController@set')->name('currency.set');
 Route::get('login/{driver}', 'Auth\LoginController@redirectToProvider')->name('login.provider');
 Route::get('login/{driver}/callback', 'Auth\LoginController@handleProviderCallback')->name('login.provider_callback');
 Route::post('/login/check', 'Auth\LoginController@check')->name('login.check');
+Route::get('logout', function(){
+	auth()->logout();
+	return redirect()->back();
+});
+Route::post('register/check', 'Auth\RegisterController@check')->name('register.check');
+
 Auth::routes();
 
 // cart
 Route::post('cart/shipping', 'CartController@addFee')->name('cart.shipping');
 Route::put('cart/update', 'CartController@updateCart')->name('cart.update');
 Route::delete('cart/remove/{id}', 'CartController@removeCart')->name('cart.remove');
+Route::post('cart/add_address', 'CartController@addAddress')->name('cart.add_address');
+Route::delete('cart/remove_address/{id}', 'CartController@removeAddress')->name('cart.remove_address');
+Route::post('cart/change_addresses', 'CartController@changeAddresses')->name('cart.change_addresses');
 Route::resource('cart', 'CartController');
 
 // checkout
 Route::get('checkout', 'CheckoutController@index')->name('checkout.index');
 Route::post('checkout', 'CheckoutController@store')->name('checkout.store');
+Route::get('checkout/check_card/{card_number}', 'CheckoutController@checkCard')->name('checkout.check_card');
+Route::get('checkout/complete', 'CheckoutController@complete')->name('checkout.complete');
 
 // region, what you just rewrite existing code? 
 Route::get('/region/city', 'RegionController@city');
@@ -155,6 +166,7 @@ Route::prefix('/admin')->as('admin.')->middleware(['auth', 'role:admin'])->group
 
 
 // shop
+Route::get('/product/{id}', 'ShopController@ajax')->name('shop.ajax');
 Route::get('/shop', 'ShopController@index')->name('shop.index');
 Route::get('/{slug}', 'ShopController@show')->name('shop.show');
 Auth::routes();

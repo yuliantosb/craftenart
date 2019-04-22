@@ -47,8 +47,8 @@
                                 <div role="tabpanel" class="tab-pane" id="id">
                                     <div style="margin-top: 20px">
                                         <div class="form-group">
-                                            <label class="control-label">Name <span class="text-danger">*</span></label>
-                                            <input type="text" name="name_id" class="form-control" placeholder="Category Name" required="required" value="{{ $category->name_id }}">
+                                            <label class="control-label">Name </label>
+                                            <input type="text" name="name_id" class="form-control" placeholder="Category Name" value="{{ $category->name_id }}">
                                             <span class="help-block"></span>
                                         </div>
 

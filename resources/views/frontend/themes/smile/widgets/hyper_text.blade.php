@@ -1,0 +1,1 @@
+@include('frontend.themes.'.config('app.themes').'.widgets.partials.hyper_text', ['name' => $config['name'], 'widget' => $config['widget']])

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Gravatar;
 use DB;
 
@@ -85,5 +86,22 @@ class RegisterController extends Controller
 
         // });
 
+    }
+
+    public function check(Request $request)
+    {
+        
+        if ($request->ajax()) {
+
+            $user = User::where('email', $request->email);
+
+            if ($user->count() > 0) {
+                return 'false';
+            } else {
+                return 'true';
+            }
+
+        }
+        
     }
 }

@@ -3,392 +3,197 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use LaraCart;
-use RajaOngkir;
-use Helper;
+use App\Address;
 use App\Order;
+use App\OrderDetails;
+use App\Ship;
+use App\Stock;
+use App\StockDetails;
+use App\OrderAttribute;
 
-use App\Veritrans\Veritrans;
-
-use PayPal\Rest\ApiContext;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Api\Amount;
-use PayPal\Api\Details;
-use PayPal\Api\Item;
-use PayPal\Api\ItemList;
-use PayPal\Api\Payer;
-use PayPal\Api\Payment;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\ExecutePayment;
-use PayPal\Api\PaymentExecution;
-use PayPal\Api\Transaction;
+use LaraCart;
 use GuzzleHttp;
+use Helper;
+use RajaOngkir;
+use DB;
 
 class CheckoutController extends Controller
 {
-
-    private $_api_context;
-    
-    public function __construct()
-    {
-    	$this->middleware('auth');
-
-        parent::__construct();
-
-	 	Veritrans::$serverKey = 'VT-server-LKBf4dk76gQmJHcIIc2Gh5_K';
-        Veritrans::$isProduction = false;
-        
-        /** setup PayPal api context **/
-        $paypal_conf = \Config::get('paypal');
-        $this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']));
-        $this->_api_context->setConfig($paypal_conf['settings']);
-    }
-
     public function index()
     {
-    	$carts = LaraCart::getItems();
 
-        if (!empty($carts)) {
-            $provinces = RajaOngkir::getProvince();
-            $weight = collect($carts)->pluck('weight')->sum();
-
-            if (session()->has('shipping') || !empty(auth()->user()->cust->province_id)) {
-
-                $province_id = !empty(auth()->user()->cust->province_id) ? auth()->user()->cust->province_id : session()->get('shipping.province_id');
-
-                $cities = RajaOngkir::getCity($province_id);
-                $city_id = !empty(auth()->user()->cust->city_id) ? auth()->user()->cust->city_id : session()->get('shipping.city_id');
-
-                $costs = [];
-                $couriers = ['jne', 'pos', 'tiki'];
-
-                foreach ($couriers as $courier) {
-                    $costs[] = RajaOngkir::getCost($city_id, $weight, $courier);
-                }
-
-            } else {
-
-                $cities = collect([]);
-                $costs = collect([]);
-            }
-
-            $amount['subtotal'] = LaraCart::subTotal($format = false, $withDiscount = true);
-            $amount['taxes'] = LaraCart::taxTotal($formatted = false);
-            $amount['shipping_fee'] = LaraCart::getFee('shippingFee')->amount;
-            
-            if (!empty(LaraCart::getCoupons())) {
-                $amount['discount'] = LaraCart::totalDiscount($formatted = false);
-            } else {
-                $amount['discount'] = 0;
-            }
-
-            $amount['total'] = ($amount['subtotal'] + $amount['taxes'] + $amount['shipping_fee']) - $amount['discount'];
-            
-
-            return view('frontend.themes.'.config('app.themes').'.checkout', compact(['carts', 'provinces', 'cities', 'costs', 'weight', 'amount']));
+        if (!session()->has('shipping') || empty(LaraCart::getItems())) {
+            return redirect('cart');
         }
-        return redirect()->route('cart.index');
-        
+
+        $address = Address::where('user_id', auth()->user()->id)
+                        ->where(function($where){
+                            if (session()->has('address')) {
+                                $where->where('id', session()->get('address'));
+                            }
+                        })
+                    ->first();
+
+        $carts = LaraCart::getitems();
+        $amount['subtotal'] = LaraCart::subTotal($format = false, $withDiscount = true);
+        $amount['taxes'] = LaraCart::taxTotal($formatted = false);
+        $amount['shipping_fee'] = LaraCart::getFee('shippingFee')->amount;
+
+        if (!empty(LaraCart::getCoupons())) {
+            $amount['discount'] = LaraCart::totalDiscount($formatted = false);
+        } else {
+            $amount['discount'] = 0;
+        }
+
+        $amount['total'] = ($amount['subtotal'] + $amount['taxes'] + $amount['shipping_fee']) - $amount['discount'];
+                        
+        return view('frontend.themes.'.config('app.themes').'.checkout', compact([
+            'address',
+            'carts',
+            'amount'
+        ]));
+    }
+
+    public function checkCard($card_number)
+    {
+        try {
+
+            $client = new GuzzleHttp\Client;
+            $res = $client->get('https://api.sandbox.midtrans.com/v1/bins/'.substr($card_number, 0, 6), [
+                'headers' => [
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Basic '.base64_encode(config('midtrans.server_key').':'),
+                                'Content-Type' => 'application/json'
+                ]
+            ]);
+
+            $results = $res->getBody()->getContents();
+            $response = json_decode($results);
+            
+            if ($response->data->brand == 'VISA') {
+                $image = url('frontend/'.config('app.themes').'/images/cards/visa.png');
+            } else if ($response->data->brand == 'MASTERCARD') {
+                $image = url('frontend/'.config('app.themes').'/images/cards/mastercard.png');
+            } else if ($response->data->brand == 'JCB') {
+                $image = url('frontend/'.config('app.themes').'/images/cards/jcb.png');
+            } else if ($response->data->brand == 'AMERICAN EXPRESS') {
+                $image = url('frontend/'.config('app.themes').'/images/cards/amex.png');
+            } else if ($response->data->brand == 'DISCOVER') {
+                $image = url('frontend/'.config('app.themes').'/images/cards/discover.png');
+            }  else {
+                $image = null;
+            }
+
+            return response()->json(
+                [
+                    'type' => 'success',
+                    'message' => 'success fetch bin data',
+                    'data' => $response->data,
+                    'image' => $image
+                ], 200
+            );
+
+        } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+            
+            if ($e->getCode() == 404) {
+                return response()->json(
+                    [
+                        'type' => 'error',
+                        'message' => 'Your card is invalid, we cannot find any of your card',
+                    ], $e->getCode()
+                );
+            }
+
+            return response()->json(
+                [
+                    'type' => 'error',
+                    'message' => json_decode($e->getResponse()->getBody()->getContents()),
+                ], $e->getCode()
+            );
+        }
     }
 
     public function store(Request $request)
     {
+        $token = $this->getToken($request);
+        $order_id = auth()->user()->id.date('mdY').mt_rand(100000,999999);
 
-        $subtotal = round(Helper::getCurrency(LaraCart::subTotal($format = false, $withDiscount = true), 'idr'));
-        $taxes = round(Helper::getCurrency(LaraCart::taxTotal($formatted = false), 'idr'));
-        $shipping_fee = round(Helper::getCurrency(LaraCart::getFee('shippingFee')->amount, 'idr'));
-        $discount = round(Helper::getCurrency(LaraCart::totalDiscount($formatted = false), 'idr'));
-        $total = ($subtotal + $taxes + $shipping_fee) - $discount;
+        if ($token->status_code == 200) {
 
-        $gross_amount = $total;
-        $card_number = $request->card_number;
-        $card_exp_month = $request->month_expired;
-        $card_exp_year = $request->year_expired;
-        $cvv = $request->cvv;
+            $pay = $this->payCreditCard($request, $token->token_id, $order_id);
 
-        $client = new GuzzleHttp\Client;
-		$res = $client->request('GET', config('midtrans.api_url').'/v2/token?client_key='.config('midtrans.client_key').'&gross_amount='.$gross_amount.'&card_number='.$card_number.'&card_exp_month='.$card_exp_month.'&card_exp_year='.$card_exp_year.'&card_cvv='.$cvv.'&secure=false');
+            if ($pay->status_code == 200) {
 
-		$results = $res->getBody()->getContents();        
-        $token_id = json_decode($results)->token_id;
-        $pay = $this->payCreditCard($request, $token_id);
+                $order = $this->storeToDatabase($request, $order_id, $pay);
+                LaraCart::destroyCart();
+                session()->forget('shipping');
 
-        return redirect('payment/complete/success');
-
-    }
-
-
-    private function payWithMidtrans($request)
-    {
-        $vt = new Veritrans;
-
-        $subtotal = round(Helper::getCurrency(LaraCart::subTotal($format = false, $withDiscount = true), 'idr'));
-        $taxes = round(Helper::getCurrency(LaraCart::taxTotal($formatted = false), 'idr'));
-        $shipping_fee = round(Helper::getCurrency(LaraCart::getFee('shippingFee')->amount, 'idr'));
-        $discount = round(Helper::getCurrency(LaraCart::totalDiscount($formatted = false), 'idr'));
-        $total = ($subtotal + $taxes + $shipping_fee) - $discount;
-
-        $user_id = auth()->user()->id;
-        $count_order = Order::where('user_id', $user_id)
-                            ->count();
-        $pad = str_pad($count_order, 5, "0", STR_PAD_LEFT);
-
-        $transaction_details = array(
-            'order_id' => time().'-'.$user_id.'-'.$pad,
-            'gross_amount' => $total
-        );
-
-        // Populate items
-
-        $items = [];
-
-        foreach (LaraCart::getItems() as $item) {
-            $items[] = [
-                            'id' => $item->id,
-                            'price' => round(Helper::getCurrency($item->price, 'idr')),
-                            'quantity' => $item->qty,
-                            'name' => $item->name
-                        ];
-        }
-
-        if ($discount > 0) {
-
-            $items[] = [
-                        'id' => 'discount',
-                        'price' => -$discount,
-                        'quantity' => 1,
-                        'name' => 'Discount'
-                    ];
-        }
-
-        $items[] = [
-                        'id' => 'shipping_fee',
-                        'price' => $shipping_fee,
-                        'quantity' => 1,
-                        'name' => 'Shipping Fee'
-                    ];
-
-
-        $items[] = [
-                        'id' => 'tax',
-                        'price' => $taxes,
-                        'quantity' => 1,
-                        'name' => 'Tax'
-                    ];
-
-        // Populate customer's billing address
-        $billing_address = array(
-
-            'first_name' => session()->get('shipping.first_name'),
-            'last_name' => session()->get('shipping.last_name'),
-            'address' => session()->get('shipping.address'),
-            'city' => RajaOngkir::getCityAttr(
-                        session()->get('shipping.city_id'),
-                        session()->get('shipping.province_id')),
-            'postal_code' => session()->get('shipping.zip'),
-            'phone' => session()->get('shipping.phone_number'),
-            'country_code'  => 'IDN'
-
-        );
-
-        // Populate customer's shipping address
-        $shipping_address = array(
-
-            'first_name' => session()->get('shipping.first_name'),
-            'last_name' => session()->get('shipping.last_name'),
-            'address' => session()->get('shipping.address'),
-            'city' => RajaOngkir::getCityAttr(
-                        session()->get('shipping.city_id'),
-                        session()->get('shipping.province_id')),
-            'postal_code' => session()->get('shipping.zip'),
-            'phone' => session()->get('shipping.phone_number'),
-            'country_code'  => 'IDN'
-        );
-
-        // Populate customer's Info
-        $customer_details = array(
-
-            'first_name' => session()->get('shipping.first_name'),
-            'last_name' => session()->get('shipping.last_name'),
-            'email' => session()->get('shipping.email'),
-            'phone' => session()->get('shipping.phone_number'),
-            'billing_address' => $billing_address,
-            'shipping_address'=> $shipping_address
-        );
-
-        // Data yang akan dikirim untuk request redirect_url.
-        // Uncomment 'credit_card_3d_secure' => true jika transaksi ingin diproses dengan 3DSecure.
-        $transaction_data = array(
-            'payment_type'          => 'vtweb', 
-            'vtweb'                         => array(
-                //'enabled_payments'    => [],
-                'credit_card_3d_secure' => true
-            ),
-            'transaction_details'=> $transaction_details,
-            'item_details'           => $items,
-            'customer_details'   => $customer_details
-        );
-    
-        try
-        {
-            $vtweb_url = $vt->vtweb_charge($transaction_data);
-            return redirect($vtweb_url);
-        } 
-        catch (Exception $e) 
-        {   
-            return $e->getMessage;
-        }
-    }
-
-    private function payWithPayPal($request)
-    {
-
-        $user_id = auth()->user()->id;
-        $count_order = Order::where('user_id', $user_id)
-                            ->count();
-
-        $pad = str_pad($count_order, 5, "0", STR_PAD_LEFT);
-
-        $order_id = time().'-'.$user_id.'-'.$pad;
-        $subtotal = Helper::getCurrency(LaraCart::subTotal($format = false, $withDiscount = true), 'usd');
-        $taxes = Helper::getCurrency(LaraCart::taxTotal($formatted = false), 'usd');
-        $shipping_fee = Helper::getCurrency(LaraCart::getFee('shippingFee')->amount, 'usd');
-        $discount = Helper::getCurrency(LaraCart::totalDiscount($formatted = false), 'usd');
-        $total = ($subtotal + $taxes + $shipping_fee) - $discount;
-
-        $payer = new Payer();
-        $payer->setPaymentMethod('paypal');
-
-        $items = [];
-
-        foreach (LaraCart::getItems() as $item) {
-
-            $items[] = (new Item)->setName($item->name)
-                                ->setCurrency('USD')
-                                ->setQuantity($item->qty)
-                                ->setPrice(Helper::getCurrency($item->price, 'usd'));
-
-        }
-
-        if ($discount > 0) {
-
-            $items[] = (new Item)->setName('Discount')
-                                ->setCurrency('USD')
-                                ->setQuantity(1)
-                                ->setPrice(-$discount);
-        }
-
-        $items[] = (new Item)->setName('Shipping Fee')
-                                ->setCurrency('USD')
-                                ->setQuantity(1)
-                                ->setPrice($shipping_fee);
-                                
-
-        $items[] = (new Item)->setName('Tax')
-                                ->setCurrency('USD')
-                                ->setQuantity(1)
-                                ->setPrice($taxes);
-
-
-        $item_list = new ItemList;
-        $item_list->setItems($items);
-
-        $amount = new Amount();
-        $amount->setCurrency('USD')
-                    ->setTotal($total);
-
-
-        $transaction = new Transaction();
-        $transaction->setAmount($amount)
-                    ->setItemList($item_list)
-                    ->setDescription('Craftenart payment #'.$order_id);
-
-        $redirect_urls = new RedirectUrls();
-        $redirect_urls->setReturnUrl(url()->route('payment.paypal')) /** Specify return URL **/
-                        ->setCancelUrl(url()->route('payment.paypal'));
-
-        $payment = new Payment();
-        $payment->setIntent('Sale')
-                ->setPayer($payer)
-                ->setRedirectUrls($redirect_urls)
-                ->setTransactions(array($transaction));
-            /** dd($payment->create($this->_api_context));exit; **/
-
-        try {
-
-            $payment->create($this->_api_context);
-
-        } catch (\PayPal\Exception\PPConnectionException $ex) {
-            
-            if (config()->get('app.debug')) {
-
-                return redirect()->route('payment.paypal')
-                                    ->with('message', ['status' => 'failed', 'content' => 'Error timeout, please try again']);
-                /** echo "Exception: " . $ex->getMessage() . PHP_EOL; **/
-                /** $err_data = json_decode($ex->getData(), true); **/
-                /** exit; **/
+                return redirect('checkout/complete')->with('checkout', [
+                    'status' => 'success',
+                    'message' => $pay->status_message,
+                    'order' => $order
+                ]);
 
             } else {
-                
-                return redirect()->route('payment.paypal')
-                                ->with('message', ['status' => 'failed', 'content' => 'Some error occur, sorry for inconvenient']);
-                /** die('Some error occur, sorry for inconvenient'); **/
+                return redirect('checkout/complete')->with('checkout', [
+                    'status' => 'error',
+                    'message' => $pay->status_message
+                    ]);
             }
+
+        } else {
+            return redirect('checkout/complete')->with('checkout', [
+                'status' => 'error',
+                'message' => $token->status_message
+            ]);
         }
+    }
 
-        foreach($payment->getLinks() as $link) {
+    public function getToken($request)
+    {
+        try {
+            $expiration_date = explode('/', $request->expiration_date);
+            $card_month_exp = $expiration_date[0];
+            $card_year_exp = $expiration_date[1];
 
-            if($link->getRel() == 'approval_url') {
-                $redirect_url = $link->getHref();
-                break;
-            }
+            $gross_amount = LaraCart::total($formatted=false);
+            $client = new GuzzleHttp\Client;
+            $res = $client->request('get', 'https://api.sandbox.midtrans.com/v2/token?client_key='.config('midtrans.client_key').'&gross_amount='.$gross_amount.'&card_number='.$request->card_number.'&card_exp_month='.$card_month_exp.'&card_exp_year='.$card_year_exp.'&card_cvv='.$request->card_cvv.'&secure=false');
+
+            $result = $res->getBody()->getContents();
+            return json_decode($result);
+
+        } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+
+            return json_decode($e->getResponse()->getBody()->getContents());
         }
-
-        /** add payment ID to session **/
-        session()->put('paypal_payment_id', $payment->getId());
-        session()->put('order_number', $order_id);
-
-        if(isset($redirect_url)) {
-            /** redirect to paypal **/
-            return redirect()->away($redirect_url);
-        }
-
-        return redirect()->route('payment.paypal')
-                        ->with('message', ['status' => 'failed', 'content' => 'Unknown error occurred']);
 
     }
 
-    public function payCreditCard($request, $token_id)
+    public function payCreditCard($request, $token_id, $order_id)
     {
-       
         $subtotal = round(Helper::getCurrency(LaraCart::subTotal($format = false, $withDiscount = true), 'idr'));
         $taxes = round(Helper::getCurrency(LaraCart::taxTotal($formatted = false), 'idr'));
         $shipping_fee = round(Helper::getCurrency(LaraCart::getFee('shippingFee')->amount, 'idr'));
         $discount = round(Helper::getCurrency(LaraCart::totalDiscount($formatted = false), 'idr'));
         $total = ($subtotal + $taxes + $shipping_fee) - $discount;
 
-        $user_id = auth()->user()->id;
-        $count_order = Order::where('user_id', $user_id)
-                            ->count();
-
-        $pad = str_pad($count_order, 5, "0", STR_PAD_LEFT);
-
-        $transaction_details = array(
-            'order_id' => time().'-'.$user_id.'-'.$pad,
-            'gross_amount' => $total
-        );
-
-        // Populate items
-
+        $address = Address::where('user_id', auth()->user()->id)
+                        ->where(function($where){
+                            if (session()->has('address')) {
+                                $where->where('id', session()->get('address'));
+                            }
+                        })
+                    ->first();
         $items = [];
 
         foreach (LaraCart::getItems() as $item) {
             $items[] = [
-                            'id' => $item->id,
-                            'price' => round(Helper::getCurrency($item->price, 'idr')),
-                            'quantity' => $item->qty,
-                            'name' => $item->name
-                        ];
+                'id' => $item->name,
+                'price' => round(Helper::getCurrency($item->price, 'idr')),
+                'quantity' => $item->qty,
+                'name' => $item->name
+            ];
         }
 
         if ($discount > 0) {
@@ -415,48 +220,139 @@ class CheckoutController extends Controller
                         'quantity' => 1,
                         'name' => 'Tax'
                     ];
-        
-        $address = array(
 
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
+        $customer = [
+            'first_name' => auth()->user()->name,
+            'last_name' => '',
             'email' => auth()->user()->email,
-            'address' => $request->address,
-            'city' => RajaOngkir::getCityAttr(
-                        session()->get('shipping.city_id'),
-                        session()->get('shipping.province_id')),
-            'postal_code' => $request->zip,
-            'phone' => $request->phone_number,
-            'country_code'  => 'IDN'
-
-        );
-
-        $json = [
-            'payment_type' => 'credit_card',
-            'credit_card' => [
-                'token_id' => $token_id
-            ],
-            'transaction_details' => $transaction_details,
-            'item_details' => $items,
-            'customer_details' => $address,
-            'shipping_address' => $address
+            'address' => $address->address.', '.RajaOngkir::getCityAttr($address->city_id, $address->province_id).' '.RajaOngkir::getProvinceAttr($address->province_id),
+            'city' => RajaOngkir::getCityAttr($address->city_id, $address->province_id),
+            'postal_code' => $address->postal_code,
+            'phone' => auth()->user()->cust->phone_number,
+            'country_code' => 'IDN'
         ];
 
-        $client = new GuzzleHttp\Client;
+        $body = [
+                'payment_type' => 'credit_card',
+                'transaction_details' => [
+                    'order_id' => $order_id,
+                    'gross_amount' => $total
+                ],
+                'credit_card' => [
+                    'token_id' => $token_id
+                ],
+                'item_details' => $items,
+                'customer_details' => $customer,
+                'shipping_address' => $customer,
+            ];
         
-		$res = $client->request('POST', config('midtrans.api_url').'/v2/charge', [
-		    'headers' => [
-                        'Content-Type' => 'application/json',
-                        'Accept' => 'application/json',
-                        'Authorization' => 'Basic '. base64_encode(config('midtrans.server_key').':')
-            ],
-            'json' => $json
-        ]);
-        
-        $results = $res->getBody()->getContents();
-        return $results;
-    }
-        
+        $headers['ContentType'] = 'application/json';
+        $headers['Authorization'] = 'Basic '.base64_encode(config('midtrans.server_key').':');
 
+        $client = new GuzzleHttp\Client;
+        $res = $client->post(
+            'https://api.sandbox.midtrans.com/v2/charge',
+            ['headers' => $headers, 'json' => $body]
+        );
+
+        $result = $res->getBody()->getContents();
+        return json_decode($result);
+
+    }
+
+    public function storeToDatabase($request, $order_id, $pay)
+    {
+        $return = '';
+
+        DB::transaction(function() use ($request, $order_id, $pay, &$return){
+            $items = LaraCart::getItems();
+            $address = Address::where('user_id', auth()->user()->id)
+                            ->where(function($where){
+                                if (session()->has('address')) {
+                                    $where->where('id', session()->get('address'));
+                                }
+                            })
+                        ->first();
+            
+            $shipping_data = session()->get('shipping');
+
+            $order = new Order;
+            $order->number = $order_id;
+            $order->subtotal = LaraCart::subTotal($format = false, $withDiscount = false);
+            $order->tax = LaraCart::taxTotal($formatted = false);
+            $order->discount = LaraCart::totalDiscount($formatted = false);
+            $order->shipping_fee = LaraCart::getFee('shippingFee')->amount;
+            $order->total = LaraCart::total($formatted = false, $withDiscount = true);
+            if (!empty(LaraCart::getCoupons())){ 
+                $order->coupon_code = array_keys(LaraCart::getCoupons())[0];
+            }
+            $order->user_id = auth()->user()->id;
+            $order->payment_date = $pay->transaction_time;
+            $order->transaction_status = $pay->transaction_status;
+            $order->payment_type = $pay->payment_type;
+            $order->fraud_status = $pay->fraud_status;
+            $order->bank_name = $pay->bank;
+            $order->first_name = auth()->user()->name;
+            $order->last_name = '';
+            $order->phone = auth()->user()->cust->phone_number;
+            $order->email = auth()->user()->email;
+            $order->address = $address->address;
+            $order->save();
+
+            $shipping = new Ship;
+            $shipping->first_name = auth()->user()->name;
+            $shipping->last_name = '';
+            $shipping->email = auth()->user()->email;
+            $shipping->phone_number = auth()->user()->cust->phone_number;
+            $shipping->country_id = 'IDN';
+            $shipping->province_id = $address->province_id;
+            $shipping->city_id = $address->city_id;
+            $shipping->zip = $address->postal_code;
+            $shipping->address = $address->address;
+            $shipping->courier_id = $shipping_data['courier_id'];
+            $shipping->total_weight = $shipping_data['total_weight'];
+            $shipping->cost = $shipping_data['cost'];
+            $shipping->service_name = $shipping_data['service_name'];
+            $shipping->service_description = $shipping_data['service_description'];
+            $shipping->estimate_delivery = $shipping_data['estimate_delivery'];
+
+            $order->ship()->save($shipping);
+
+            foreach ($items as $item) {
+
+                $order_details = new OrderDetails;
+                $order_details->product_id = $item->id;
+                $order_details->price = $item->price;
+                $order_details->qty = $item->qty;
+                $order->details()->save($order_details);
+
+                if (!empty($item->attributes)) {
+                    foreach ($item->attributes as $attributes) {
+
+                        $order_attributes = new OrderAttribute;
     
+                        $order_attributes->name = $attributes['name'];
+                        $order_attributes->value = $attributes['value'];
+    
+                        $order_details->attributes()->save($order_attributes);
+    
+                    }
+                }
+            }
+
+            $return = $order;
+
+        });
+
+        return $return;
+    }
+
+    public function complete()
+    {
+        if (session()->has('checkout')) {
+            return view('frontend.themes.'.config('app.themes').'.checkout.complete');
+        } else {
+            return redirect('cart');
+        }
+    }
 }

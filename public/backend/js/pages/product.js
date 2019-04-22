@@ -39,9 +39,15 @@ $(document).ready(function(){
 
 		description = d.description === null ? 'No Description attached' : d.description;
 		galleries = '';
+		attributes = '';
 
 		$.each(d.galleries, function(i, v){
 			galleries += '<div class="col-md-6 no-gutters" style="margin-bottom: 10px"><img src="'+ BASE_URL + '/uploads/thumbs/' + v.picture +'" class="img img-thumbnail img-responsive"></div>';
+		});
+
+		$.each($.parseJSON(d.attributes), function(i, v){
+			value = $.parseJSON(v.value);
+			attributes += `<div class="col-md-2"><strong>${v.name}</strong></div><div class="col-md-8">${value.join(', ')}</div>`;
 		});
 
 		return ' <div class="col-md-row">' +
@@ -52,7 +58,10 @@ $(document).ready(function(){
 			        '</div>' +
 			        '<div class="col-md-9">' +
 			            '<p class="text-primary">Description</p class="text-primary">' +
-			            '<p>'+ description +'</p>' +
+						'<p>'+ description +'</p>' +
+						'<hr>' +
+						'<p class="text-primary">Attributes</p>' +
+						'<div class="row">'+ attributes +'</div>' +
 			        '</div>' +
 			    '</div>';
 	}

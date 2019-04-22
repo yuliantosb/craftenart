@@ -59,16 +59,38 @@ class ReviewController extends Controller
 
     public function store(Request $request)
     {
-    	$review = new Review;
-    	$review->user_id = Auth::user()->id;
-		$review->product_id = $request->product_id;
-		$review->rate = $request->rate;
-		$review->content = $request->content;
-		$review->save();
+		$check = Review::where('user_id', auth()->user()->id)
+							->where('product_id', $request->product_id)
+							->get();
 
-		return redirect()
-				->back()
-				->with('message', 'Your review will appear when approved by Admin');
+		if (!$check->isEmpty()) {
+
+			return redirect()
+					->back()
+					->with('review', [
+						'title' => 'Error',
+						'message' => 'You already give a review to this product!',
+						'type' => 'danger'
+					]);
+
+		} else {
+
+			$review = new Review;
+			$review->user_id = Auth::user()->id;
+			$review->product_id = $request->product_id;
+			$review->rate = $request->rate;
+			$review->content = $request->content;
+			$review->save();
+
+			return redirect()
+					->back()
+					->with('review', [
+						'title' => 'success',
+						'message' => 'Your review will appear when approved by Admin',
+						'type' => 'success'
+					]);
+		}
+    	
     }
 
     public function show($id)

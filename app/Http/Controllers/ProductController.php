@@ -28,7 +28,7 @@ class ProductController extends Controller
 
     		->of($products)
 
-    		->rawColumns(['name', 'price'])
+    		->rawColumns(['name', 'price', 'attributes'])
     		
     		->addColumn('name', function($data){
     			return '<p class="text-primary">'.$data->name.'</p>
@@ -60,7 +60,11 @@ class ProductController extends Controller
 
     		->addColumn('description', function($data){
     			return strip_tags($data->description);
-    		})
+			})
+			
+			->addColumn('attributes', function($data){
+				return $data->attributes;
+			})
 
     		->toJson();
 

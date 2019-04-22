@@ -10,4 +10,9 @@ class OrderDetails extends Model
     {
     	return $this->belongsTo('App\Product', 'product_id');
     }
+
+    public function attributes()
+    {
+        return $this->hasMany('App\OrderAttribute', 'order_detail_id');
+    }
 }
