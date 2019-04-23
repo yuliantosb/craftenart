@@ -24,7 +24,7 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
 use GuzzleHttp;
 
-class CheckoutController extends Controller
+class CheckoutController_old extends Controller
 {
 
     private $_api_context;
