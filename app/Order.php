@@ -182,6 +182,21 @@ class Order extends Model
 	}
 
 
+	public function laratablesNumber()
+	{
+		return '<p class="text-primary"><a href="'.route('admin.order.show', $this->id).'">'.$this->number.'</a></p>
+			<p>
+			<a href="'.route('admin.order.show', $this->id).'" class="btn btn-primary btn-xs">View</a>
+			<button class="btn btn-danger btn-xs" onClick="on_delete('.$this->id.')">Delete</button>
+				
+		    <form action="'. route('admin.order.destroy', $this->id) .'" method="POST" id="form-delete-'.$this->id.'" style="display:none">
+		        '. method_field('DELETE') .'
+		        '. csrf_field() .'
+		    </form>
+
+			</p>';
+	}
+
 	public function laratablesFirstName()
 	{
 		return "{$this->first_name} {$this->last_name}";

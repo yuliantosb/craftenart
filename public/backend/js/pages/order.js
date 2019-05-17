@@ -4,8 +4,8 @@ $(document).ready(function(){
 		serverSide: true,
 		ajax : SITE_URL + '/order',
 		columns: [
-			{ name: 'first_name' },
 			{ name: 'number' },
+			{ name: 'first_name' },
 			{ name: 'payment_type' },
 			{ name: 'total', class: 'text-right' },
 			{ name: 'status', class: 'text-center' },

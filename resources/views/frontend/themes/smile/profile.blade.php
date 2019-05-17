@@ -23,7 +23,7 @@
             <div class="row">
 
                 <div class="col-sm-3 col-md-2 sidebar">
-                  @include('frontend.themes.'.config('app.themes').'.layouts.user_sidebar', ['active' => 'profile'])
+                  
                 </div>
 
                 <div class="col-sm-9 col-md-10">

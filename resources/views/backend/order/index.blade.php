@@ -19,8 +19,8 @@
                         <table class="table table-striped" id="table-order">
                             <thead>
                                 <tr>
-                                	<th>Full Name</th>
                                     <th>Order Number</th>
+                                	<th>Full Name</th>
                                     <th>Transaction Type</th>
     	                        	<th>Total</th>
                                     <th>Status</th>

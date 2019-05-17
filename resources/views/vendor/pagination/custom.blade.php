@@ -1,1 +1,1 @@
-@extends('frontend.themes.'.config('app.themes').'pagination')
+@extends('frontend.themes.'.config('app.themes').'.pagination')
