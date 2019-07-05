@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration
             $table->integer('user_id');
             $table->string('slug')->unique();
             $table->string('title_en');
-            $table->string('title_id');
+            $table->string('title_id')->nullable();
             $table->text('content_en')->nullable();
             $table->text('content_id')->nullable();
             $table->string('feature_image')->nullable();
