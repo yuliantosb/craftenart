@@ -4953,7 +4953,8 @@ label.css-label {
     }
 
     .header-xtra {
-        display: none;
+        /* display: none; */
+        display: block !important;
     }
 
     header {

@@ -253,3 +253,8 @@ $.validator.setDefaults({
     // onkeyup: function(element){$(element).valid()},
     onChange: function(element){$(element).valid()},
 });
+
+$('.collapse-duh').click(function(e){
+    e.preventDefault();
+    console.log($(this).data('target'));
+});

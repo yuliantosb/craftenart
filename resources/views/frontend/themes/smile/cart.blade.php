@@ -175,8 +175,14 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-sm-12">
-              <div class="pull-left">Add new address</div>
-              <div class="pull-right"><button data-toggle="collapse" data-target="#addaddress" type="button" class="btn btn-sm btn-link text-success"><i class="fa fa-plus"></i></button></div>
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="pull-left">Add new address</div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="pull-right"><button data-toggle="collapse" data-target="#addaddress" type="button" class="btn btn-sm btn-link text-success"><i class="fa fa-plus"></i></button></div>
+                </div>
+              </div>
             </div>
             <form id="form-add-address">
             <div class="col-sm-12">

@@ -8,7 +8,7 @@
 		<link rel="icon" type="image/png" href="{{ !empty(App\Setting::getSetting('favicon')->img) ? url('uploads/'.App\Setting::getSetting('favicon')->img) : '' }}" />
 
 		<!-- set the viewport width and initial-scale on mobile devices -->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!-- CSRF Token -->
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 
