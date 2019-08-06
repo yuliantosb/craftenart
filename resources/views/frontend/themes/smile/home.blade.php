@@ -9,6 +9,7 @@
 	<div class="space10"></div>
 		<div class="clearfix space10"></div>
 		<!-- BLOCK -->
+		@if (!empty($category_chunks[0]) && !empty($category_chunks[1]))
 		<div class="block-main container no-padding-top">
 			<div class="row">
 				<div class="col-md-3 col-sm-3">
@@ -49,6 +50,7 @@
 				</div>
 			</div>
 		</div>
+		@endif
 
 		<!-- PRODUCTS -->
 		<div class="container padding40">
