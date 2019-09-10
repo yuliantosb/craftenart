@@ -82,6 +82,7 @@
 										@csrf
 										<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
 									</form>
+									{!! Share::page(route('shop.show', $product->slug), $product->name)->facebook()->whatsapp()->twitter() !!}
 									<a href="javascript:void(0)" onclick="document.getElementById('new-product-{{ $product->id }}').submit()" class="addcart fa fa-shopping-cart"></a>
 									
 									@if (auth()->check())

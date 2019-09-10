@@ -117,6 +117,7 @@
 							</div>
 							</form>
 							<div class="space20"></div>
+							{!! Share::page(route('shop.show', $product->slug), $product->name, [], '<div class="share">', '</div>')->facebook()->whatsapp()->twitter() !!}
 							<div class="share">
 								<span>
 								@if (auth()->check())
@@ -251,6 +252,7 @@
 												@csrf
 												<input type="text" name="product_id" value="{{ $product->id }}" hidden="hidden">
 											</form>
+											{!! Share::page(route('shop.show', $product->slug), $product->name)->facebook()->whatsapp()->twitter() !!}
 											<a href="javascript:void(0)" onclick="document.getElementById('new-product-{{ $product->id }}').submit()" class="addcart fa fa-shopping-cart"></a>
 											
 											@if (auth()->check())

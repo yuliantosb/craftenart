@@ -5571,3 +5571,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 .navbar-user li.active {
   background-color: #f7f7f7 !important;
 }
+
+.share, .share li {
+    display: inline-block;
+}

@@ -169,6 +169,7 @@ return [
         LukePOLO\LaraCart\LaraCartServiceProvider::class,
         Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
         Arrilot\Widgets\ServiceProvider::class,
+        Jorenvh\Share\Providers\ShareServiceProvider::class,
 
     ],
 
@@ -230,6 +231,7 @@ return [
         'Widget'       => Arrilot\Widgets\Facade::class,
         'AsyncWidget'  => Arrilot\Widgets\AsyncFacade::class,
         'LaraTables' => Freshbitsweb\Laratables\Laratables::class,
+        'Share' => Jorenvh\Share\ShareFacade::class,
         
     ],
 

@@ -82,6 +82,7 @@
 											@csrf
 											<input type="text" name="product_id" value="{{ $new_product->id }}" hidden="hidden">
 										</form>
+										{!! Share::page(route('shop.show', $new_product->slug), $new_product->name)->facebook()->whatsapp()->twitter() !!}
 										<a href="javascript:void(0)" onclick="document.getElementById('new-product-{{ $new_product->id }}').submit()" class="addcart fa fa-shopping-cart"></a>
 										
 										@if (auth()->check())
@@ -163,6 +164,7 @@
 													@csrf
 													<input type="text" name="product_id" value="{{ $category_product->id }}" hidden="hidden">
 												</form>
+												{!! Share::page(route('shop.show', $category_product->slug), $category_product->name)->facebook()->whatsapp()->twitter() !!}
 												<a href="javascript:void(0)" onclick="document.getElementById('new-product-{{ $category_product->id }}').submit()" class="addcart fa fa-shopping-cart"></a>
 												
 												@if (auth()->check())
@@ -218,6 +220,7 @@
 													@csrf
 													<input type="text" name="product_id" value="{{ $category_product->id }}" hidden="hidden">
 												</form>
+												{!! Share::page(route('shop.show', $category_product->slug), $category_product->name)->facebook()->whatsapp()->twitter() !!}
 												<a href="javascript:void(0)" onclick="document.getElementById('new-product-{{ $category_product->id }}').submit()" class="addcart fa fa-shopping-cart"></a>
 												
 												@if (auth()->check())
